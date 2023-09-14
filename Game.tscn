@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=7 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://CardInstance.tscn" id="2_b4muc"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_b8es7"]
 [ext_resource type="PackedScene" uid="uid://chgp72brs104" path="res://Stack.tscn" id="3_1ux7f"]
 [ext_resource type="Script" path="res://CardDataManager.cs" id="3_dkwey"]
+[ext_resource type="Script" path="res://Hand.cs" id="6_xq7l6"]
 
 [node name="GrandArchive" type="Node2D"]
 script = ExtResource("1_15phb")
@@ -15,14 +16,16 @@ cardBack = ExtResource("2_b8es7")
 [node name="CardDataManager" type="HTTPRequest" parent="."]
 script = ExtResource("3_dkwey")
 
-[node name="Card" parent="." instance=ExtResource("2_b4muc")]
-position = Vector2(565, 336)
-
 [node name="Stack" parent="." instance=ExtResource("3_1ux7f")]
 position = Vector2(1065, 323)
 zoneName = "Main Deck"
 privateZone = true
 cards = ["ilW4cRlI0C", "ilW4cRlI0C", "ilW4cRlI0C", "ilW4cRlI0C"]
+
+[node name="Hand" type="Node2D" parent="."]
+position = Vector2(589, 648)
+script = ExtResource("6_xq7l6")
+cardInstance = ExtResource("2_b4muc")
 
 [connection signal="request_completed" from="ImageRequest" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]

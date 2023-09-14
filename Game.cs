@@ -1,14 +1,15 @@
 using Godot;
 using Godot.Collections;
 
-public partial class Game : Node
+public partial class Game : Node2D
 {
 	public CardDataManager cardDataManager;
     HttpRequest imageRequest;
 
-    Dictionary imageCache = new Dictionary();
+	Dictionary imageCache = new();
 
 	public CardInstance grabbedCard { get; set; } = null;
+	public Hand hand;
 
 	[Export] public CompressedTexture2D cardBack;
 
@@ -19,6 +20,8 @@ public partial class Game : Node
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 
 		cardDataManager.GetCardsFromDatabase();
+
+		hand = GetNode<Hand>("Hand");
 	}
 
 	public override void _Input(InputEvent @event)
@@ -30,7 +33,25 @@ public partial class Game : Node
 		}
 	}
 
-	public void ImageRequest(string url)
+	public override void _PhysicsProcess(double delta)
+	{
+		if (grabbedCard != null) grabbedCard.posGoal = GetGlobalMousePosition();
+
+		foreach (CardInstance card in hand.GetChildren())
+		{
+			if (card == grabbedCard)
+				card.MoveToGoal(25 * (float)delta);
+			else
+				card.MoveToGoal(10 * (float)delta);
+		}
+	}
+
+    private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
+    {
+        return beginning * (1 - speed) + goal * speed;
+    }
+
+    public void ImageRequest(string url)
 	{
 		Error httpError = imageRequest.Request(url);
 		if (httpError != Error.Ok)
@@ -41,7 +62,7 @@ public partial class Game : Node
 
 	public void ImageRequestCompleted(long result, long response_code, string[] headers, byte[] body)
 	{
-		Image image = new Image();
+		Image image = new();
 		Error imageError = image.LoadJpgFromBuffer(body);
 		switch (imageError)
 		{
