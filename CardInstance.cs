@@ -23,7 +23,7 @@ public partial class CardInstance : Node2D
 		}
 	}
 
-    public void OnTryPickup(Node viewport, InputEvent input, int shape_idx)
+	public void OnTryPickup(Node viewport, InputEvent input, int shape_idx)
 	{
 		if (input.IsActionPressed("click"))
 		{

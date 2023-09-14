@@ -4,8 +4,20 @@ using Godot.Collections;
 public partial class CardDataManager : HttpRequest
 {
 
-    //[Export] public Array<CardData> cards = new Array<CardData>();
     [Export] public Dictionary<string, CardData> cards = new Dictionary<string, CardData>();
+
+    public CardData GetCard(string uuid)
+    {
+        CardData ret;
+        if (cards.TryGetValue(uuid, out ret))
+        {
+            return ret;
+        } 
+        else
+        {
+            return null;
+        }
+    }
 
     public void GetCardsFromDatabase()
     {

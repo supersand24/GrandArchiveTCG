@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public partial class Game : Node
 {
-	CardDataManager cardDataManager;
+	public CardDataManager cardDataManager;
     HttpRequest imageRequest;
 
     Dictionary imageCache = new Dictionary();

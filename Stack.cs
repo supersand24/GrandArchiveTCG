@@ -8,7 +8,7 @@ public partial class Stack : Node2D
 	[Export] string zoneName = "Zone";
 	[Export] bool privateZone = false;
 
-	Array<CardInstance> cards = new Array<CardInstance>();
+	[Export] Array<string> cards = new Array<string>();
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -18,7 +18,7 @@ public partial class Stack : Node2D
 
 	}
 
-	public CardInstance GetTopCard()
+	public string GetTopCardUUID()
 	{
 		if (cards.Count == 0) return null;
 		return cards.Last();
@@ -32,12 +32,17 @@ public partial class Stack : Node2D
 		}
 		else
 		{
-			GetNode<Sprite2D>("TopCardImage").Texture = GetTopCard().GetNode<Sprite2D>("Image").Texture;
+			//GetNode<Sprite2D>("TopCardImage").Texture = GetTopCard().GetNode<Sprite2D>("Image").Texture;
 		}
     }
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void OnInputEvent(Node viewport, InputEvent input, int shape_idx)
 	{
+		if (input.IsActionPressed("click"))
+		{
+			CardData card = GetOwner<Game>().cardDataManager.GetCard(GetTopCardUUID());
+			GD.Print(card.name + " was drawn!");
+		}
 	}
+
 }
