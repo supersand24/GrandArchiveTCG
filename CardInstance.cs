@@ -1,15 +1,19 @@
 using Godot;
-using System;
 
 public partial class CardInstance : Node2D
 {
 
 	bool selected = false;
+	[Export] bool faceUp = true;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
-	}
+		if (!faceUp)
+		{
+			GetNode<Sprite2D>("Image").Texture = GetOwner<Game>().cardBack;
+		}
+    }
 
     public override void _PhysicsProcess(double delta)
     {

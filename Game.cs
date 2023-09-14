@@ -1,32 +1,44 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public partial class Game : Node
 {
+    HttpRequest cardRequest;
+    HttpRequest imageRequest;
 
-	HttpRequest imageRequest;
-	Dictionary imageCache = new Dictionary();
+    Dictionary imageCache = new Dictionary();
 
 	public CardInstance grabbedCard { get; set; } = null;
+
+	[Export] public CompressedTexture2D cardBack;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        imageRequest = GetNode<HttpRequest>("ImageRequest");
-		HTTPRequest("https://ga-index-public.s3.us-west-2.amazonaws.com/cards/triskit-guidance-angel-doa-alter.jpg");
+		imageRequest = GetNode<HttpRequest>("ImageRequest");
+        cardRequest = GetNode<HttpRequest>("CardRequest");
+        ImageRequest("https://ga-index-public.s3.us-west-2.amazonaws.com/cards/triskit-guidance-angel-doa-alter.jpg");
 	}
 
-    public override void _Input(InputEvent @event)
-    {
-        if (@event.IsActionReleased("click") && grabbedCard != null)
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionReleased("click") && grabbedCard != null)
 		{
 			grabbedCard.Drop();
 			grabbedCard = null;
 		}
-    }
+	}
 
-    public void HTTPRequest(string url)
+	public void CardRequest(string search = "")
+	{
+		Error httpError = cardRequest.Request("https://api.gatcg.com/cards/search?" + search);
+		if (httpError != Error.Ok)
+		{
+			GD.PrintErr("Bad HTTP Request : https://api.gatcg.com/cards/search?" + search);
+		}
+	}
+
+	public void ImageRequest(string url)
 	{
 		Error httpError = imageRequest.Request(url);
 		if (httpError != Error.Ok)
@@ -35,7 +47,12 @@ public partial class Game : Node
 		}
 	}
 
-	public void HTTPRequestCompleted(long result, long response_code, string[] headers, byte[] body)
+    public void CardRequestCompleted(long result, long response_code, string[] headers, byte[] body)
+    {
+        
+    }
+
+    public void ImageRequestCompleted(long result, long response_code, string[] headers, byte[] body)
 	{
 		Image image = new Image();
 		Error imageError = image.LoadJpgFromBuffer(body);
@@ -43,9 +60,9 @@ public partial class Game : Node
 		{
 			case Error.Ok:
 				ImageTexture imageTexture = ImageTexture.CreateFromImage(image);
-				GetNode("Card").GetNode<Sprite2D>("Image").Texture = imageTexture;
+				//GetNode("Card").GetNode<Sprite2D>("Image").Texture = imageTexture;
 				imageCache.Add("triskit-guidance-angel-doa-alter", imageTexture);
-            break;
+			break;
 			default:
 				GD.PrintErr("An error occurred while trying to display the image.");
 			break;
