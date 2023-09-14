@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public partial class Game : Node
 {
-    HttpRequest cardRequest;
+	CardDataManager cardDataManager;
     HttpRequest imageRequest;
 
     Dictionary imageCache = new Dictionary();
@@ -16,8 +16,9 @@ public partial class Game : Node
 	public override void _Ready()
 	{
 		imageRequest = GetNode<HttpRequest>("ImageRequest");
-        cardRequest = GetNode<HttpRequest>("CardRequest");
-        ImageRequest("https://ga-index-public.s3.us-west-2.amazonaws.com/cards/triskit-guidance-angel-doa-alter.jpg");
+		cardDataManager = GetNode<CardDataManager>("CardDataManager");
+
+		cardDataManager.GetCardsFromDatabase();
 	}
 
 	public override void _Input(InputEvent @event)
@@ -26,15 +27,6 @@ public partial class Game : Node
 		{
 			grabbedCard.Drop();
 			grabbedCard = null;
-		}
-	}
-
-	public void CardRequest(string search = "")
-	{
-		Error httpError = cardRequest.Request("https://api.gatcg.com/cards/search?" + search);
-		if (httpError != Error.Ok)
-		{
-			GD.PrintErr("Bad HTTP Request : https://api.gatcg.com/cards/search?" + search);
 		}
 	}
 
@@ -47,12 +39,7 @@ public partial class Game : Node
 		}
 	}
 
-    public void CardRequestCompleted(long result, long response_code, string[] headers, byte[] body)
-    {
-        
-    }
-
-    public void ImageRequestCompleted(long result, long response_code, string[] headers, byte[] body)
+	public void ImageRequestCompleted(long result, long response_code, string[] headers, byte[] body)
 	{
 		Image image = new Image();
 		Error imageError = image.LoadJpgFromBuffer(body);
