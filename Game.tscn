@@ -16,16 +16,19 @@ cardBack = ExtResource("2_b8es7")
 [node name="CardDataManager" type="HTTPRequest" parent="."]
 script = ExtResource("3_dkwey")
 
+[node name="CardInstances" type="Node2D" parent="."]
+
 [node name="Stack" parent="." instance=ExtResource("3_1ux7f")]
 position = Vector2(1065, 323)
 zoneName = "Main Deck"
 privateZone = true
 cards = ["ilW4cRlI0C", "ilW4cRlI0C", "ilW4cRlI0C", "ilW4cRlI0C"]
 
-[node name="Hand" type="Node2D" parent="."]
+[node name="Hand" type="Node2D" parent="." node_paths=PackedStringArray("mainDeck")]
 position = Vector2(589, 648)
 script = ExtResource("6_xq7l6")
 cardInstance = ExtResource("2_b4muc")
+mainDeck = NodePath("../Stack")
 
 [connection signal="request_completed" from="ImageRequest" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]

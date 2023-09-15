@@ -9,7 +9,8 @@ public partial class Game : Node2D
 	Dictionary imageCache = new();
 
 	public CardInstance grabbedCard { get; set; } = null;
-	public Hand hand;
+
+	public Array<Hand> players = new();
 
 	[Export] public CompressedTexture2D cardBack;
 
@@ -21,7 +22,7 @@ public partial class Game : Node2D
 
 		cardDataManager.GetCardsFromDatabase();
 
-		hand = GetNode<Hand>("Hand");
+		players.Add(GetNode<Hand>("Hand"));
 	}
 
 	public override void _Input(InputEvent @event)
@@ -37,7 +38,7 @@ public partial class Game : Node2D
 	{
 		if (grabbedCard != null) grabbedCard.posGoal = GetGlobalMousePosition();
 
-		foreach (CardInstance card in hand.GetChildren())
+		foreach (CardInstance card in players[0].cards)
 		{
 			if (card == grabbedCard)
 				card.MoveToGoal(25 * (float)delta);

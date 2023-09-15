@@ -4,6 +4,9 @@ using Godot.Collections;
 public partial class Hand : Node2D
 {
     [Export] PackedScene cardInstance { get; set; }
+    public Array<CardInstance> cards = new();
+
+    [Export] Stack mainDeck;
 
     [Export] int bounds = 300;
 
@@ -11,15 +14,14 @@ public partial class Hand : Node2D
     {
         for (int i = 0; i < 5; i++)
         {
-            CardInstance card = cardInstance.Instantiate<CardInstance>();
-            AddChild(card);
+            cards.Add(mainDeck.DrawCard());
         }
         UpdateHandSpacing();
     }
 
     public void UpdateHandSpacing()
     {
-        Array<Node> cards = GetChildren();
+        //Array<Node> cards = GetChildren();
         if (cards.Count > 1)
         {
             float step = bounds*2/(cards.Count-1);

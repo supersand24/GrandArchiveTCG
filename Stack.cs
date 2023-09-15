@@ -5,14 +5,27 @@ using System.Linq;
 public partial class Stack : Node2D
 {
 
+	Node cardInstancesNode;
+
 	[Export] string zoneName = "Zone";
 	[Export] bool privateZone = false;
 
-	[Export] Array<string> cards = new Array<string>();
+	[Export] Array<string> cards = new();
+
+	public CardInstance DrawCard()
+	{
+		CardInstance card = GD.Load<PackedScene>("res://CardInstance.tscn").Instantiate<CardInstance>();
+		cardInstancesNode.AddChild(card);
+		card.GlobalPosition = GlobalPosition;
+		card.FlipUp();
+		return card;
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
+		cardInstancesNode = GetOwner<Game>().GetNode("CardInstances");
 
 		UpdateImage();
 
@@ -33,15 +46,6 @@ public partial class Stack : Node2D
 		else
 		{
 			//GetNode<Sprite2D>("TopCardImage").Texture = GetTopCard().GetNode<Sprite2D>("Image").Texture;
-		}
-    }
-
-	public void OnInputEvent(Node viewport, InputEvent input, int shape_idx)
-	{
-		if (input.IsActionPressed("click"))
-		{
-			CardData card = GetOwner<Game>().cardDataManager.GetCard(GetTopCardUUID());
-			GD.Print(card.name + " was drawn!");
 		}
 	}
 
