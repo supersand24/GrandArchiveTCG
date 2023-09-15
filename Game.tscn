@@ -11,7 +11,7 @@
 script = ExtResource("1_15phb")
 cardBack = ExtResource("2_b8es7")
 
-[node name="ImageRequest" type="HTTPRequest" parent="."]
+[node name="CardImageManager" type="HTTPRequest" parent="."]
 
 [node name="CardDataManager" type="HTTPRequest" parent="."]
 script = ExtResource("3_dkwey")
@@ -22,7 +22,7 @@ script = ExtResource("3_dkwey")
 position = Vector2(1065, 323)
 zoneName = "Main Deck"
 privateZone = true
-cards = ["ilW4cRlI0C", "ilW4cRlI0C", "ilW4cRlI0C", "ilW4cRlI0C"]
+cards = ["htjm4wuq20", "htjm4wuq20", "t389gwtde1", "htjm4wuq20"]
 
 [node name="Hand" type="Node2D" parent="." node_paths=PackedStringArray("mainDeck")]
 position = Vector2(589, 648)
@@ -30,5 +30,5 @@ script = ExtResource("6_xq7l6")
 cardInstance = ExtResource("2_b4muc")
 mainDeck = NodePath("../Stack")
 
-[connection signal="request_completed" from="ImageRequest" to="." method="ImageRequestCompleted"]
+[connection signal="request_completed" from="CardImageManager" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]

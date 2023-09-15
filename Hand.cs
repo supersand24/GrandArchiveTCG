@@ -10,11 +10,13 @@ public partial class Hand : Node2D
 
     [Export] int bounds = 300;
 
-    public override void _Ready()
+    public void DrawHand()
     {
         for (int i = 0; i < 5; i++)
         {
-            cards.Add(mainDeck.DrawCard());
+            CardInstance drawnCard = mainDeck.DrawCard();
+            if (drawnCard != null)
+                cards.Add(drawnCard);
         }
         UpdateHandSpacing();
     }

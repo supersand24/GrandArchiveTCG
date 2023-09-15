@@ -4,15 +4,29 @@ using Godot.Collections;
 public partial class CardDataManager : HttpRequest
 {
 
-    [Export] public Dictionary<string, CardData> cards = new Dictionary<string, CardData>();
+    [Export] public Dictionary<string, CardData> cards = new();
+    [Export] public Dictionary<string, CardEditionData> cardEditions = new();
 
-    public CardData GetCard(string uuid)
+    public CardData GetCardData(string uuid)
     {
         CardData ret;
         if (cards.TryGetValue(uuid, out ret))
         {
             return ret;
         } 
+        else
+        {
+            return null;
+        }
+    }
+
+    public CardEditionData GetCardEdition(string uuid)
+    {
+        CardEditionData ret;
+        if (cardEditions.TryGetValue(uuid, out ret))
+        {
+            return ret;
+        }
         else
         {
             return null;
@@ -43,7 +57,12 @@ public partial class CardDataManager : HttpRequest
                 {
                     Variant uuid;
                     if (entry.TryGetValue("uuid", out uuid))
-                        cards.Add(uuid.ToString(), new CardData(entry));
+                    {
+                        CardData card = new CardData(entry);
+                        cards.Add(uuid.ToString(), card);
+                        foreach (CardEditionData cardEdition in card.editions)
+                            cardEditions.Add(cardEdition.uuid, cardEdition);
+                    }
                 }
 
                 break;
@@ -51,6 +70,8 @@ public partial class CardDataManager : HttpRequest
                 GD.PrintErr("Unknown response code : " + response_code);
                 break;
         }
+
+        GetParent<Game>().LoadComplete();
     }
 
 }

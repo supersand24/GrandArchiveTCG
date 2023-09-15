@@ -4,7 +4,7 @@ using Godot.Collections;
 public partial class Game : Node2D
 {
 	public CardDataManager cardDataManager;
-    HttpRequest imageRequest;
+	public HttpRequest cardImageManager;
 
 	Dictionary imageCache = new();
 
@@ -17,12 +17,13 @@ public partial class Game : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		imageRequest = GetNode<HttpRequest>("ImageRequest");
+        cardImageManager = GetNode<HttpRequest>("CardImageManager");
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 
 		cardDataManager.GetCardsFromDatabase();
 
 		players.Add(GetNode<Hand>("Hand"));
+
 	}
 
 	public override void _Input(InputEvent @event)
@@ -52,9 +53,14 @@ public partial class Game : Node2D
         return beginning * (1 - speed) + goal * speed;
     }
 
+	public void LoadComplete()
+	{
+        players[0].DrawHand();
+    }
+
     public void ImageRequest(string url)
 	{
-		Error httpError = imageRequest.Request(url);
+		Error httpError = cardImageManager.Request(url);
 		if (httpError != Error.Ok)
 		{
 			GD.PrintErr("Bad HTTP Request : " + url);

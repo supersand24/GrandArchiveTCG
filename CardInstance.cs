@@ -5,11 +5,10 @@ public partial class CardInstance : Node2D
 
 	public Vector2 posGoal = Vector2.Zero;
 
-	[Export] bool faceUp = true;
-
-	public double handRatio = 0.5;
-
 	AnimationPlayer animPlayer;
+    [Export] bool faceUp = true;
+
+	public string uuid { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -17,6 +16,16 @@ public partial class CardInstance : Node2D
 		//GetNode<Sprite2D>("CardFront").Visible = faceUp;
 		animPlayer = GetNode<AnimationPlayer>("Animations");
     }
+
+	public void SetCard(string uuid)
+	{
+		this.uuid = uuid;
+		Game game = GetParent().GetOwner<Game>();
+		GD.Print(uuid);
+		CardEditionData cardEdition = game.cardDataManager.GetCardEdition(uuid);
+		GD.Print("Trying to load " + "res://images/" + cardEdition.slug + ".png");
+		GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + cardEdition.slug + ".png");
+	}
 
 	public void FlipUp()
 	{

@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Visual Studio ignores
 .vs/
+
+# Card Images
+images/

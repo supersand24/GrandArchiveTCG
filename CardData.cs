@@ -8,6 +8,8 @@ public partial class CardData : Resource
     [Export] public string name;
     [Export] public string slug;
 
+    public Array<CardEditionData> editions = new();
+
     public CardData(Dictionary data)
     {
         Variant temp;
@@ -20,6 +22,12 @@ public partial class CardData : Resource
 
         data.TryGetValue("slug", out temp);
         slug = temp.As<string>();
+
+        data.TryGetValue("editions", out temp);
+        foreach (Dictionary entry in temp.AsGodotArray())
+        {
+            editions.Add(new CardEditionData(entry));
+        }
 
         GD.Print(name + " | " + uuid);
     }

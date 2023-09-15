@@ -14,11 +14,28 @@ public partial class Stack : Node2D
 
 	public CardInstance DrawCard()
 	{
-		CardInstance card = GD.Load<PackedScene>("res://CardInstance.tscn").Instantiate<CardInstance>();
-		cardInstancesNode.AddChild(card);
-		card.GlobalPosition = GlobalPosition;
-		card.FlipUp();
-		return card;
+		string cardUUID = GetTopCardUUID();
+		if (cardUUID == null)
+		{
+			GD.PrintErr(zoneName + " is out of cards!");
+		}
+		else
+		{
+			CardInstance card = GD.Load<PackedScene>("res://CardInstance.tscn").Instantiate<CardInstance>();
+			cardInstancesNode.AddChild(card);
+			card.GlobalPosition = GlobalPosition;
+
+			card.FlipUp();
+			card.SetCard(cardUUID);
+			cards.RemoveAt(cards.Count - 1);
+			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0; 
+
+			PrintDeck();
+			return card;
+		}
+
+		return null;
+
 	}
 
 	// Called when the node enters the scene tree for the first time.
@@ -48,5 +65,15 @@ public partial class Stack : Node2D
 			//GetNode<Sprite2D>("TopCardImage").Texture = GetTopCard().GetNode<Sprite2D>("Image").Texture;
 		}
 	}
+
+	public void PrintDeck()
+	{
+		var i = 0;
+        foreach (string uuid in cards)
+        {
+			GD.Print(i + ": " + uuid);
+			i++;
+        }
+    }
 
 }
