@@ -6,9 +6,37 @@ public partial class Hand : Node2D
     [Export] PackedScene cardInstance { get; set; }
     public Array<CardInstance> cards = new();
 
+    [Export] PackedScene stackInstance { get; set; }
     [Export] Stack mainDeck;
+    [Export] Stack materialDeck;
+    [Export] Stack graveyard;
+    [Export] Stack banishment;
 
-    [Export] int bounds = 300;
+    [Export] int bounds = 400;
+    int deckPlacement = 675;
+
+    public void SpawnZones()
+    {
+        mainDeck = stackInstance.Instantiate<Stack>();
+        AddChild(mainDeck);
+        mainDeck.Name = "Main Deck";
+        mainDeck.Position = new Vector2(deckPlacement, -100);
+
+        materialDeck = stackInstance.Instantiate<Stack>();
+        AddChild(materialDeck);
+        materialDeck.Position = new Vector2(-deckPlacement, -100);
+
+        graveyard = stackInstance.Instantiate<Stack>();
+        AddChild(graveyard);
+        graveyard.Position = new Vector2(deckPlacement, -300);
+
+        banishment = stackInstance.Instantiate<Stack>();
+        AddChild(banishment);
+        banishment.Position = new Vector2(-deckPlacement, -300);
+
+        DrawHand();
+
+    }
 
     public void DrawHand()
     {
@@ -24,21 +52,23 @@ public partial class Hand : Node2D
     public void UpdateHandSpacing()
     {
         //Array<Node> cards = GetChildren();
-        if (cards.Count > 1)
+        switch (cards.Count)
         {
-            float step = bounds*2/(cards.Count-1);
-            Vector2 newPos = GlobalPosition;
-            newPos.X -= bounds;
-            foreach (CardInstance card in cards)
-            {
-                card.posGoal = newPos;
-                newPos.X += step;
-            }
-        }
-        else
-        {
-            CardInstance card = GetChild<CardInstance>(0);
-            card.posGoal = GlobalPosition;
+            case 0:
+                break;
+            case 1:
+                cards[0].posGoal = GlobalPosition;
+                break;
+            default:
+                float step = bounds * 2 / (cards.Count - 1);
+                Vector2 newPos = GlobalPosition;
+                newPos.X -= bounds;
+                foreach (CardInstance card in cards)
+                {
+                    card.posGoal = newPos;
+                    newPos.X += step;
+                }
+                break;
         }
 
     }

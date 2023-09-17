@@ -5,8 +5,8 @@ public partial class CardInstance : Node2D
 
 	public Vector2 posGoal = Vector2.Zero;
 
-	AnimationPlayer animPlayer;
-    [Export] bool faceUp = true;
+	public AnimationPlayer animPlayer;
+	[Export] bool faceUp = true;
 
 	public string uuid { get; set; }
 
@@ -27,6 +27,11 @@ public partial class CardInstance : Node2D
 		GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + cardEdition.slug + ".png");
 	}
 
+	public void DrawAnim()
+	{
+		animPlayer.Play("draw");
+	}
+
 	public void FlipUp()
 	{
 		faceUp = true;
@@ -40,6 +45,11 @@ public partial class CardInstance : Node2D
 			Game game = GetParent().GetOwner<Game>();
 			game.grabbedCard = this;
 		}
+	}
+
+	public void MouseHovered()
+	{
+		GD.Print("Hello!");
 	}
 
 	public void Drop()

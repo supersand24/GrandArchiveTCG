@@ -25,7 +25,8 @@ public partial class Stack : Node2D
 			cardInstancesNode.AddChild(card);
 			card.GlobalPosition = GlobalPosition;
 
-			card.FlipUp();
+			//card.FlipUp();
+			card.DrawAnim();
 			card.SetCard(cardUUID);
 			cards.RemoveAt(cards.Count - 1);
 			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0; 
@@ -42,8 +43,7 @@ public partial class Stack : Node2D
 	public override void _Ready()
 	{
 
-		cardInstancesNode = GetOwner<Game>().GetNode("CardInstances");
-
+		cardInstancesNode = GetParent().GetOwner<Game>().GetNode("CardInstances");
 		UpdateImage();
 
 	}

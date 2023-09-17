@@ -17,20 +17,23 @@ public partial class Game : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        cardImageManager = GetNode<HttpRequest>("CardImageManager");
+		cardImageManager = GetNode<HttpRequest>("CardImageManager");
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 
 		cardDataManager.GetCardsFromDatabase();
 
-		players.Add(GetNode<Hand>("Hand"));
+		players.Add(GetNode<Hand>("Hand1"));
 
 	}
 
 	public override void _Input(InputEvent @event)
 	{
+		if (@event.IsActionPressed("ui_cancel")) GetTree().Quit();
+
 		if (@event.IsActionReleased("click") && grabbedCard != null)
 		{
 			grabbedCard.Drop();
+			GD.Print("Card Dropped at " + grabbedCard.Position);
 			grabbedCard = null;
 		}
 	}
@@ -55,7 +58,7 @@ public partial class Game : Node2D
 
 	public void LoadComplete()
 	{
-        players[0].DrawHand();
+		players[0].SpawnZones();
     }
 
     public void ImageRequest(string url)
