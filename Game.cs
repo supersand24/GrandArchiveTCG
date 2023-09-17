@@ -5,6 +5,7 @@ public partial class Game : Node2D
 {
 	public CardDataManager cardDataManager;
 	public HttpRequest cardImageManager;
+	public SilvieDeckImporter silvieDeckImporter;
 
 	Dictionary imageCache = new();
 
@@ -19,6 +20,7 @@ public partial class Game : Node2D
 	{
 		cardImageManager = GetNode<HttpRequest>("CardImageManager");
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
+		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
 		cardDataManager.GetCardsFromDatabase();
 
@@ -50,6 +52,11 @@ public partial class Game : Node2D
 				card.MoveToGoal(10 * (float)delta);
 		}
 	}
+
+    public override void _Draw()
+    {
+		DrawLine(new Vector2(0, 540), new Vector2(1920, 540), new Color(0,0,0));
+    }
 
     private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
     {

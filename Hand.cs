@@ -7,10 +7,10 @@ public partial class Hand : Node2D
     public Array<CardInstance> cards = new();
 
     [Export] PackedScene stackInstance { get; set; }
-    [Export] Stack mainDeck;
-    [Export] Stack materialDeck;
-    [Export] Stack graveyard;
-    [Export] Stack banishment;
+    public Stack mainDeck;
+    public Stack materialDeck;
+    Stack graveyard;
+    Stack banishment;
 
     [Export] int bounds = 400;
     int deckPlacement = 675;
@@ -24,17 +24,22 @@ public partial class Hand : Node2D
 
         materialDeck = stackInstance.Instantiate<Stack>();
         AddChild(materialDeck);
+        materialDeck.Name = "Material Deck";
         materialDeck.Position = new Vector2(-deckPlacement, -100);
 
         graveyard = stackInstance.Instantiate<Stack>();
         AddChild(graveyard);
+        graveyard.Name = "Graveyard";
         graveyard.Position = new Vector2(deckPlacement, -300);
 
         banishment = stackInstance.Instantiate<Stack>();
         AddChild(banishment);
+        banishment.Name = "Banishment";
         banishment.Position = new Vector2(-deckPlacement, -300);
 
-        DrawHand();
+        GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24","SCFireMerlinFTC",this);
+
+        //DrawHand();
 
     }
 

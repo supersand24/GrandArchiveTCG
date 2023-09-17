@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=9 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://CardInstance.tscn" id="2_b4muc"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_b8es7"]
 [ext_resource type="PackedScene" uid="uid://chgp72brs104" path="res://Stack.tscn" id="3_1ux7f"]
 [ext_resource type="Script" path="res://CardDataManager.cs" id="3_dkwey"]
+[ext_resource type="Script" path="res://SilvieDeckImporter.cs" id="4_8l6fo"]
 [ext_resource type="Script" path="res://Hand.cs" id="6_xq7l6"]
 [ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="7_jb6ya"]
 
@@ -17,14 +18,16 @@ cardBack = ExtResource("2_b8es7")
 [node name="CardDataManager" type="HTTPRequest" parent="."]
 script = ExtResource("3_dkwey")
 
+[node name="SilvieDeckImporter" type="HTTPRequest" parent="."]
+script = ExtResource("4_8l6fo")
+
 [node name="CardInstances" type="Node2D" parent="."]
 
-[node name="Hand1" type="Node2D" parent="." node_paths=PackedStringArray("mainDeck")]
+[node name="Hand1" type="Node2D" parent="."]
 position = Vector2(1160, 1080)
 script = ExtResource("6_xq7l6")
 cardInstance = ExtResource("2_b4muc")
 stackInstance = ExtResource("3_1ux7f")
-mainDeck = NodePath("")
 bounds = 675
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -52,3 +55,4 @@ stretch_mode = 4
 
 [connection signal="request_completed" from="CardImageManager" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]
+[connection signal="request_completed" from="SilvieDeckImporter" to="SilvieDeckImporter" method="DeckImportCompleted"]

@@ -10,7 +10,7 @@ public partial class Stack : Node2D
 	[Export] string zoneName = "Zone";
 	[Export] bool privateZone = false;
 
-	[Export] Array<string> cards = new();
+	[Export] public Array<string> cards = new();
 
 	public CardInstance DrawCard()
 	{
