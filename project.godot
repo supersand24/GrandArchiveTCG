@@ -34,6 +34,12 @@ click={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="CardInstances"
+2d_physics/layer_2="CardStacks"
+2d_physics/layer_3="CardUI"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

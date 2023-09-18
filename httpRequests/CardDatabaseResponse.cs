@@ -9,7 +9,7 @@ public partial class CardDatabaseResponse
     int totalCards = 0;
     int paginatedCardsCount = 0;
     int pageSize = 0;
-    bool hasMore = false;
+    public bool hasMore = false;
     public int totalPages = 0;
     string sort = "";
     string order = "";

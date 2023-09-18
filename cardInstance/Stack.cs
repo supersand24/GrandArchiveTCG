@@ -66,6 +66,14 @@ public partial class Stack : Node2D
 		}
 	}
 
+	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
+	{
+		if (input.IsActionPressed("click"))
+		{
+			GetParent().GetParent<Game>().OpenCardPicker(cards);
+		}
+	}
+
 	public void PrintDeck()
 	{
 		var i = 0;

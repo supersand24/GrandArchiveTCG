@@ -7,6 +7,9 @@ public partial class Game : Node2D
 	public HttpRequest cardImageManager;
 	public SilvieDeckImporter silvieDeckImporter;
 
+	[Export] public InfoPanel infoPanel;
+	[Export] public CardPicker cardPicker;
+
 	Dictionary imageCache = new();
 
 	public CardInstance grabbedCard { get; set; } = null;
@@ -22,7 +25,7 @@ public partial class Game : Node2D
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
-		cardDataManager.GetCardsFromDatabase();
+		cardDataManager.CardRequest();
 
 		players.Add(GetNode<Hand>("Hand1"));
 
@@ -53,14 +56,23 @@ public partial class Game : Node2D
 		}
 	}
 
-    public override void _Draw()
+	public override void _Draw()
     {
 		DrawLine(new Vector2(0, 540), new Vector2(1920, 540), new Color(0,0,0));
     }
 
-    private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
+	private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
     {
         return beginning * (1 - speed) + goal * speed;
+    }
+
+	public void OpenCardPicker(Array<string> uuidList)
+	{
+		cardPicker.Visible = true;
+        foreach (string uuid in uuidList)
+        {
+			cardPicker.AddCard(cardDataManager.GetCardEdition(uuid));
+        }
     }
 
 	public void LoadComplete()
@@ -68,7 +80,7 @@ public partial class Game : Node2D
 		players[0].SpawnZones();
     }
 
-    public void ImageRequest(string url)
+	public void ImageRequest(string url)
 	{
 		Error httpError = cardImageManager.Request(url);
 		if (httpError != Error.Ok)
