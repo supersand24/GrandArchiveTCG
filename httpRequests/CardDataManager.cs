@@ -74,7 +74,7 @@ public partial class CardDataManager : HttpRequest
 
                 GD.Print("Request Complete Page " + response.page + "/" + response.totalPages);
 
-                if (response.hasMore) HTTPRequest(response.page);
+                if (response.hasMore) HTTPRequest(response.page + 1);
                 else requests.RemoveOldestRequest();
 
                 break;

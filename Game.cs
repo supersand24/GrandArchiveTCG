@@ -25,11 +25,13 @@ public partial class Game : Node2D
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
-		cardDataManager.CardRequest();
+		//cardDataManager.CardRequest();
 
 		players.Add(GetNode<Hand>("Hand1"));
 
-	}
+        players[0].SpawnZones();
+
+    }
 
 	public override void _Input(InputEvent @event)
 	{
