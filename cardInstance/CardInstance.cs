@@ -13,8 +13,8 @@ public partial class CardInstance : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
-		//GetNode<Sprite2D>("CardFront").Visible = faceUp;
 		animPlayer = GetNode<AnimationPlayer>("Animations");
+		if (faceUp) animPlayer.Play("flipUp");
     }
 
 	public void SetCard(string uuid)

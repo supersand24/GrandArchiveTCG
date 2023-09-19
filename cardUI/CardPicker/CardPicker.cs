@@ -7,11 +7,23 @@ public partial class CardPicker : ColorRect
 
     [Export] GridContainer cardGrid;
 
-    public void AddCard(CardEditionData cardEdition)
+    Stack stack;
+
+    public void SetStack(Stack stack)
+    {
+        this.stack = stack;
+    }
+
+    public Stack GetStack()
+    {
+        return stack;
+    }
+
+    public void AddCard(CardEditionData cardEdition, int index)
     {
         UICardImage card = UICard.Instantiate<UICardImage>();
         cardGrid.AddChild(card);
-        card.SetCard(cardEdition);
+        card.SetCard(cardEdition, index);
     }
 
     public void ClearCards()

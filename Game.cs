@@ -25,7 +25,7 @@ public partial class Game : Node2D
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
-		cardDataManager.CardRequest();
+		cardDataManager.CardRequest(null,null,"CHAMPION");
 
 		players.Add(GetNode<Hand>("Hand1"));
 
@@ -47,7 +47,7 @@ public partial class Game : Node2D
 	{
 		if (grabbedCard != null) grabbedCard.posGoal = GetGlobalMousePosition();
 
-		foreach (CardInstance card in players[0].cards)
+		foreach (CardInstance card in GetNode("CardInstances").GetChildren())
 		{
 			if (card == grabbedCard)
 				card.MoveToGoal(25 * (float)delta);
@@ -66,12 +66,14 @@ public partial class Game : Node2D
         return beginning * (1 - speed) + goal * speed;
     }
 
-	public void OpenCardPicker(Array<string> uuidList)
+	public void OpenCardPicker(Array<string> uuidList, Stack stack)
 	{
+		cardPicker.SetStack(stack);
+		int i = 0;
         foreach (string uuid in uuidList)
         {
-			GD.Print(uuid);
-			cardPicker.AddCard(cardDataManager.GetCardEdition(uuid));
+			cardPicker.AddCard(cardDataManager.GetCardEdition(uuid), i);
+			i++;
         }
         cardPicker.Visible = true;
     }

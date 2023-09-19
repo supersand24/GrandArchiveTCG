@@ -6,6 +6,7 @@ public partial class Stack : Node2D
 {
 
 	Node cardInstancesNode;
+	[Export] PackedScene cardInstance;
 
 	[Export] string zoneName = "Zone";
 	[Export] bool privateZone = false;
@@ -38,6 +39,18 @@ public partial class Stack : Node2D
 
 	}
 
+	public CardInstance SpawnCard(int index)
+	{
+		CardInstance card = cardInstance.Instantiate<CardInstance>();
+		cardInstancesNode.AddChild(card);
+		card.GlobalPosition = GlobalPosition;
+
+		card.SetCard(cards[index]);
+		cards.RemoveAt(index);
+		card.posGoal = new Vector2(1160, 540);
+		return card;
+	}
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -68,7 +81,7 @@ public partial class Stack : Node2D
 	{
 		if (input.IsActionPressed("click"))
 		{
-            GetParent().GetParent<Game>().OpenCardPicker(cards);
+            GetParent().GetParent<Game>().OpenCardPicker(cards,this);
 		}
 	}
 

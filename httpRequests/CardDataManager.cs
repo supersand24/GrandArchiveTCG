@@ -29,9 +29,9 @@ public partial class CardDataManager : HttpRequest
         }
     }
 
-    public void CardRequest(string cardName = null, string effect = null)
+    public void CardRequest(string cardName = null, string effect = null, string type = null)
     {
-        if (requests.Request(cardName, effect)) HTTPRequest();
+        if (requests.Request(cardName, effect, type)) HTTPRequest();
         else
         {
             GD.Print("Request Pending");
@@ -86,9 +86,9 @@ internal class CardDatabaseRequests
 {
     List<CardDatabaseAwait> requests = new();
 
-    public bool Request(string cardName, string effect)
+    public bool Request(string cardName, string effect, string type)
     {
-        requests.Add(new CardDatabaseAwait(cardName, effect));
+        requests.Add(new CardDatabaseAwait(cardName, effect, type));
         return requests.Count == 1;
     }
 
@@ -110,11 +110,13 @@ internal class CardDatabaseAwait
 {
     string cardName;
     string effect;
+    string type;
 
-    public CardDatabaseAwait(string cardName, string effect)
+    public CardDatabaseAwait(string cardName, string effect, string type)
     {
         this.cardName = cardName;
         this.effect = effect;
+        this.type = type;
     }
 
     public string GetFormattedURL()
@@ -123,6 +125,7 @@ internal class CardDatabaseAwait
         sb.Append("https://api.gatcg.com/cards/search?");
         if (cardName != null) sb.Append("name=").Append(cardName).Append("&");
         if (effect != null) sb.Append("effect=").Append(effect).Append("&");
+        if (type != null) sb.Append("type=").Append(type).Append("&");
         return sb.ToString();
     }
 

@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://chgp72brs104"]
+[gd_scene load_steps=5 format=3 uid="uid://chgp72brs104"]
 
 [ext_resource type="Script" path="res://cardInstance/Stack.cs" id="1_04a8k"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_t75l3"]
+[ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_tvo8q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i178v"]
 size = Vector2(125, 174)
 
 [node name="Stack" type="Node2D"]
 script = ExtResource("1_04a8k")
+cardInstance = ExtResource("2_tvo8q")
 
 [node name="TopCardImage" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

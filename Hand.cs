@@ -37,8 +37,7 @@ public partial class Hand : Node2D
         banishment.Name = "Banishment";
         banishment.Position = new Vector2(-deckPlacement, -300);
 
-        GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24","SCFireMerlinFTC",this);
-
+        GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24", "XXCHvAXEbnGYWJdNkTQI", this);
         //DrawHand();
 
     }
