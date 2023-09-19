@@ -23,8 +23,8 @@ public partial class CardDataManager : HttpRequest
         if (cardEditions.TryGetValue(uuid, out ret)) return ret;
         else
         {
-            GD.PrintErr("Could not find " + uuid + ", defaulting...");
             CardData data = GetCardData(uuid);
+            GD.PrintErr("Could not find " + uuid + ", defaulted to " + data.editions[0].uuid);
             return data.editions[0];
         }
     }

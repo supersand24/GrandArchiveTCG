@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=13 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_b4muc"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://cardUI/InfoPanel/InfoPanel.cs" id="8_h5854"]
 [ext_resource type="PackedScene" uid="uid://7y4o53p4k0s4" path="res://cardUI/CardPicker/UICardImage.tscn" id="9_ufxlr"]
 [ext_resource type="Script" path="res://cardUI/CardPicker/CardPicker.cs" id="10_7bafy"]
+[ext_resource type="Theme" uid="uid://dn4xx5qbqyuao" path="res://cardUI/CardPicker/CardPickerTheme.tres" id="10_qs3c4"]
 
 [node name="GrandArchive" type="Node2D" node_paths=PackedStringArray("infoPanel", "cardPicker")]
 script = ExtResource("1_15phb")
@@ -75,10 +76,11 @@ stretch_mode = 4
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("10_qs3c4")
 color = Color(0, 0, 0, 0.470588)
 script = ExtResource("10_7bafy")
 UICard = ExtResource("9_ufxlr")
-cardGrid = NodePath("MarginContainer/VBoxContainer/GridContainer")
+cardGrid = NodePath("MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CardPicker"]
 layout_mode = 1
@@ -103,9 +105,14 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 
-[node name="GridContainer" type="GridContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
 layout_mode = 2
-columns = 7
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+theme = ExtResource("10_qs3c4")
+columns = 6
 
 [connection signal="request_completed" from="CardImageManager" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]

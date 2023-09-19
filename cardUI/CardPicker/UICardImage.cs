@@ -7,7 +7,7 @@ public partial class UICardImage : TextureRect
 
     public void MouseHovered()
     {
-        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(card);
+        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(card);
     }
 
     public void SetCard(CardEditionData card)
