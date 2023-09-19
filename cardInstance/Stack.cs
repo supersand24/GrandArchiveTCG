@@ -25,7 +25,6 @@ public partial class Stack : Node2D
 			cardInstancesNode.AddChild(card);
 			card.GlobalPosition = GlobalPosition;
 
-			//card.FlipUp();
 			card.DrawAnim();
 			card.SetCard(cardUUID);
 			cards.RemoveAt(cards.Count - 1);
@@ -69,10 +68,6 @@ public partial class Stack : Node2D
 	{
 		if (input.IsActionPressed("click"))
 		{
-            foreach (string card in cards)
-            {
-                //GD.Print(card);
-            }
             GetParent().GetParent<Game>().OpenCardPicker(cards);
 		}
 	}

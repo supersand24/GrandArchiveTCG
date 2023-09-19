@@ -1,42 +1,31 @@
 using Godot;
-using Godot.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 public partial class CardDataManager : HttpRequest
 {
 
-    [Export] public Godot.Collections.Dictionary cards = new();
-    [Export] public Godot.Collections.Dictionary cardEditions = new();
+    public Dictionary<string, CardData> cards = new();
+    public Dictionary<string, CardEditionData> cardEditions = new();
 
     CardDatabaseRequests requests = new();
 
     public CardData GetCardData(string uuid)
     {
-        Variant ret;
-        if (cards.TryGetValue(uuid, out ret))
-        {
-            return ret.As<CardData>();
-        } 
-        else
-        {
-            return null;
-        }
+        CardData ret;
+        cards.TryGetValue(uuid, out ret);
+        return ret;
     }
 
     public CardEditionData GetCardEdition(string uuid)
     {
-        Variant ret;
-        if (cardEditions.TryGetValue(uuid, out ret)) return ret.As<CardEditionData>();
+        CardEditionData ret;
+        if (cardEditions.TryGetValue(uuid, out ret)) return ret;
         else
         {
-            GD.PrintErr("Could not find Edition, defaulting...");
-            GD.Print(cards.ContainsKey(uuid));
-            Variant data;
-            cards.TryGetValue(uuid, out data);
-            GD.Print(data.As<CardData>().editions);
-            //GD.Print(data.name);
-            return null;
+            GD.PrintErr("Could not find " + uuid + ", defaulting...");
+            CardData data = GetCardData(uuid);
+            return data.editions[0];
         }
     }
 
@@ -63,7 +52,7 @@ public partial class CardDataManager : HttpRequest
                 Variant data = Json.ParseString(body.GetStringFromUtf8());
                 CardDatabaseResponse response = new CardDatabaseResponse(data.AsGodotDictionary());
 
-                foreach (Dictionary entry in response.data)
+                foreach (Godot.Collections.Dictionary entry in response.data)
                 {
                     Variant uuid;
                     if (entry.TryGetValue("uuid", out uuid))
@@ -78,15 +67,17 @@ public partial class CardDataManager : HttpRequest
                 GD.Print("Request Complete Page " + response.page + "/" + response.totalPages);
 
                 if (response.hasMore) HTTPRequest(response.page + 1);
-                else requests.RemoveOldestRequest();
+                else
+                {
+                    requests.RemoveOldestRequest();
+                    GetParent<Game>().LoadComplete();
+                }
 
                 break;
             default:
                 GD.PrintErr("Unknown response code : " + response_code);
                 break;
         }
-
-        GetParent<Game>().LoadComplete();
     }
 
 }

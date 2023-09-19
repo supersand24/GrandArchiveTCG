@@ -25,11 +25,9 @@ public partial class Game : Node2D
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
-		//cardDataManager.CardRequest();
+		cardDataManager.CardRequest();
 
 		players.Add(GetNode<Hand>("Hand1"));
-
-        players[0].SpawnZones();
 
     }
 
@@ -70,15 +68,11 @@ public partial class Game : Node2D
 
 	public void OpenCardPicker(Array<string> uuidList)
 	{
-		cardPicker.Visible = true;
         foreach (string uuid in uuidList)
         {
-			CardEditionData ed = cardDataManager.GetCardEdition(uuid);
-
-			GD.Print(ed);
-            //GD.Print(uuid + " -> " + ed.slug);
-			cardPicker.AddCard(ed);
+			cardPicker.AddCard(cardDataManager.GetCardEdition(uuid));
         }
+        cardPicker.Visible = true;
     }
 
 	public void LoadComplete()

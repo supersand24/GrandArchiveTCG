@@ -5,10 +5,17 @@ public partial class InfoPanel : ColorRect
 {
 
     [Export] TextureRect imagePreview;
+    CardEditionData card;
 
-    public void SetCard(Texture2D image)
+    public void SetCard(CardEditionData card)
     {
-        imagePreview.Texture = image;
+        this.card = card;
+        Update();
+    }
+
+    public void Update()
+    {
+        imagePreview.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
     }
 
 }
