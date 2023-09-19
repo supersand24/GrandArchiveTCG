@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class UICardImage : TextureRect
+public partial class UICardImage : TextureButton
 {
 
     CardEditionData card;
@@ -13,7 +13,12 @@ public partial class UICardImage : TextureRect
     public void SetCard(CardEditionData card)
     {
         this.card = card;
-        Texture = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
+        TextureNormal = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
+    }
+
+    public void OnPressed()
+    {
+        GD.Print("Activating " + card.slug);
     }
 
 }
