@@ -13,7 +13,7 @@ public partial class UICardImage : TextureRect
     public void SetCard(CardEditionData card)
     {
         this.card = card;
-        GD.Print(card);
+        //GD.Print(card);
         Texture = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
     }
 

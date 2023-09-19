@@ -45,7 +45,6 @@ public partial class Stack : Node2D
 
 		cardInstancesNode = GetParent().GetOwner<Game>().GetNode("CardInstances");
 		UpdateImage();
-
 	}
 
 	public string GetTopCardUUID()
@@ -70,7 +69,11 @@ public partial class Stack : Node2D
 	{
 		if (input.IsActionPressed("click"))
 		{
-			GetParent().GetParent<Game>().OpenCardPicker(cards);
+            foreach (string card in cards)
+            {
+                //GD.Print(card);
+            }
+            GetParent().GetParent<Game>().OpenCardPicker(cards);
 		}
 	}
 

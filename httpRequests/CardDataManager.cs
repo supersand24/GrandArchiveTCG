@@ -6,17 +6,17 @@ using System.Text;
 public partial class CardDataManager : HttpRequest
 {
 
-    [Export] public Godot.Collections.Dictionary<string, CardData> cards = new();
-    [Export] public Godot.Collections.Dictionary<string, CardEditionData> cardEditions = new();
+    [Export] public Godot.Collections.Dictionary cards = new();
+    [Export] public Godot.Collections.Dictionary cardEditions = new();
 
     CardDatabaseRequests requests = new();
 
     public CardData GetCardData(string uuid)
     {
-        CardData ret;
+        Variant ret;
         if (cards.TryGetValue(uuid, out ret))
         {
-            return ret;
+            return ret.As<CardData>();
         } 
         else
         {
@@ -26,13 +26,16 @@ public partial class CardDataManager : HttpRequest
 
     public CardEditionData GetCardEdition(string uuid)
     {
-        CardEditionData ret;
-        if (cardEditions.TryGetValue(uuid, out ret))
-        {
-            return ret;
-        }
+        Variant ret;
+        if (cardEditions.TryGetValue(uuid, out ret)) return ret.As<CardEditionData>();
         else
         {
+            GD.PrintErr("Could not find Edition, defaulting...");
+            GD.Print(cards.ContainsKey(uuid));
+            Variant data;
+            cards.TryGetValue(uuid, out data);
+            GD.Print(data.As<CardData>().editions);
+            //GD.Print(data.name);
             return null;
         }
     }
