@@ -24,7 +24,7 @@ public partial class CardDataManager : HttpRequest
         else
         {
             CardData data = GetCardData(uuid);
-            GD.PrintErr("Could not find " + uuid + ", defaulted to " + data.editions[0].uuid);
+            GD.PrintErr("Could not find " + uuid + ", defaulted to " + data.editions[0].uuidBase);
             return data.editions[0];
         }
     }
@@ -60,7 +60,7 @@ public partial class CardDataManager : HttpRequest
                         CardData card = new CardData(entry);
                         cards.Add(uuid.ToString(), card);
                         foreach (CardEditionData cardEdition in card.editions)
-                            cardEditions.Add(cardEdition.uuid, cardEdition);
+                            cardEditions.Add(cardEdition.uuidEdition, cardEdition);
                     }
                 }
 
