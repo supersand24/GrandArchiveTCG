@@ -42,7 +42,7 @@ public partial class SilvieDeckImportResponse
             Variant quantity;
             Variant uuid;
             card.AsGodotDictionary().TryGetValue("quantity", out quantity);
-            card.AsGodotDictionary().TryGetValue("uuid", out uuid);
+            card.AsGodotDictionary().TryGetValue("edition", out uuid);
             for (int i = 0; i < quantity.AsUInt16(); i++)
                 decks[0].Add(uuid.AsString());
         }
@@ -54,7 +54,7 @@ public partial class SilvieDeckImportResponse
             Variant quantity;
             Variant uuid;
             card.AsGodotDictionary().TryGetValue("quantity", out quantity);
-            card.AsGodotDictionary().TryGetValue("uuid", out uuid);
+            card.AsGodotDictionary().TryGetValue("edition", out uuid);
             for (int i = 0; i < quantity.AsUInt16(); i++)
                 decks[1].Add(uuid.AsString());
         }
@@ -66,7 +66,7 @@ public partial class SilvieDeckImportResponse
             Variant quantity;
             Variant uuid;
             card.AsGodotDictionary().TryGetValue("quantity", out quantity);
-            card.AsGodotDictionary().TryGetValue("uuid", out uuid);
+            card.AsGodotDictionary().TryGetValue("edition", out uuid);
             for (int i = 0; i < quantity.AsUInt16(); i++)
                 decks[2].Add(uuid.AsString());
         }

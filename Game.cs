@@ -70,6 +70,7 @@ public partial class Game : Node2D
 	{
         foreach (string uuid in uuidList)
         {
+			GD.Print(uuid);
 			cardPicker.AddCard(cardDataManager.GetCardEdition(uuid));
         }
         cardPicker.Visible = true;
