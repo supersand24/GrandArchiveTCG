@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=16 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_b4muc"]
@@ -9,9 +9,16 @@
 [ext_resource type="Script" path="res://Hand.cs" id="6_xq7l6"]
 [ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="7_jb6ya"]
 [ext_resource type="Script" path="res://cardUI/InfoPanel/InfoPanel.cs" id="8_h5854"]
+[ext_resource type="Theme" uid="uid://bludhm574uenq" path="res://cardUI/InfoPanel/InfoPanel.tres" id="9_qrxbj"]
 [ext_resource type="PackedScene" uid="uid://7y4o53p4k0s4" path="res://cardUI/CardPicker/UICardImage.tscn" id="9_ufxlr"]
 [ext_resource type="Script" path="res://cardUI/CardPicker/CardPicker.cs" id="10_7bafy"]
 [ext_resource type="Theme" uid="uid://dn4xx5qbqyuao" path="res://cardUI/CardPicker/CardPickerTheme.tres" id="10_qs3c4"]
+[ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/LinBiolinum_Normal.ttf" id="11_56vjh"]
+
+[sub_resource type="Theme" id="Theme_478me"]
+RichTextLabel/font_sizes/bold_font_size = 24
+RichTextLabel/font_sizes/normal_font_size = 24
+RichTextLabel/fonts/normal_font = ExtResource("11_56vjh")
 
 [node name="GrandArchive" type="Node2D" node_paths=PackedStringArray("infoPanel", "cardPicker")]
 script = ExtResource("1_15phb")
@@ -47,12 +54,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="InfoPanel" type="ColorRect" parent="HBoxContainer" node_paths=PackedStringArray("imagePreview")]
+[node name="InfoPanel" type="Panel" parent="HBoxContainer" node_paths=PackedStringArray("image", "name", "cost", "types", "subtypes", "effect", "flavor", "stats", "counters", "debug")]
 custom_minimum_size = Vector2(400, 1080)
 layout_mode = 2
-color = Color(0.180392, 0.180392, 0.180392, 1)
+theme = ExtResource("9_qrxbj")
+theme_type_variation = &"NORM"
 script = ExtResource("8_h5854")
-imagePreview = NodePath("MarginContainer/UICardImage")
+image = NodePath("MarginContainer/VBoxContainer/Image")
+name = NodePath("MarginContainer/VBoxContainer/Name and Cost/Name")
+cost = NodePath("MarginContainer/VBoxContainer/Name and Cost/Cost")
+types = NodePath("MarginContainer/VBoxContainer/Types/Types")
+subtypes = NodePath("MarginContainer/VBoxContainer/Types/Subtypes")
+effect = NodePath("MarginContainer/VBoxContainer/Effect")
+flavor = NodePath("MarginContainer/VBoxContainer/Flavor")
+stats = NodePath("MarginContainer/VBoxContainer/Stats")
+counters = NodePath("MarginContainer/VBoxContainer/Counters")
+debug = NodePath("MarginContainer/VBoxContainer/Etc")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/InfoPanel"]
 layout_mode = 1
@@ -64,13 +81,107 @@ grow_vertical = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="UICardImage" type="TextureRect" parent="HBoxContainer/InfoPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Image" type="TextureRect" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("7_jb6ya")
-expand_mode = 1
-stretch_mode = 4
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Name and Cost" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Name" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name and Cost"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_478me")
+bbcode_enabled = true
+text = "[b]Refurbish[/b]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Cost" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name and Cost"]
+layout_mode = 2
+theme = SubResource("Theme_478me")
+bbcode_enabled = true
+text = "[right]4 Cost[/right]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Types" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Types" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Types"]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 18
+text = "ACTION"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Subtypes" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Types"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[right]WARRIOR SWORD CRAFT"
+fit_content = true
+scroll_active = false
+
+[node name="Effect" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Put two [b]durability[/b] counters on target Sword weapon you control."
+fit_content = true
+scroll_active = false
+
+[node name="Flavor" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[i]When whetted and oiled, even scrapped blades can once again become razor-sharp."
+fit_content = true
+scroll_active = false
+
+[node name="Stats" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[right][color=blue]Slow Speed[/color][/right]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Counters" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[right][color=red]3 Buff[/color][/right]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Etc" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "b43adsk77Y | ybT6KGi3Ha"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="CardPicker" type="ColorRect" parent="HBoxContainer" node_paths=PackedStringArray("cardGrid")]
 visible = false

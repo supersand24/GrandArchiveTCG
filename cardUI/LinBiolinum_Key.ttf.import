@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dx8wckmaytk33"
-path="res://.godot/imported/LinBiolinum_R.ttf-3c93b49e75e9d6665bd8f02c0ee13bb9.fontdata"
+uid="uid://dj2xdly5mm3gq"
+path="res://.godot/imported/LinBiolinum_Key.ttf-11119fb183a10d1831185dd32db463eb.fontdata"
 
 [deps]
 
-source_file="res://cardUI/CardPicker/LinBiolinum_R.ttf"
-dest_files=["res://.godot/imported/LinBiolinum_R.ttf-3c93b49e75e9d6665bd8f02c0ee13bb9.fontdata"]
+source_file="res://cardUI/LinBiolinum_Key.ttf"
+dest_files=["res://.godot/imported/LinBiolinum_Key.ttf-11119fb183a10d1831185dd32db463eb.fontdata"]
 
 [params]
 

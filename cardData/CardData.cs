@@ -45,6 +45,8 @@ public partial class CardData
         subtypes = temp.As<Array<string>>();
         data.TryGetValue("classes", out temp);
         classes = temp.As<Array<string>>();
+        data.TryGetValue("element", out temp);
+        element = temp.As<string>();
 
         data.TryGetValue("effect", out temp);
         effect = temp.As<string>();

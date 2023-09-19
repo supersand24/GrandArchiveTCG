@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=6 format=3 uid="uid://dn4xx5qbqyuao"]
 
-[ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/CardPicker/LinBiolinum_R.ttf" id="1_057ww"]
+[ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/LinBiolinum_Normal.ttf" id="1_057ww"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gu2a"]
 bg_color = Color(0.6, 0.333333, 0.305882, 1)
