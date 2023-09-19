@@ -19,6 +19,7 @@ public partial class UICardImage : TextureButton
     public void SetCard(CardEditionData card, int index)
     {
         this.card = card;
+        posInStack = index;
         TextureNormal = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
     }
 
