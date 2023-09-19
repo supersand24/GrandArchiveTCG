@@ -1,8 +1,65 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dn4xx5qbqyuao"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://dn4xx5qbqyuao"]
 
 [ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/CardPicker/LinBiolinum_R.ttf" id="1_057ww"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gu2a"]
+bg_color = Color(0.6, 0.333333, 0.305882, 1)
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.862745, 0.615686, 0.584314, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gq2go"]
+bg_color = Color(0.8, 0.513726, 0.478431, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.862745, 0.615686, 0.584314, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3w8ex"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3liqo"]
+bg_color = Color(0.584314, 0.32549, 0.294118, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.411765, 0.211765, 0.192157, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [resource]
+Button/constants/h_separation = 40
+Button/font_sizes/font_size = 30
+Button/fonts/font = ExtResource("1_057ww")
+Button/styles/focus = SubResource("StyleBoxFlat_3gu2a")
+Button/styles/hover = SubResource("StyleBoxFlat_gq2go")
+Button/styles/normal = SubResource("StyleBoxFlat_3w8ex")
+Button/styles/pressed = SubResource("StyleBoxFlat_3liqo")
 GridContainer/constants/h_separation = 50
 GridContainer/constants/v_separation = 16
 RichTextLabel/font_sizes/normal_font_size = 48

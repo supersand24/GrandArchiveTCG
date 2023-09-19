@@ -14,4 +14,12 @@ public partial class CardPicker : ColorRect
         card.SetCard(cardEdition);
     }
 
+    public void ClearCards()
+    {
+        foreach (Node card in cardGrid.GetChildren())
+        {
+            card.QueueFree();
+        }
+    }
+
 }

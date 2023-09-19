@@ -75,7 +75,13 @@ public partial class Game : Node2D
         cardPicker.Visible = true;
     }
 
-	public void LoadComplete()
+    public void CloseCardPicker()
+    {
+		cardPicker.ClearCards();
+        cardPicker.Visible = false;
+    }
+
+    public void LoadComplete()
 	{
 		players[0].SpawnZones();
     }

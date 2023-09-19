@@ -97,13 +97,26 @@ theme_override_constants/margin_bottom = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CardPicker/MarginContainer"]
 clip_contents = true
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 text = "Material Deck"
 fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
+
+[node name="Button" type="Button" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme = ExtResource("10_qs3c4")
+text = "Exit"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -117,3 +130,4 @@ columns = 6
 [connection signal="request_completed" from="CardImageManager" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]
 [connection signal="request_completed" from="SilvieDeckImporter" to="SilvieDeckImporter" method="DeckImportCompleted"]
+[connection signal="pressed" from="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="CloseCardPicker"]
