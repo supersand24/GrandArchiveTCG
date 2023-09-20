@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://co20dnajwfxka"]
+
+[ext_resource type="StyleBox" uid="uid://b6b23oma0y0cx" path="res://cardUI/InfoPanel/TextBox/Norm.tres" id="1_0oj2y"]
+[ext_resource type="StyleBox" uid="uid://b0vtlr3ypg1p8" path="res://cardUI/InfoPanel/TextBox/Arcane.tres" id="1_wkmwq"]
+[ext_resource type="StyleBox" uid="uid://v1ska6nj5wq0" path="res://cardUI/InfoPanel/TextBox/Crux.tres" id="2_ptw70"]
+[ext_resource type="StyleBox" uid="uid://bl0c7u4es2l2s" path="res://cardUI/InfoPanel/TextBox/Fire.tres" id="3_ovy2h"]
+[ext_resource type="StyleBox" uid="uid://bfo8bb66k7se3" path="res://cardUI/InfoPanel/TextBox/Luxem.tres" id="4_otxbv"]
+[ext_resource type="StyleBox" uid="uid://cixmjbqvm7oy1" path="res://cardUI/InfoPanel/TextBox/Tera.tres" id="6_24172"]
+[ext_resource type="StyleBox" uid="uid://dmjsm8prlpojg" path="res://cardUI/InfoPanel/TextBox/Water.tres" id="7_dqvvb"]
+[ext_resource type="StyleBox" uid="uid://hcq0a25myhh8" path="res://cardUI/InfoPanel/TextBox/Wind.tres" id="8_1d1lo"]
+
+[resource]
+ARCANE/styles/panel = ExtResource("1_wkmwq")
+CRUX/styles/panel = ExtResource("2_ptw70")
+FIRE/styles/panel = ExtResource("3_ovy2h")
+LUXEM/styles/panel = ExtResource("4_otxbv")
+NORM/styles/panel = ExtResource("1_0oj2y")
+TERA/styles/panel = ExtResource("6_24172")
+WATER/styles/panel = ExtResource("7_dqvvb")
+WIND/styles/panel = ExtResource("8_1d1lo")

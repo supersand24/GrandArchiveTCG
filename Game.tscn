@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=17 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_b4muc"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://cardUI/CardPicker/CardPicker.cs" id="10_7bafy"]
 [ext_resource type="Theme" uid="uid://dn4xx5qbqyuao" path="res://cardUI/CardPicker/CardPickerTheme.tres" id="10_qs3c4"]
 [ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/LinBiolinum_Normal.ttf" id="11_56vjh"]
+[ext_resource type="Theme" uid="uid://co20dnajwfxka" path="res://cardUI/InfoPanel/TextBox/InfoPanelTextBox.tres" id="11_hqoq1"]
 
 [sub_resource type="Theme" id="Theme_478me"]
 RichTextLabel/font_sizes/bold_font_size = 24
@@ -60,14 +61,14 @@ theme = ExtResource("9_qrxbj")
 theme_type_variation = &"NORM"
 script = ExtResource("8_h5854")
 image = NodePath("MarginContainer/VBoxContainer/Image")
-name = NodePath("MarginContainer/VBoxContainer/Name and Cost/Name")
-cost = NodePath("MarginContainer/VBoxContainer/Name and Cost/Cost")
-types = NodePath("MarginContainer/VBoxContainer/Types/Types")
-subtypes = NodePath("MarginContainer/VBoxContainer/Types/Subtypes")
-effect = NodePath("MarginContainer/VBoxContainer/Effect")
-flavor = NodePath("MarginContainer/VBoxContainer/Flavor")
-stats = NodePath("MarginContainer/VBoxContainer/Stats")
-counters = NodePath("MarginContainer/VBoxContainer/Counters")
+name = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost/Name")
+cost = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost/Cost")
+types = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Types/Types")
+subtypes = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Types/Subtypes")
+effect = NodePath("MarginContainer/VBoxContainer/Effect&Flavor Panel/VBoxContainer/Effect")
+flavor = NodePath("MarginContainer/VBoxContainer/Effect&Flavor Panel/VBoxContainer/Flavor")
+stats = NodePath("MarginContainer/VBoxContainer/Stats&Counters/VBoxContainer/Stats")
+counters = NodePath("MarginContainer/VBoxContainer/Stats&Counters/VBoxContainer/Counters")
 debug = NodePath("MarginContainer/VBoxContainer/Etc")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/InfoPanel"]
@@ -92,11 +93,19 @@ texture = ExtResource("7_jb6ya")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Name and Cost" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="Name&Cost&Types Panel" type="PanelContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_hqoq1")
+theme_type_variation = &"NORM"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel"]
+layout_mode = 2
+
+[node name="Name&Cost" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Name" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name and Cost"]
+[node name="Name" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = SubResource("Theme_478me")
@@ -106,7 +115,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Cost" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name and Cost"]
+[node name="Cost" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost"]
 layout_mode = 2
 theme = SubResource("Theme_478me")
 bbcode_enabled = true
@@ -115,11 +124,11 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Types" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="Types" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Types" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Types"]
+[node name="Types" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Types"]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 18
 text = "ACTION"
@@ -127,7 +136,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Subtypes" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Types"]
+[node name="Subtypes" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Types"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 16
@@ -136,7 +145,17 @@ text = "[right]WARRIOR SWORD CRAFT"
 fit_content = true
 scroll_active = false
 
-[node name="Effect" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="Effect&Flavor Panel" type="PanelContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("11_hqoq1")
+theme_type_variation = &"NORM"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Effect&Flavor Panel"]
+layout_mode = 2
+theme_type_variation = &"NORM"
+
+[node name="Effect" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Effect&Flavor Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -145,7 +164,7 @@ text = "Put two [b]durability[/b] counters on target Sword weapon you control."
 fit_content = true
 scroll_active = false
 
-[node name="Flavor" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="Flavor" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Effect&Flavor Panel/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
@@ -153,7 +172,15 @@ text = "[i]When whetted and oiled, even scrapped blades can once again become ra
 fit_content = true
 scroll_active = false
 
-[node name="Stats" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="Stats&Counters" type="PanelContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_hqoq1")
+theme_type_variation = &"NORM"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Stats&Counters"]
+layout_mode = 2
+
+[node name="Stats" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Stats&Counters/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
@@ -162,7 +189,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Counters" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+[node name="Counters" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Stats&Counters/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 16

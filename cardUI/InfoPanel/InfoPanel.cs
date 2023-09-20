@@ -42,6 +42,9 @@ public partial class InfoPanel : Panel
 
         //Panel Color match Element
         ThemeTypeVariation = data.element;
+        name.GetParent().GetParent().GetParent<PanelContainer>().ThemeTypeVariation = data.element;
+        effect.GetParent().GetParent<PanelContainer>().ThemeTypeVariation = data.element;
+        stats.GetParent().GetParent<PanelContainer>().ThemeTypeVariation = data.element;
 
         //Name
         name.Text = data.name;
