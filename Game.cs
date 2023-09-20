@@ -25,7 +25,10 @@ public partial class Game : Node2D
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
-		cardDataManager.CardRequest();
+		//cardDataManager.CardRequest();
+		cardDataManager.CardRequest( new Godot.Collections.Dictionary {
+			{ "types", new Array { "CHAMPION", "ALLY" } }
+		});
 
 		players.Add(GetNode<Hand>("Hand1"));
 

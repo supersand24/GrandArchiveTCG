@@ -1,12 +1,13 @@
 using Godot;
+using Godot.Collections;
 using System.Collections.Generic;
 using System.Text;
 
 public partial class CardDataManager : HttpRequest
 {
 
-    public Dictionary<string, CardData> cards = new();
-    public Dictionary<string, CardEditionData> cardEditions = new();
+    public System.Collections.Generic.Dictionary<string, CardData> cards = new();
+    public System.Collections.Generic.Dictionary<string, CardEditionData> cardEditions = new();
 
     CardDatabaseRequests requests = new();
 
@@ -15,11 +16,6 @@ public partial class CardDataManager : HttpRequest
         CardData ret;
         cards.TryGetValue(uuid, out ret);
         return ret;
-    }
-
-    public CardData GetCardDataFromEdition(string uuid)
-    {
-        return GetCardData(GetCardEdition(uuid).uuidBase);
     }
 
     public CardEditionData GetCardEdition(string uuid)
@@ -34,9 +30,9 @@ public partial class CardDataManager : HttpRequest
         }
     }
 
-    public void CardRequest(string cardName = null, string effect = null, string type = null)
+    public void CardRequest(Dictionary filters = null)
     {
-        if (requests.Request(cardName, effect, type)) HTTPRequest();
+        if (requests.Request(filters)) HTTPRequest();
         else
         {
             GD.Print("Request Pending");
@@ -92,18 +88,18 @@ public partial class CardDataManager : HttpRequest
 
 internal class CardDatabaseRequests
 {
-    List<CardDatabaseAwait> requests = new();
+    List<Dictionary> requests = new();
 
-    public bool Request(string cardName, string effect, string type)
+    public bool Request(Dictionary filters)
     {
-        requests.Add(new CardDatabaseAwait(cardName, effect, type));
+        requests.Add(filters);
         return requests.Count == 1;
     }
 
     public string GetOldestRequest()
     {
         if (requests.Count == 0) return null;
-        return requests[0].GetFormattedURL();
+        return FormatURL();
     }
 
     public void RemoveOldestRequest()
@@ -112,28 +108,23 @@ internal class CardDatabaseRequests
         requests.RemoveAt(0);
     }
 
-}
-
-internal class CardDatabaseAwait
-{
-    string cardName;
-    string effect;
-    string type;
-
-    public CardDatabaseAwait(string cardName, string effect, string type)
+    public string FormatURL()
     {
-        this.cardName = cardName;
-        this.effect = effect;
-        this.type = type;
-    }
+        if (requests[0] == null) return "https://api.gatcg.com/cards/search?";
 
-    public string GetFormattedURL()
-    {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         sb.Append("https://api.gatcg.com/cards/search?");
-        if (cardName != null) sb.Append("name=").Append(cardName).Append("&");
-        if (effect != null) sb.Append("effect=").Append(effect).Append("&");
-        if (type != null) sb.Append("type=").Append(type).Append("&");
+        Dictionary filters = requests[0];
+
+        if (filters.ContainsKey("types"))
+        {
+            if (filters["types"].VariantType == Variant.Type.Array)
+                foreach (string type in filters["types"].AsGodotArray())
+                    sb.Append("type=").Append(type).Append("&");
+            else sb.Append("type=").Append(filters["types"].AsString()).Append("&");
+        }
+
+        GD.Print("Formatted URL " + sb.ToString());
         return sb.ToString();
     }
 
