@@ -27,7 +27,9 @@ public partial class SilvieDeckImporter : HttpRequest
                     GD.Print("Imported " + response.name + " by " + response.creator);
                     GD.Print(response.url);
                     playerHand.mainDeck.cards = response.decks[0];
+                    playerHand.mainDeck.UpdateImage();
                     playerHand.materialDeck.cards = response.decks[1];
+                    playerHand.materialDeck.UpdateImage();
                 }
                 break;
             default:

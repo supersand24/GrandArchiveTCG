@@ -2,13 +2,16 @@ using Godot;
 
 public partial class CardInstance : Node2D
 {
+	CardData data;
+	CardEditionData edition;
+    public string uuid { get; set; }
 
-	public Vector2 posGoal = Vector2.Zero;
+	int ownerNumber = 0;
+
+    public Vector2 posGoal = Vector2.Zero;
 
 	public AnimationPlayer animPlayer;
 	[Export] bool faceUp = true;
-
-	public string uuid { get; set; }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -21,11 +24,13 @@ public partial class CardInstance : Node2D
 	{
 		this.uuid = uuid;
 		Game game = GetParent().GetOwner<Game>();
-		GD.Print(uuid);
-		CardEditionData cardEdition = game.cardDataManager.GetCardEdition(uuid);
-		GD.Print("Trying to load " + "res://images/" + cardEdition.slug + ".png");
-		GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + cardEdition.slug + ".png");
-	}
+
+        edition = game.cardDataManager.GetCardEdition(uuid);
+		data = game.cardDataManager.GetCardData(edition.uuidBase);
+
+		GD.Print("Trying to load " + "res://images/" + edition.slug + ".png");
+        GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + edition.slug + ".png");
+    }
 
 	public void DrawAnim()
 	{

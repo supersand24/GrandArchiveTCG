@@ -17,6 +17,11 @@ public partial class CardDataManager : HttpRequest
         return ret;
     }
 
+    public CardData GetCardDataFromEdition(string uuid)
+    {
+        return GetCardData(GetCardEdition(uuid).uuidBase);
+    }
+
     public CardEditionData GetCardEdition(string uuid)
     {
         CardEditionData ret;

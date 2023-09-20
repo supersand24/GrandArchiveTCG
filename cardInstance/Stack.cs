@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System;
 using System.Linq;
 
 public partial class Stack : Node2D
@@ -8,8 +9,11 @@ public partial class Stack : Node2D
 	Node cardInstancesNode;
 	[Export] PackedScene cardInstance;
 
+	[Export] Sprite2D topCardSprite;
+
 	[Export] string zoneName = "Zone";
-	[Export] bool privateZone = false;
+	[Export] public bool privateZone = true;
+	[Export] int ownerNumber = 0;
 
 	[Export] public Array<string> cards = new();
 
@@ -22,16 +26,15 @@ public partial class Stack : Node2D
 		}
 		else
 		{
-			CardInstance card = GD.Load<PackedScene>("res://CardInstance.tscn").Instantiate<CardInstance>();
+			CardInstance card = cardInstance.Instantiate<CardInstance>();
 			cardInstancesNode.AddChild(card);
 			card.GlobalPosition = GlobalPosition;
 
 			card.DrawAnim();
 			card.SetCard(cardUUID);
-			cards.RemoveAt(cards.Count - 1);
+            RemoveCard(cards.Count - 1);
 			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0; 
 
-			PrintDeck();
 			return card;
 		}
 
@@ -45,16 +48,60 @@ public partial class Stack : Node2D
 		cardInstancesNode.AddChild(card);
 		card.GlobalPosition = GlobalPosition;
 
-		card.SetCard(cards[index]);
-		cards.RemoveAt(index);
-		card.posGoal = new Vector2(1160, 540);
-		return card;
+        card.SetCard(cards[index]);
+
+        RemoveCard(index);
+        //card.PlayFromDeck();
+
+        return card;
+	}
+
+	public void AddCardToTop(CardInstance card)
+	{
+		AddCardToTop(card.uuid);
+    }
+
+	public void AddCardToTop(string card)
+	{
+        cards.Add(card);
+        UpdateImage();
+    }
+
+	public void AddCardToBottom(CardInstance card)
+	{
+        AddCardToBottom(card.uuid);
+	}
+
+	public void AddCardToBottom(string card)
+	{
+        Array<string> newStack = new() { card };
+        foreach (string uuid in cards) newStack.Add(uuid);
+        cards = newStack;
+    }
+
+	private void RemoveCard(int index)
+	{
+        cards.RemoveAt(index);
+		UpdateImage();
+    }
+
+	public void ActivateCard(int index)
+	{
+		Hand hand = GetParent<Hand>();
+		CardEditionData edition = hand.GetParent<Game>().cardDataManager.GetCardEdition(cards[index]);
+        CardData card = hand.GetParent<Game>().cardDataManager.GetCardData(edition.uuidBase);
+
+        foreach (string type in card.types)
+			switch (type)
+			{
+				case "CHAMPION": hand.champion.AddCardToTop(edition.uuidEdition); break;
+			}
+		RemoveCard(index);
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
 		cardInstancesNode = GetParent().GetOwner<Game>().GetNode("CardInstances");
 		UpdateImage();
 	}
@@ -67,14 +114,20 @@ public partial class Stack : Node2D
 
 	public void UpdateImage()
 	{
-		if (privateZone)
+		if (cards.Count == 0)
 		{
-			GetNode<Sprite2D>("TopCardImage").Texture = GetOwner<Game>().cardBack;
-		}
+			topCardSprite.Visible = false;
+        }
 		else
 		{
-			//GetNode<Sprite2D>("TopCardImage").Texture = GetTopCard().GetNode<Sprite2D>("Image").Texture;
-		}
+            topCardSprite.Visible = true;
+            if (privateZone) topCardSprite.Texture = GetParent().GetParent<Game>().cardBack;
+            else
+            {
+                CardEditionData card = GetParent().GetParent<Game>().cardDataManager.GetCardEdition(GetTopCardUUID());
+                topCardSprite.Texture = GD.Load<Texture2D>("res://images/" + card.slug + ".png");
+            }
+        }
 	}
 
 	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
@@ -84,15 +137,5 @@ public partial class Stack : Node2D
             GetParent().GetParent<Game>().OpenCardPicker(cards,this);
 		}
 	}
-
-	public void PrintDeck()
-	{
-		var i = 0;
-        foreach (string uuid in cards)
-        {
-			GD.Print(i + ": " + uuid);
-			i++;
-        }
-    }
 
 }

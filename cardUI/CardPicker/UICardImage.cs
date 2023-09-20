@@ -26,7 +26,8 @@ public partial class UICardImage : TextureButton
     public void OnPressed()
     {
         GD.Print("Activating " + card.slug);
-        GetStack().SpawnCard(posInStack);
+        //GetStack().SpawnCard(posInStack);
+        GetStack().ActivateCard(posInStack);
         GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().CloseCardPicker();
     }
 

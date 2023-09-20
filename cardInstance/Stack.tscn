@@ -7,9 +7,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i178v"]
 size = Vector2(125, 174)
 
-[node name="Stack" type="Node2D"]
+[node name="Stack" type="Node2D" node_paths=PackedStringArray("topCardSprite")]
 script = ExtResource("1_04a8k")
 cardInstance = ExtResource("2_tvo8q")
+topCardSprite = NodePath("TopCardImage")
 
 [node name="TopCardImage" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

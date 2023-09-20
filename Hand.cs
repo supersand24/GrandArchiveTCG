@@ -9,10 +9,11 @@ public partial class Hand : Node2D
     [Export] PackedScene stackInstance { get; set; }
     public Stack mainDeck;
     public Stack materialDeck;
-    Stack graveyard;
-    Stack banishment;
+    public Stack graveyard;
+    public Stack banishment;
+    public Stack champion;
 
-    [Export] int bounds = 400;
+    int handBounds = 400;
     int deckPlacement = 675;
 
     public void SpawnZones()
@@ -20,25 +21,32 @@ public partial class Hand : Node2D
         mainDeck = stackInstance.Instantiate<Stack>();
         AddChild(mainDeck);
         mainDeck.Name = "Main Deck";
-        mainDeck.Position = new Vector2(deckPlacement, -100);
-
-        materialDeck = stackInstance.Instantiate<Stack>();
-        AddChild(materialDeck);
-        materialDeck.Name = "Material Deck";
-        materialDeck.Position = new Vector2(-deckPlacement, -100);
+        mainDeck.Position = new Vector2(deckPlacement, -300);
 
         graveyard = stackInstance.Instantiate<Stack>();
         AddChild(graveyard);
         graveyard.Name = "Graveyard";
-        graveyard.Position = new Vector2(deckPlacement, -300);
+        graveyard.Position = new Vector2(deckPlacement, -100);
+        graveyard.privateZone = false;
+
+        champion = stackInstance.Instantiate<Stack>();
+        AddChild(champion);
+        champion.Name = "Champion Stack";
+        champion.Position = new Vector2(-deckPlacement, -500);
+        champion.privateZone = false;
+
+        materialDeck = stackInstance.Instantiate<Stack>();
+        AddChild(materialDeck);
+        materialDeck.Name = "Material Deck";
+        materialDeck.Position = new Vector2(-deckPlacement, -300);
 
         banishment = stackInstance.Instantiate<Stack>();
         AddChild(banishment);
         banishment.Name = "Banishment";
-        banishment.Position = new Vector2(-deckPlacement, -300);
+        banishment.Position = new Vector2(-deckPlacement, -100);
+        banishment.privateZone = false;
 
         GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24", "XXCHvAXEbnGYWJdNkTQI", this);
-        //DrawHand();
 
     }
 
@@ -55,7 +63,6 @@ public partial class Hand : Node2D
 
     public void UpdateHandSpacing()
     {
-        //Array<Node> cards = GetChildren();
         switch (cards.Count)
         {
             case 0:
@@ -64,9 +71,9 @@ public partial class Hand : Node2D
                 cards[0].posGoal = GlobalPosition;
                 break;
             default:
-                float step = bounds * 2 / (cards.Count - 1);
+                float step = handBounds * 2 / (cards.Count - 1);
                 Vector2 newPos = GlobalPosition;
-                newPos.X -= bounds;
+                newPos.X -= handBounds;
                 foreach (CardInstance card in cards)
                 {
                     card.posGoal = newPos;
@@ -74,6 +81,5 @@ public partial class Hand : Node2D
                 }
                 break;
         }
-
     }
 }
