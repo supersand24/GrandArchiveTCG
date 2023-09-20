@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 using System.Linq;
 
 public partial class Stack : Node2D
@@ -88,13 +87,12 @@ public partial class Stack : Node2D
 	public void ActivateCard(int index)
 	{
 		Hand hand = GetParent<Hand>();
-		CardEditionData edition = hand.GetParent<Game>().cardDataManager.GetCardEdition(cards[index]);
-        CardData card = hand.GetParent<Game>().cardDataManager.GetCardData(edition.uuidBase);
+		CardEditionData card = hand.GetParent<Game>().cardDataManager.GetCardEdition(cards[index]);
 
-        foreach (string type in card.types)
+        foreach (string type in card.baseData.types)
 			switch (type)
 			{
-				case "CHAMPION": hand.champion.AddCardToTop(edition.uuidEdition); break;
+				case "CHAMPION": hand.champion.AddCardToTop(card.uuidEdition); break;
 			}
 		RemoveCard(index);
 	}
@@ -125,7 +123,7 @@ public partial class Stack : Node2D
             else
             {
                 CardEditionData card = GetParent().GetParent<Game>().cardDataManager.GetCardEdition(GetTopCardUUID());
-                topCardSprite.Texture = GD.Load<Texture2D>("res://images/" + card.slug + ".png");
+                topCardSprite.Texture = GD.Load<Texture2D>("res://images/" + card.GetEditionSlug() + ".png");
             }
         }
 	}

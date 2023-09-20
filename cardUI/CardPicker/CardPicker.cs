@@ -61,16 +61,16 @@ public partial class CardPicker : ColorRect
         foreach (UICardImage card in cardGrid.GetChildren())
         {
             //If not already disabled, disable if out of Level Range.
-            if (card.data.level.VariantType != Variant.Type.Nil && card.Disabled == false)
+            if (card.card.GetLevel().VariantType != Variant.Type.Nil && card.Disabled == false)
             {
-                int cardLevel = card.data.level.AsInt32();
+                int cardLevel = card.card.GetLevel().AsInt32();
                 if (cardLevel < minLevel || cardLevel > maxLevel) card.Disable();
             }
 
             //If not already disabled, disable if not in Types Array.
             if (card.Disabled == false)
             {
-                foreach (string type in types) if (!card.data.types.Contains(type)) card.Disable();
+                foreach (string type in types) if (!card.card.GetTypes().Contains(type)) card.Disable();
             }
             
         }

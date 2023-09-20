@@ -65,7 +65,10 @@ public partial class CardDataManager : HttpRequest
                         CardData card = new CardData(entry);
                         cards.Add(uuid.ToString(), card);
                         foreach (CardEditionData cardEdition in card.editions)
+                        {
                             cardEditions.Add(cardEdition.uuidEdition, cardEdition);
+                            cardEdition.baseData = card;
+                        }
                     }
                 }
 

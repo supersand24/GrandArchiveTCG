@@ -2,8 +2,7 @@ using Godot;
 
 public partial class CardInstance : Node2D
 {
-	CardData data;
-	CardEditionData edition;
+	CardEditionData card;
     public string uuid { get; set; }
 
 	int ownerNumber = 0;
@@ -25,11 +24,10 @@ public partial class CardInstance : Node2D
 		this.uuid = uuid;
 		Game game = GetParent().GetOwner<Game>();
 
-        edition = game.cardDataManager.GetCardEdition(uuid);
-		data = game.cardDataManager.GetCardData(edition.uuidBase);
+        card = game.cardDataManager.GetCardEdition(uuid);
 
-		GD.Print("Trying to load " + "res://images/" + edition.slug + ".png");
-        GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + edition.slug + ".png");
+		GD.Print("Trying to load " + "res://images/" + card.GetEditionSlug() + ".png");
+        GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
     }
 
 	public void DrawAnim()

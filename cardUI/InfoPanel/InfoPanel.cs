@@ -33,47 +33,40 @@ public partial class InfoPanel : Panel
     {
         StringBuilder sb = new StringBuilder();
 
-        CardData data = GetParent().GetParent<Game>().cardDataManager.GetCardData(card.uuidBase);
-
         //Image
-        image.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
-
-        if (data == null) { GD.PrintErr("Info Panel could not get Card Data!"); return; }
+        image.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
 
         //Panel Color match Element
-        ThemeTypeVariation = data.element;
-        name.GetParent().GetParent().GetParent<PanelContainer>().ThemeTypeVariation = data.element;
-        effect.GetParent().GetParent<PanelContainer>().ThemeTypeVariation = data.element;
-        stats.GetParent().GetParent<PanelContainer>().ThemeTypeVariation = data.element;
+        ThemeTypeVariation = card.GetElement();
+        name.GetParent().GetParent().GetParent<PanelContainer>().ThemeTypeVariation = card.GetElement();
+        effect.GetParent().GetParent<PanelContainer>().ThemeTypeVariation = card.GetElement();
+        stats.GetParent().GetParent<PanelContainer>().ThemeTypeVariation = card.GetElement();
 
         //Name
-        name.Text = data.name;
+        name.Text = card.GetName();
 
         //Cost
-        if (data.costReserve.VariantType == Variant.Type.Nil)
-            cost.Text = "[right]" + data.costMemory + " COST";
-        else
-            cost.Text = "[right]" + data.costReserve + " COST";
+        cost.Text = "[right]" + card.GetCost() + " COST";
 
         //Type
-        foreach (string type in data.types) sb.Append(type).Append(" ");
+        foreach (string type in card.GetTypes()) sb.Append(type).Append(" ");
         types.Text = sb.ToString();
         sb.Clear();
 
         //SubType
         sb.Append("[right]");
-        foreach (string subtype in data.subtypes) sb.Append(subtype).Append(" ");
+        foreach (string subtype in card.GetSubtypes()) sb.Append(subtype).Append(" ");
         subtypes.Text = sb.ToString();
         sb.Clear();
 
         //Effect
-        effect.Text = data.effectFormatted;
+        effect.Text = card.baseData.effectFormatted;
 
         //Flavor
-        flavor.Text = "[i]" + data.flavor;
+        flavor.Text = "[i]" + card.GetFlavor();
 
         //Stats
-        stats.Text = "[right]" + data.life + " Life";
+        stats.Text = "[right]" + card.GetLife() + " Life";
 
         //Counters
         counters.Text = "";

@@ -3,8 +3,7 @@ using Godot;
 public partial class UICardImage : TextureButton
 {
 
-    public CardData data;
-    CardEditionData edition;
+    public CardEditionData card;
     int posInStack;
 
     public Stack GetStack()
@@ -14,20 +13,19 @@ public partial class UICardImage : TextureButton
 
     public void MouseHovered()
     {
-        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(edition);
+        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(card);
     }
 
-    public void SetCard(CardEditionData edition, int index)
+    public void SetCard(CardEditionData card, int index)
     {
-        this.edition = edition;
-        this.data = GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().cardDataManager.GetCardData(edition.uuidBase);
+        this.card = card;
         posInStack = index;
-        TextureNormal = GD.Load<CompressedTexture2D>("res://images/" + edition.slug + ".png");
+        TextureNormal = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
     }
 
     public void OnPressed()
     {
-        GD.Print("Activating " + edition.slug);
+        GD.Print("Activating " + card.GetEditionSlug());
         GetStack().ActivateCard(posInStack);
         GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().cardPicker.Close();
     }
