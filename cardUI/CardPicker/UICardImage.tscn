@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://7y4o53p4k0s4"]
+[gd_scene load_steps=4 format=3 uid="uid://7y4o53p4k0s4"]
 
 [ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="1_mwhqn"]
 [ext_resource type="Script" path="res://cardUI/CardPicker/UICardImage.cs" id="2_lj6s7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ihupx"]
+bg_color = Color(0, 0, 0, 0.705882)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 12
 
 [node name="TextureButton" type="TextureButton"]
 clip_contents = true
@@ -12,6 +20,17 @@ texture_normal = ExtResource("1_mwhqn")
 ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("2_lj6s7")
+
+[node name="DisabledIndicator" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ihupx")
 
 [connection signal="mouse_entered" from="." to="." method="MouseHovered"]
 [connection signal="pressed" from="." to="." method="OnPressed"]

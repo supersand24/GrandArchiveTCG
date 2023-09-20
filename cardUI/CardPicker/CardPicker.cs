@@ -64,14 +64,13 @@ public partial class CardPicker : ColorRect
             if (card.data.level.VariantType != Variant.Type.Nil && card.Disabled == false)
             {
                 int cardLevel = card.data.level.AsInt32();
-                card.Disabled = cardLevel < minLevel || cardLevel > maxLevel;
+                if (cardLevel < minLevel || cardLevel > maxLevel) card.Disable();
             }
 
             //If not already disabled, disable if not in Types Array.
             if (card.Disabled == false)
             {
-                foreach (string type in types)
-                    card.Disabled = !card.data.types.Contains(type);
+                foreach (string type in types) if (!card.data.types.Contains(type)) card.Disable();
             }
             
         }

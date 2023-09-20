@@ -183,6 +183,7 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="CardPicker" type="ColorRect" parent="HBoxContainer" node_paths=PackedStringArray("title", "cardGrid")]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("10_qs3c4")

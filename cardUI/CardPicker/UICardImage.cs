@@ -32,4 +32,10 @@ public partial class UICardImage : TextureButton
         GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().cardPicker.Close();
     }
 
+    public void Disable()
+    {
+        Disabled = true;
+        GetChild<Panel>(0).Visible = true;
+    }
+
 }
