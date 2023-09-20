@@ -3,32 +3,33 @@ using Godot;
 public partial class UICardImage : TextureButton
 {
 
-    CardEditionData card;
+    public CardData data;
+    CardEditionData edition;
     int posInStack;
 
     public Stack GetStack()
     {
-        return GetParent().GetParent().GetParent().GetParent().GetParent<CardPicker>().GetStack();
+        return GetParent().GetParent().GetParent().GetParent().GetParent<CardPicker>().openStack;
     }
 
     public void MouseHovered()
     {
-        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(card);
+        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(edition);
     }
 
-    public void SetCard(CardEditionData card, int index)
+    public void SetCard(CardEditionData edition, int index)
     {
-        this.card = card;
+        this.edition = edition;
+        this.data = GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().cardDataManager.GetCardData(edition.uuidBase);
         posInStack = index;
-        TextureNormal = GD.Load<CompressedTexture2D>("res://images/" + card.slug + ".png");
+        TextureNormal = GD.Load<CompressedTexture2D>("res://images/" + edition.slug + ".png");
     }
 
     public void OnPressed()
     {
-        GD.Print("Activating " + card.slug);
-        //GetStack().SpawnCard(posInStack);
+        GD.Print("Activating " + edition.slug);
         GetStack().ActivateCard(posInStack);
-        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().CloseCardPicker();
+        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().cardPicker.Close();
     }
 
 }

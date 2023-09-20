@@ -41,7 +41,6 @@ position = Vector2(1160, 1080)
 script = ExtResource("6_xq7l6")
 cardInstance = ExtResource("2_b4muc")
 stackInstance = ExtResource("3_1ux7f")
-bounds = 675
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(1920, 1080)
@@ -183,14 +182,14 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="CardPicker" type="ColorRect" parent="HBoxContainer" node_paths=PackedStringArray("cardGrid")]
-visible = false
+[node name="CardPicker" type="ColorRect" parent="HBoxContainer" node_paths=PackedStringArray("title", "cardGrid")]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("10_qs3c4")
 color = Color(0, 0, 0, 0.470588)
 script = ExtResource("10_7bafy")
 UICard = ExtResource("9_ufxlr")
+title = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Title")
 cardGrid = NodePath("MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CardPicker"]
@@ -214,7 +213,7 @@ theme_override_constants/separation = 10
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -243,4 +242,4 @@ columns = 6
 [connection signal="request_completed" from="CardImageManager" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]
 [connection signal="request_completed" from="SilvieDeckImporter" to="SilvieDeckImporter" method="DeckImportCompleted"]
-[connection signal="pressed" from="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="CloseCardPicker"]
+[connection signal="pressed" from="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer/Button" to="HBoxContainer/CardPicker" method="Close"]

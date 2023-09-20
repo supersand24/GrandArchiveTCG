@@ -25,7 +25,7 @@ public partial class Game : Node2D
 		cardDataManager = GetNode<CardDataManager>("CardDataManager");
 		silvieDeckImporter = GetNode<SilvieDeckImporter>("SilvieDeckImporter");
 
-		cardDataManager.CardRequest(null,null,"CHAMPION");
+		cardDataManager.CardRequest();
 
 		players.Add(GetNode<Hand>("Hand1"));
 
@@ -64,24 +64,6 @@ public partial class Game : Node2D
 	private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
     {
         return beginning * (1 - speed) + goal * speed;
-    }
-
-	public void OpenCardPicker(Array<string> uuidList, Stack stack)
-	{
-		cardPicker.SetStack(stack);
-		int i = 0;
-        foreach (string uuid in uuidList)
-        {
-			cardPicker.AddCard(cardDataManager.GetCardEdition(uuid), i);
-			i++;
-        }
-        cardPicker.Visible = true;
-    }
-
-    public void CloseCardPicker()
-    {
-		cardPicker.ClearCards();
-        cardPicker.Visible = false;
     }
 
     public void LoadComplete()

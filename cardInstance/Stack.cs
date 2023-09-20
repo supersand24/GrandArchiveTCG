@@ -134,7 +134,12 @@ public partial class Stack : Node2D
 	{
 		if (input.IsActionPressed("click"))
 		{
-            GetParent().GetParent<Game>().OpenCardPicker(cards,this);
+            Dictionary limits = new()
+            {
+				{ "types", new Godot.Collections.Array() { "CHAMPION" } },
+				{ "level", "==0" }
+            };
+            GetParent().GetParent<Game>().cardPicker.Open(cards, this, limits);
 		}
 	}
 
