@@ -13,6 +13,8 @@ public partial class Hand : Node2D
     public Stack banishment;
     public Stack champion;
 
+    public Stack highlightedStack = null;
+
     int handBounds = 400;
     int deckPlacement = 675;
 
@@ -59,6 +61,13 @@ public partial class Hand : Node2D
                 cards.Add(drawnCard);
         }
         UpdateHandSpacing();
+    }
+
+    public void UnhighlightStack()
+    {
+        if (highlightedStack != null)
+            highlightedStack.Unhighlight();
+        highlightedStack = null;
     }
 
     public void UpdateHandSpacing()

@@ -9,8 +9,9 @@ public partial class Stack : Node2D
 	[Export] PackedScene cardInstance;
 
 	[Export] Sprite2D topCardSprite;
+    [Export] Sprite2D highlightSprite;
 
-	[Export] string zoneName = "Zone";
+    [Export] string zoneName = "Zone";
 	[Export] public bool privateZone = true;
 	[Export] int ownerNumber = 0;
 
@@ -128,16 +129,40 @@ public partial class Stack : Node2D
         }
 	}
 
+	public void Highlight()
+	{
+        highlightSprite.Visible = true;
+    }
+
+	public void Unhighlight()
+	{
+		highlightSprite.Visible = false;
+	}
+
 	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
 	{
 		if (input.IsActionPressed("click"))
 		{
-            Dictionary limits = new()
-            {
+			Dictionary limits = new()
+			{
 				{ "types", new Godot.Collections.Array() { "CHAMPION" } },
 				{ "level", "==0" }
-            };
-            GetParent().GetParent<Game>().cardPicker.Open(cards, this, limits);
+			};
+			GetParent().GetParent<Game>().cardPicker.Open(cards, this, limits);
+		}
+		else if (input.IsActionPressed("right_click"))
+		{
+			Hand owner = GetParent<Hand>();
+			if (highlightSprite.Visible)
+			{
+				owner.UnhighlightStack();
+			}
+			else
+			{
+				Highlight();
+				owner.UnhighlightStack();
+				owner.highlightedStack = this;
+			}
 		}
 	}
 
