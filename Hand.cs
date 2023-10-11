@@ -91,4 +91,15 @@ public partial class Hand : Node2D
                 break;
         }
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (highlightedStack == null) return;
+        if (@event.IsActionPressed("draw"))
+        {
+            CardInstance card = highlightedStack.DrawCard();
+            if (card != null) cards.Add(card);
+            UpdateHandSpacing();
+        }
+    }
 }

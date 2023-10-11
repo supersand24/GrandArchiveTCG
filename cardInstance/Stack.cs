@@ -32,8 +32,8 @@ public partial class Stack : Node2D
 
 			card.DrawAnim();
 			card.SetCard(cardUUID);
-            RemoveCard(cards.Count - 1);
-			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0; 
+			RemoveCard(cards.Count - 1);
+			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0;
 
 			return card;
 		}
