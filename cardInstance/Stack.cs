@@ -105,9 +105,17 @@ public partial class Stack : Node2D
 		UpdateImage();
 	}
 
-	public string GetTopCardUUID()
+	public string GetTopCardUUID(bool remove = false)
 	{
 		if (cards.Count == 0) return null;
+		if (remove) RemoveCard(0);
+		return cards.First();
+	}
+
+	public string GetBottomCardUUID(bool remove = true)
+	{
+		if (cards.Count == 0) return null;
+		if (remove) RemoveCard(cards.Count - 1);
 		return cards.Last();
 	}
 
