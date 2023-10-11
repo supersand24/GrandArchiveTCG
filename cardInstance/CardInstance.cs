@@ -52,7 +52,7 @@ public partial class CardInstance : Node2D
 
 	public void MouseHovered()
 	{
-		GD.Print("Hello!");
+		GetParent().GetParent<Game>().infoPanel.SetCard(card);
 	}
 
 	public void Drop()
