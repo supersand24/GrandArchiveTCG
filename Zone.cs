@@ -4,8 +4,8 @@ using Godot.Collections;
 public partial class Zone : Node2D
 {
 
-    [Export] public int width = 10;
-    [Export] public int height = 10;
+    [Export] public int width = 50;
+    [Export] public int height = 200;
 
     [Export(PropertyHint.Range, "1,3,")] public int rows = 1;
     int row1Pos = 20;
@@ -13,6 +13,9 @@ public partial class Zone : Node2D
     float[] rowPosistions;
 
     public Array<CardInstance> cards = new();
+
+    [ExportGroup("Debug")]
+    [Export] bool drawBounds = false;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -34,6 +37,7 @@ public partial class Zone : Node2D
 
     public override void _Draw()
     {
+        if (drawBounds == false) return;
         DrawRect(new Rect2(-width, -height, width*2, height*2), Colors.Green, false);
         DrawCircle(Vector2.Zero, 3, Colors.White);
         foreach(float row in rowPosistions)

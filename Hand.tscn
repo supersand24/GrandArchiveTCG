@@ -11,3 +11,4 @@ script = ExtResource("1_kbh8l")
 cardInstance = ExtResource("2_cuh8b")
 stackInstance = ExtResource("3_lm4od")
 zoneInstance = ExtResource("4_vjjrr")
+width = 500

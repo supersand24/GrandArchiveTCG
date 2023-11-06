@@ -1,10 +1,9 @@
 using Godot;
 using Godot.Collections;
 
-public partial class Hand : Node2D
+public partial class Hand : Zone
 {
     [Export] PackedScene cardInstance { get; set; }
-    public Array<CardInstance> cards = new();
 
     [Export] PackedScene stackInstance { get; set; }
     public Stack mainDeck;
@@ -16,9 +15,10 @@ public partial class Hand : Node2D
     [Export] PackedScene zoneInstance { get; set; }
     public Zone field;
 
+    //TODO Move to Game
     public Stack highlightedStack = null;
 
-    int handBounds = 400;
+    //Temp Used for Placing Decks At Start.
     int deckPlacement = 675;
 
     public void SpawnZones()
@@ -68,7 +68,7 @@ public partial class Hand : Node2D
             if (drawnCard != null)
                 cards.Add(drawnCard);
         }
-        UpdateHandSpacing();
+        UpdateCardSpacing();
     }
 
     public void UnhighlightStack()
@@ -78,28 +78,6 @@ public partial class Hand : Node2D
         highlightedStack = null;
     }
 
-    public void UpdateHandSpacing()
-    {
-        switch (cards.Count)
-        {
-            case 0:
-                break;
-            case 1:
-                cards[0].posGoal = GlobalPosition;
-                break;
-            default:
-                float step = handBounds * 2 / (cards.Count - 1);
-                Vector2 newPos = GlobalPosition;
-                newPos.X -= handBounds;
-                foreach (CardInstance card in cards)
-                {
-                    card.posGoal = newPos;
-                    newPos.X += step;
-                }
-                break;
-        }
-    }
-
     public override void _Input(InputEvent @event)
     {
         if (highlightedStack == null) return;
@@ -107,7 +85,7 @@ public partial class Hand : Node2D
         {
             CardInstance card = highlightedStack.DrawCard();
             if (card != null) cards.Add(card);
-            UpdateHandSpacing();
+            UpdateCardSpacing();
         }
     }
 }
