@@ -19,7 +19,7 @@ public partial class Stack : Node2D
 
 	public CardInstance DrawCard()
 	{
-		string cardUUID = GetTopCardUUID();
+		string cardUUID = GetTopCardUUID(true);
 		if (cardUUID == null)
 		{
 			GD.PrintErr(zoneName + " is out of cards!");
@@ -32,7 +32,6 @@ public partial class Stack : Node2D
 
 			card.DrawAnim();
 			card.SetCard(cardUUID);
-			RemoveCard(cards.Count - 1);
 			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0;
 
 			return card;
