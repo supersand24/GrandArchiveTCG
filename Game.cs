@@ -41,8 +41,13 @@ public partial class Game : Node2D
 		if (@event.IsActionReleased("click") && grabbedCard != null)
 		{
 			grabbedCard.Drop();
+			players[0].field.cards.Add(grabbedCard);
+			players[0].field.UpdateCardSpacing();
+			players[0].cards.Remove(grabbedCard);
+
 			GD.Print("Card Dropped at " + grabbedCard.Position);
 			grabbedCard = null;
+
 		}
 	}
 

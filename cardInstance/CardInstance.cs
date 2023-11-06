@@ -57,6 +57,7 @@ public partial class CardInstance : Node2D
 
 	public void Drop()
 	{
+		animPlayer.Play("dropFaceUp");
 		Game game = GetParent().GetOwner<Game>();
 		Vector2 oldPos = GlobalPosition;
 		GlobalPosition = oldPos;

@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjumt5fh4ej5g"]
+
+[ext_resource type="Script" path="res://Hand.cs" id="1_kbh8l"]
+[ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_cuh8b"]
+[ext_resource type="PackedScene" uid="uid://chgp72brs104" path="res://cardInstance/Stack.tscn" id="3_lm4od"]
+[ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://Zone.tscn" id="4_vjjrr"]
+
+[node name="Hand" type="Node2D"]
+position = Vector2(1160, 1080)
+script = ExtResource("1_kbh8l")
+cardInstance = ExtResource("2_cuh8b")
+stackInstance = ExtResource("3_lm4od")
+zoneInstance = ExtResource("4_vjjrr")

@@ -13,6 +13,9 @@ public partial class Hand : Node2D
     public Stack banishment;
     public Stack champion;
 
+    [Export] PackedScene zoneInstance { get; set; }
+    public Zone field;
+
     public Stack highlightedStack = null;
 
     int handBounds = 400;
@@ -47,6 +50,11 @@ public partial class Hand : Node2D
         banishment.Name = "Banishment";
         banishment.Position = new Vector2(-deckPlacement, -100);
         banishment.privateZone = false;
+
+        field = zoneInstance.Instantiate<Zone>();
+        AddChild(field);
+        field.Name = "Field";
+        field.Position = Vector2.Up * 300;
 
         GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24", "XXCHvAXEbnGYWJdNkTQI", this);
 
