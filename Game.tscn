@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=16 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_b8es7"]
 [ext_resource type="Script" path="res://httpRequests/CardDataManager.cs" id="3_dkwey"]
 [ext_resource type="Script" path="res://httpRequests/SilvieDeckImporter.cs" id="4_8l6fo"]
-[ext_resource type="PackedScene" uid="uid://bjumt5fh4ej5g" path="res://Hand.tscn" id="5_8k48j"]
+[ext_resource type="PackedScene" uid="uid://bjumt5fh4ej5g" path="res://zones/Hand.tscn" id="5_8k48j"]
+[ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/Zone.tscn" id="6_dh1sg"]
 [ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="7_jb6ya"]
 [ext_resource type="Script" path="res://cardUI/InfoPanel/InfoPanel.cs" id="8_h5854"]
 [ext_resource type="Theme" uid="uid://bludhm574uenq" path="res://cardUI/InfoPanel/InfoPanel.tres" id="9_qrxbj"]
@@ -36,6 +37,13 @@ script = ExtResource("4_8l6fo")
 [node name="CardInstances" type="Node2D" parent="."]
 
 [node name="Hand1" parent="." instance=ExtResource("5_8k48j")]
+
+[node name="Effect Stack" parent="." instance=ExtResource("6_dh1sg")]
+position = Vector2(1160, 540)
+width = 600
+height = 100
+rows = 1
+drawBounds = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(1920, 1080)

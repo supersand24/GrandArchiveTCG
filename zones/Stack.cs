@@ -148,7 +148,7 @@ public partial class Stack : Node2D
 
 	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
 	{
-		if (input.IsActionPressed("click"))
+		if (input.IsActionPressed("left_click"))
 		{
 			Dictionary limits = new()
 			{

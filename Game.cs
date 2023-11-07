@@ -36,16 +36,25 @@ public partial class Game : Node2D
 
 	public override void _Input(InputEvent @event)
 	{
+		//DEBUG Exit Game
 		if (@event.IsActionPressed("ui_cancel")) GetTree().Quit();
 
-		if (@event.IsActionReleased("click") && grabbedCard != null)
+		//Release Left Click, and currently holding a card.
+		if (@event.IsActionReleased("left_click") && grabbedCard != null)
 		{
-			grabbedCard.Drop();
-			players[0].field.cards.Add(grabbedCard);
-			players[0].field.UpdateCardSpacing();
-			players[0].cards.Remove(grabbedCard);
 
-			GD.Print("Card Dropped at " + grabbedCard.Position);
+			Zone effectStack = GetNode<Zone>("Effect Stack");
+
+			effectStack.AddCard(grabbedCard);
+			players[0].RemoveCard(grabbedCard);
+
+			//For adding to field, but all cards should go through the Effect Stack.
+			//grabbedCard.Drop();
+			//players[0].field.cards.Add(grabbedCard);
+			//players[0].field.UpdateCardSpacing();
+			//players[0].cards.Remove(grabbedCard);
+
+			//GD.Print("Card Dropped at " + grabbedCard.Position);
 			grabbedCard = null;
 
 		}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://boumm64fcwnyr"]
+[gd_scene load_steps=12 format=3 uid="uid://boumm64fcwnyr"]
 
 [ext_resource type="Script" path="res://cardInstance/CardInstance.cs" id="2_3aqpg"]
 [ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="3_46rx4"]
@@ -132,35 +132,6 @@ tracks/4/keys = {
 "values": [Vector2(0.25, 0.25), Vector2(0.4, 0.4)]
 }
 
-[sub_resource type="Animation" id="Animation_k77hr"]
-resource_name = "flipUp"
-length = 0.25
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CardFront:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CardFront:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0.4, 0.4), Vector2(0.25, 0.25)]
-}
-
 [sub_resource type="Animation" id="Animation_ljoku"]
 resource_name = "flipDown"
 length = 0.4
@@ -243,13 +214,72 @@ tracks/2/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_k77hr"]
+resource_name = "flipUp"
+length = 0.25
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardFront:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardFront:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.4), Vector2(0.25, 0.25)]
+}
+
+[sub_resource type="Animation" id="Animation_medxh"]
+resource_name = "flipUp"
+length = 0.4
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CardFront:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CardFront:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.25, 0.25), Vector2(0.4, 0.4)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ri0e"]
 _data = {
 "RESET": SubResource("Animation_kw5p2"),
 "draw": SubResource("Animation_6lrn4"),
-"dropFaceUp": SubResource("Animation_k77hr"),
 "flipDown": SubResource("Animation_ljoku"),
-"flipUp": SubResource("Animation_7r5ce")
+"flipUp": SubResource("Animation_7r5ce"),
+"lower": SubResource("Animation_k77hr"),
+"raise": SubResource("Animation_medxh")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i178v"]
