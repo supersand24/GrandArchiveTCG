@@ -56,7 +56,6 @@ public partial class ExtendedZone : Zone
 
         //Update Card Bounds
         int totalSize = cardSpacing * cards.Count;
-        softBound = totalSize / 2;
 
         switch (cards.Count)
         {
@@ -74,7 +73,7 @@ public partial class ExtendedZone : Zone
                     area = totalSize;
                 float step = area / (cards.Count - 1);
                 Vector2 newPos = GlobalPosition;
-                newPos.X -= softBound;
+                newPos.X -= System.Math.Min(softBound, width);
                 foreach (CardInstance card in cards)
                 {
                     card.posGoal = newPos;
