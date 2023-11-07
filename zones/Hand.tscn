@@ -6,9 +6,35 @@
 [ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="4_3m1im"]
 
 [node name="Hand" type="Node2D"]
-position = Vector2(1160, 1080)
 script = ExtResource("1_hmrrt")
 cardInstance = ExtResource("2_a5c5g")
 stackInstance = ExtResource("3_e4vrb")
 extendedZoneInstance = ExtResource("4_3m1im")
 width = 500
+layer = 1
+
+[node name="Main Deck" parent="." instance=ExtResource("3_e4vrb")]
+position = Vector2(675, -300)
+privateZone = true
+
+[node name="Graveyard" parent="." instance=ExtResource("3_e4vrb")]
+position = Vector2(675, -100)
+
+[node name="Material Deck" parent="." instance=ExtResource("3_e4vrb")]
+position = Vector2(-675, -300)
+privateZone = true
+
+[node name="Banishment" parent="." instance=ExtResource("3_e4vrb")]
+position = Vector2(-675, -100)
+
+[node name="Champion Stack" parent="." instance=ExtResource("3_e4vrb")]
+position = Vector2(-675, -500)
+
+[node name="Field" parent="." instance=ExtResource("4_3m1im")]
+position = Vector2(0, -300)
+width = 500
+drawBounds = true
+
+[node name="Memory" parent="." instance=ExtResource("4_3m1im")]
+width = 500
+drawBounds = true

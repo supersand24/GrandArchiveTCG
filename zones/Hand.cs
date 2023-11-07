@@ -23,56 +23,13 @@ public partial class Hand : ExtendedZone
 
     public void SpawnZones()
     {
-        mainDeck = stackInstance.Instantiate<Stack>();
-        AddChild(mainDeck);
-        mainDeck.Name = "Main Deck";
-        mainDeck.privateZone = true;
-        mainDeck.layer = 0;
-        mainDeck.Position = new Vector2(deckPlacement, -300);
-
-        graveyard = stackInstance.Instantiate<Stack>();
-        AddChild(graveyard);
-        graveyard.Name = "Graveyard";
-        graveyard.privateZone = false;
-        graveyard.layer = 0;
-        graveyard.Position = new Vector2(deckPlacement, -100);
-        graveyard.privateZone = false;
-
-        champion = stackInstance.Instantiate<Stack>();
-        AddChild(champion);
-        champion.Name = "Champion Stack";
-        champion.privateZone = false;
-        champion.layer = 0;
-        champion.Position = new Vector2(-deckPlacement, -500);
-        champion.privateZone = false;
-
-        materialDeck = stackInstance.Instantiate<Stack>();
-        AddChild(materialDeck);
-        materialDeck.Name = "Material Deck";
-        materialDeck.privateZone = true;
-        materialDeck.layer = 0;
-        materialDeck.Position = new Vector2(-deckPlacement, -300);
-
-        banishment = stackInstance.Instantiate<Stack>();
-        AddChild(banishment);
-        banishment.Name = "Banishment";
-        banishment.privateZone = false;
-        banishment.layer = 0;
-        banishment.Position = new Vector2(-deckPlacement, -100);
-        banishment.privateZone = false;
-
-        field = extendedZoneInstance.Instantiate<ExtendedZone>();
-        AddChild(field);
-        field.Name = "Field";
-        field.privateZone = false;
-        field.layer = 0;
-        field.Position = Vector2.Up * 300;
-
-        memory = extendedZoneInstance.Instantiate<ExtendedZone>();
-        AddChild(memory);
-        memory.Name = "Memory";
-        memory.privateZone = true;
-        memory.layer = 0;
+        mainDeck = GetNode<Stack>("Main Deck");
+        materialDeck = GetNode<Stack>("Material Deck");
+        graveyard = GetNode<Stack>("Graveyard");
+        banishment = GetNode<Stack>("Banishment");
+        champion = GetNode<Stack>("Champion Stack");
+        field = GetNode<ExtendedZone>("Field");
+        memory = GetNode<ExtendedZone>("Memory");
 
         GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24", "XXCHvAXEbnGYWJdNkTQI", this);
 

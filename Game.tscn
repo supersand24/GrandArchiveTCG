@@ -37,11 +37,12 @@ script = ExtResource("4_8l6fo")
 [node name="CardInstances" type="Node2D" parent="."]
 
 [node name="Hand1" parent="." instance=ExtResource("5_8k48j")]
-layer = 1
+position = Vector2(1160, 1060)
 privateZone = true
 
 [node name="Effect Stack" parent="." instance=ExtResource("6_dh1sg")]
 position = Vector2(1160, 540)
+width = 650
 layer = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

@@ -16,7 +16,7 @@ public partial class ExtendedZone : Zone
     public Array<CardInstance> cards = new();
 
     [ExportGroup("Debug")]
-    [Export] bool drawBounds = false;
+    [Export] public bool drawBounds = false;
 
     //DEBUGGING
     public override void _Process(double delta)
