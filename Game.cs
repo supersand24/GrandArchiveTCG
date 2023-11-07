@@ -44,7 +44,7 @@ public partial class Game : Node2D
 		if (@event.IsActionReleased("left_click") && grabbedCard != null)
 		{
 
-			Zone effectStack = GetNode<Zone>("Effect Stack");
+            ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
 
 			effectStack.AddCard(grabbedCard);
 			players[0].RemoveCard(grabbedCard);
@@ -63,7 +63,7 @@ public partial class Game : Node2D
 		//DEBUG Resolve the top card.
 		if (@event.IsActionPressed("resolve"))
 		{
-			Zone effectStack = GetNode<Zone>("Effect Stack");
+            ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
 			CardInstance card = effectStack.GetLastCard(true);
 
 			string cardType = card.GetCardTypes()[0];

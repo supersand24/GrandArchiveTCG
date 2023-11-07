@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using System.Linq;
 
-public partial class Stack : Node2D
+public partial class Stack : Zone
 {
 
 	Node cardInstancesNode;
@@ -11,18 +11,50 @@ public partial class Stack : Node2D
 	[Export] Sprite2D topCardSprite;
     [Export] Sprite2D highlightSprite;
 
-    [Export] string zoneName = "Zone";
-	[Export] public bool privateZone = true;
-	[Export] int ownerNumber = 0;
-
 	[Export] public Array<string> cards = new();
+
+	public void MoveCardToZone(ExtendedZone zone)
+	{
+		string cardUUID = GetTopCardUUID(true);
+		if (cardUUID == null) GD.PrintErr(Name + " is out of cards!"); else
+		{
+			//Spawn Card
+			CardInstance card = cardInstance.Instantiate<CardInstance>();
+			cardInstancesNode.AddChild(card);
+			card.GlobalPosition = GlobalPosition;
+            card.SetCard(cardUUID);
+            zone.cards.Add(card);
+
+            if (zone.layer == layer)
+			{
+				//Same Layer
+			}
+			else
+            {
+				//Different Layer
+				if (layer == 0)
+                    card.DrawAnim();
+				else
+					card.DropAnim();
+			}
+
+            //If no more cards in stack, make invisible.
+            topCardSprite.Visible = cards.Count > 0;
+
+        }
+    }
+
+	public void MoveCardToZone(Stack zone)
+	{
+
+	}
 
 	public CardInstance DrawCard()
 	{
 		string cardUUID = GetTopCardUUID(true);
 		if (cardUUID == null)
 		{
-			GD.PrintErr(zoneName + " is out of cards!");
+			GD.PrintErr(Name + " is out of cards!");
 		}
 		else
 		{

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd6tm3pcypn37"]
+
+[ext_resource type="Script" path="res://zones/ExtendedZone.cs" id="1_1cyev"]
+
+[node name="ExtendedZone" type="Node2D"]
+script = ExtResource("1_1cyev")

@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://zones/Hand.cs" id="1_hmrrt"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_a5c5g"]
 [ext_resource type="PackedScene" uid="uid://chgp72brs104" path="res://zones/Stack.tscn" id="3_e4vrb"]
-[ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/Zone.tscn" id="4_hbslp"]
+[ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="4_3m1im"]
 
 [node name="Hand" type="Node2D"]
 position = Vector2(1160, 1080)
 script = ExtResource("1_hmrrt")
 cardInstance = ExtResource("2_a5c5g")
 stackInstance = ExtResource("3_e4vrb")
-zoneInstance = ExtResource("4_hbslp")
+extendedZoneInstance = ExtResource("4_3m1im")
 width = 500

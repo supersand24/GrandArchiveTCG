@@ -36,7 +36,12 @@ public partial class CardInstance : Node2D
 		animPlayer.Play("draw");
 	}
 
-	public void FlipUp()
+    public void DropAnim()
+    {
+        animPlayer.Play("lower");
+    }
+
+    public void FlipUp()
 	{
 		faceUp = true;
 		animPlayer.Play("flipUp");
