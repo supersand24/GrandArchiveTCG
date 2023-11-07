@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System.Collections.Generic;
 
 public partial class Game : Node2D
 {
@@ -56,6 +57,32 @@ public partial class Game : Node2D
 
 			//GD.Print("Card Dropped at " + grabbedCard.Position);
 			grabbedCard = null;
+
+		}
+
+		//DEBUG Resolve the top card.
+		if (@event.IsActionPressed("resolve"))
+		{
+			Zone effectStack = GetNode<Zone>("Effect Stack");
+			CardInstance card = effectStack.GetLastCard(true);
+
+			string cardType = card.GetCardTypes()[0];
+			List<string> validTypes = new(){ "ALLY", "ACTION", "ATTACK", "ITEM", "DOMAIN", "PHANTASIA" };
+			if ( validTypes.Contains(cardType) )
+			{
+				switch (cardType)
+				{
+					case "ALLY":
+					case "DOMAIN":
+					case "PHANTASIA":
+					case "ITEM":
+						players[0].field.AddCard(card);
+						card.Drop();
+						break;
+				}
+			}
+			else
+				GD.PrintErr("Unexpected Card Type: " + cardType);
 
 		}
 	}

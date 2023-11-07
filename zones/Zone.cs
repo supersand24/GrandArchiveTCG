@@ -99,6 +99,21 @@ public partial class Zone : Node2D
         }
     }
 
+    public CardInstance GetLastCard(bool remove = false)
+    {
+        if (remove)
+        {
+            CardInstance card = cards[cards.Count - 1];
+            cards.Remove(card);
+            UpdateCardSpacing();
+            return card;
+        } 
+        else
+        {
+            return cards[cards.Count - 1];
+        }
+    }
+
     public void AddCard(CardInstance cardInstance)
     {
         cards.Add(cardInstance);
