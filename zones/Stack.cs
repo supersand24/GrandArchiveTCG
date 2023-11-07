@@ -23,7 +23,9 @@ public partial class Stack : Zone
 			cardInstancesNode.AddChild(card);
 			card.GlobalPosition = GlobalPosition;
             card.SetCard(cardUUID);
-            zone.cards.Add(card);
+
+            card.layer = zone.layer;
+			zone.AddCard(card);
 
             if (zone.layer == layer)
 			{
@@ -64,6 +66,7 @@ public partial class Stack : Zone
 
 			card.DrawAnim();
 			card.SetCard(cardUUID);
+			card.layer = 1;
 			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0;
 
 			return card;

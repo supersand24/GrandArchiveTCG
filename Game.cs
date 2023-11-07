@@ -76,8 +76,7 @@ public partial class Game : Node2D
 					case "DOMAIN":
 					case "PHANTASIA":
 					case "ITEM":
-						players[0].field.AddCard(card);
-						card.Drop();
+						card.MoveToZone(players[card.ownerNumber].field);
 						break;
 				}
 			}

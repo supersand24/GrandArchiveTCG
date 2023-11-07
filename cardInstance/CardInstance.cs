@@ -6,7 +6,8 @@ public partial class CardInstance : Node2D
 	CardEditionData card;
 	public string uuid { get; set; }
 
-	int ownerNumber = 0;
+	public int ownerNumber = 0;
+	public int layer = 0;
 
 	public Vector2 posGoal = Vector2.Zero;
 
@@ -45,6 +46,33 @@ public partial class CardInstance : Node2D
 	{
 		faceUp = true;
 		animPlayer.Play("flipUp");
+	}
+
+	public void MoveToZone(ExtendedZone zone)
+	{
+
+        layer = zone.layer;
+        zone.AddCard(this);
+
+        if (zone.layer == layer)
+        {
+            //Same Layer
+        }
+        else
+        {
+            //Different Layer
+            if (layer == 0)
+                DrawAnim(); //Going to Higher
+            else
+                DropAnim(); //Going to Lower
+        }
+
+        zone.UpdateCardSpacing();
+	}
+
+	public void MoveToZone(Stack zone)
+	{
+
 	}
 
 	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
