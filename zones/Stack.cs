@@ -24,9 +24,6 @@ public partial class Stack : Zone
 			card.GlobalPosition = GlobalPosition;
             card.SetCard(cardUUID);
 
-            card.layer = zone.layer;
-			zone.AddCard(card);
-
             if (zone.layer == layer)
 			{
 				//Same Layer
@@ -39,6 +36,9 @@ public partial class Stack : Zone
 				else
 					card.DropAnim();
 			}
+
+            card.layer = zone.layer;
+            zone.AddCard(card);
 
             //If no more cards in stack, make invisible.
             topCardSprite.Visible = cards.Count > 0;
@@ -74,20 +74,6 @@ public partial class Stack : Zone
 
 		return null;
 
-	}
-
-	public CardInstance SpawnCard(int index)
-	{
-		CardInstance card = cardInstance.Instantiate<CardInstance>();
-		cardInstancesNode.AddChild(card);
-		card.GlobalPosition = GlobalPosition;
-
-        card.SetCard(cards[index]);
-
-        RemoveCard(index);
-        //card.PlayFromDeck();
-
-        return card;
 	}
 
 	public void AddCardToTop(CardInstance card)

@@ -3,17 +3,26 @@ using Godot;
 public partial class UICardImage : TextureButton
 {
 
+    CardPicker cardPicker;
+    InfoPanel infoPanel;
+
     public CardEditionData card;
     int posInStack;
 
+    public void Init(CardPicker cardPicker, InfoPanel infoPanel)
+    {
+        this.cardPicker = cardPicker;
+        this.infoPanel = infoPanel;
+    }
+
     public Stack GetStack()
     {
-        return GetParent().GetParent().GetParent().GetParent().GetParent<CardPicker>().openStack;
+        return cardPicker.openStack;
     }
 
     public void MouseHovered()
     {
-        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().infoPanel.SetCard(card);
+        infoPanel.SetCard(card);
     }
 
     public void SetCard(CardEditionData card, int index)
@@ -27,7 +36,7 @@ public partial class UICardImage : TextureButton
     {
         GD.Print("Activating " + card.GetEditionSlug());
         GetStack().ActivateCard(posInStack);
-        GetParent().GetParent().GetParent().GetParent().GetParent().GetParent().GetParent<Game>().cardPicker.Close();
+        cardPicker.Close();
     }
 
     public void Disable()

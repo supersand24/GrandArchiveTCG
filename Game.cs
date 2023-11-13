@@ -9,11 +9,14 @@ public partial class Game : Node2D
 	public SilvieDeckImporter silvieDeckImporter;
 
 	[Export] public InfoPanel infoPanel;
+	[Export] public HeadsUpDisplay hud;
 	[Export] public CardPicker cardPicker;
 
 	Dictionary imageCache = new();
 
 	public CardInstance grabbedCard { get; set; } = null;
+	CardInstance activatingCard = null;
+	int costPaid = 0;
 
 	public Array<Hand> players = new();
 
@@ -43,21 +46,21 @@ public partial class Game : Node2D
 		//Release Left Click, and currently holding a card.
 		if (@event.IsActionReleased("left_click") && grabbedCard != null)
 		{
-
-            ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
-
-			effectStack.AddCard(grabbedCard);
-			players[0].RemoveCard(grabbedCard);
-
-			//For adding to field, but all cards should go through the Effect Stack.
-			//grabbedCard.Drop();
-			//players[0].field.cards.Add(grabbedCard);
-			//players[0].field.UpdateCardSpacing();
-			//players[0].cards.Remove(grabbedCard);
-
-			//GD.Print("Card Dropped at " + grabbedCard.Position);
+			if (activatingCard == null)
+			{
+                ActivateCard(grabbedCard);
+            }
+			else
+			{
+				grabbedCard.MoveToZone(players[grabbedCard.ownerNumber].memory);
+				costPaid++;
+				if (costPaid >= activatingCard.GetCardCost())
+				{
+					activatingCard = null;
+					hud.HideActionHint();
+				}
+            }
 			grabbedCard = null;
-
 		}
 
 		//DEBUG Resolve the top card.
@@ -85,6 +88,15 @@ public partial class Game : Node2D
 
 		}
 	}
+
+	public void ActivateCard(CardInstance card)
+	{
+        ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
+		activatingCard = card;
+		hud.SetActionHint("Choose Cards to Pay for " + card.GetCardName());
+		card.MoveToZone(effectStack);
+        players[0].RemoveCard(card);
+    }
 
 	public override void _PhysicsProcess(double delta)
 	{

@@ -4,6 +4,8 @@ using Godot.Collections;
 public partial class CardPicker : ColorRect
 {
 
+    [Export] Game game;
+
     [Export] PackedScene UICard;
 
     [Export] RichTextLabel title;
@@ -25,8 +27,9 @@ public partial class CardPicker : ColorRect
         for (i = 0; i < uuidList.Count; i++)
         {
             UICardImage card = UICard.Instantiate<UICardImage>();
+            card.Init(this, game.infoPanel);
             cardGrid.AddChild(card);
-            card.SetCard(GetParent().GetParent<Game>().cardDataManager.GetCardEdition(uuidList[i]), i);
+            card.SetCard(game.cardDataManager.GetCardEdition(uuidList[i]), i);
         }
 
         SetLimits(limits);

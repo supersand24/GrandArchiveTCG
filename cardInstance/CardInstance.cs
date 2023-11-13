@@ -51,12 +51,10 @@ public partial class CardInstance : Node2D
 	public void MoveToZone(ExtendedZone zone)
 	{
 
-        layer = zone.layer;
-        zone.AddCard(this);
-
         if (zone.layer == layer)
         {
-            //Same Layer
+			//Same Layer
+			GD.Print("Same Layer");
         }
         else
         {
@@ -66,6 +64,9 @@ public partial class CardInstance : Node2D
             else
                 DropAnim(); //Going to Lower
         }
+
+        layer = zone.layer;
+        zone.AddCard(this);
 
         zone.UpdateCardSpacing();
 	}
@@ -115,6 +116,18 @@ public partial class CardInstance : Node2D
 	{
 		Game game = GetParent().GetOwner<Game>();
 		return game.cardDataManager.GetCardEdition(uuid);
+	}
+
+	public string GetCardName()
+	{
+		CardEditionData cardData = GetCardEditionData();
+		return cardData.GetName();
+	}
+
+	public int GetCardCost()
+	{
+		CardEditionData cardData = GetCardEditionData();
+		return cardData.GetCost();
 	}
 
 	public Array<string> GetCardTypes()

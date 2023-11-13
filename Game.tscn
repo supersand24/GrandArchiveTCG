@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=18 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_b8es7"]
@@ -14,16 +14,24 @@
 [ext_resource type="Theme" uid="uid://dn4xx5qbqyuao" path="res://cardUI/CardPicker/CardPickerTheme.tres" id="10_qs3c4"]
 [ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/LinBiolinum_Normal.ttf" id="11_56vjh"]
 [ext_resource type="Theme" uid="uid://co20dnajwfxka" path="res://cardUI/InfoPanel/TextBox/InfoPanelTextBox.tres" id="11_hqoq1"]
+[ext_resource type="Script" path="res://cardUI/HeadsUpDisplay.cs" id="12_57763"]
 
 [sub_resource type="Theme" id="Theme_478me"]
 RichTextLabel/font_sizes/bold_font_size = 24
 RichTextLabel/font_sizes/normal_font_size = 24
 RichTextLabel/fonts/normal_font = ExtResource("11_56vjh")
 
-[node name="GrandArchive" type="Node2D" node_paths=PackedStringArray("infoPanel", "cardPicker")]
+[sub_resource type="LabelSettings" id="LabelSettings_8w8hr"]
+font_size = 30
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.392157)
+shadow_offset = Vector2(2, 2)
+
+[node name="GrandArchive" type="Node2D" node_paths=PackedStringArray("infoPanel", "hud", "cardPicker")]
 script = ExtResource("1_15phb")
 infoPanel = NodePath("HBoxContainer/InfoPanel")
-cardPicker = NodePath("HBoxContainer/CardPicker")
+hud = NodePath("HBoxContainer/MainUIArea/HeadsUpDisplay")
+cardPicker = NodePath("HBoxContainer/MainUIArea/CardPicker")
 cardBack = ExtResource("2_b8es7")
 
 [node name="CardImageManager" type="HTTPRequest" parent="."]
@@ -211,18 +219,53 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="CardPicker" type="ColorRect" parent="HBoxContainer" node_paths=PackedStringArray("title", "cardGrid")]
+[node name="MainUIArea" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="HeadsUpDisplay" type="Control" parent="HBoxContainer/MainUIArea" node_paths=PackedStringArray("actionHint")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("12_57763")
+actionHint = NodePath("ActionHint")
+
+[node name="ActionHint" type="Label" parent="HBoxContainer/MainUIArea/HeadsUpDisplay"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -22.5
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Choose Cards to Pay for Hasty Messenger"
+label_settings = SubResource("LabelSettings_8w8hr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardPicker" type="ColorRect" parent="HBoxContainer/MainUIArea" node_paths=PackedStringArray("game", "title", "cardGrid")]
 visible = false
 layout_mode = 2
+offset_right = 1520.0
+offset_bottom = 1080.0
 size_flags_horizontal = 3
 theme = ExtResource("10_qs3c4")
 color = Color(0, 0, 0, 0.470588)
 script = ExtResource("10_7bafy")
+game = NodePath("../../..")
 UICard = ExtResource("9_ufxlr")
 title = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Title")
 cardGrid = NodePath("MarginContainer/VBoxContainer/ScrollContainer/GridContainer")
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CardPicker"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MainUIArea/CardPicker"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -234,16 +277,16 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CardPicker/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MainUIArea/CardPicker/MarginContainer"]
 clip_contents = true
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MainUIArea/CardPicker/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Title" type="RichTextLabel" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="HBoxContainer/MainUIArea/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -252,17 +295,17 @@ fit_content = true
 scroll_active = false
 shortcut_keys_enabled = false
 
-[node name="Button" type="Button" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Button" parent="HBoxContainer/MainUIArea/CardPicker/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 theme = ExtResource("10_qs3c4")
 text = "Exit"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MainUIArea/CardPicker/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="HBoxContainer/MainUIArea/CardPicker/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -272,4 +315,4 @@ columns = 6
 [connection signal="request_completed" from="CardImageManager" to="." method="ImageRequestCompleted"]
 [connection signal="request_completed" from="CardDataManager" to="CardDataManager" method="CardRequestCompleted"]
 [connection signal="request_completed" from="SilvieDeckImporter" to="SilvieDeckImporter" method="DeckImportCompleted"]
-[connection signal="pressed" from="HBoxContainer/CardPicker/MarginContainer/VBoxContainer/HBoxContainer/Button" to="HBoxContainer/CardPicker" method="Close"]
+[connection signal="pressed" from="HBoxContainer/MainUIArea/CardPicker/MarginContainer/VBoxContainer/HBoxContainer/Button" to="HBoxContainer/MainUIArea/CardPicker" method="Close"]
