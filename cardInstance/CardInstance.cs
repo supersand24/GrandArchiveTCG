@@ -6,10 +6,11 @@ public partial class CardInstance : Node2D
 	CardEditionData card;
 	public string uuid { get; set; }
 
+	public bool canPickup = true;
 	public int ownerNumber = 0;
 	public int layer = 0;
 
-	public Vector2 posGoal = Vector2.Zero;
+	Vector2 posGoal = Vector2.Zero;
 
 	public AnimationPlayer animPlayer;
 	[Export] bool faceUp = true;
@@ -51,6 +52,8 @@ public partial class CardInstance : Node2D
 	public void MoveToZone(ExtendedZone zone)
 	{
 
+		GD.Print("Moving " + GetDebugName() + " to " + zone.Name);
+
         if (zone.layer == layer)
         {
 			//Same Layer
@@ -78,7 +81,7 @@ public partial class CardInstance : Node2D
 
 	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
 	{
-		if (input.IsActionPressed("left_click"))
+		if (input.IsActionPressed("left_click") && canPickup)
 		{
 			Game game = GetParent().GetOwner<Game>();
 			game.grabbedCard = this;
@@ -96,6 +99,12 @@ public partial class CardInstance : Node2D
 		Game game = GetParent().GetOwner<Game>();
 		Vector2 oldPos = GlobalPosition;
 		GlobalPosition = oldPos;
+	}
+
+	public void SetGoals(Vector2 posistion, int index)
+	{
+		posGoal = posistion;
+		ZIndex = (layer * 100) + index;
 	}
 
 	public void MoveToGoal(float speed)
@@ -116,6 +125,11 @@ public partial class CardInstance : Node2D
 	{
 		Game game = GetParent().GetOwner<Game>();
 		return game.cardDataManager.GetCardEdition(uuid);
+	}
+
+	public string GetDebugName()
+	{
+		return GetCardName() + " Card";
 	}
 
 	public string GetCardName()

@@ -52,6 +52,7 @@ public partial class Game : Node2D
             }
 			else
 			{
+				grabbedCard.canPickup = false;
 				grabbedCard.MoveToZone(players[grabbedCard.ownerNumber].memory);
 				costPaid++;
 				if (costPaid >= activatingCard.GetCardCost())
@@ -93,14 +94,16 @@ public partial class Game : Node2D
 	{
         ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
 		activatingCard = card;
+		activatingCard.canPickup = false;
 		hud.SetActionHint("Choose Cards to Pay for " + card.GetCardName());
 		card.MoveToZone(effectStack);
         players[0].RemoveCard(card);
+		GD.Print("Activating " + card.GetDebugName());
     }
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (grabbedCard != null) grabbedCard.posGoal = GetGlobalMousePosition();
+		if (grabbedCard != null) grabbedCard.SetGoals(GetGlobalMousePosition(), 300);
 
 		foreach (CardInstance card in GetNode("CardInstances").GetChildren())
 		{

@@ -13,7 +13,7 @@ public partial class Stack : Zone
 
 	[Export] public Array<string> cards = new();
 
-	public void MoveCardToZone(ExtendedZone zone)
+	public CardInstance MoveTopCardToZone(ExtendedZone zone)
 	{
 		string cardUUID = GetTopCardUUID(true);
 		if (cardUUID == null) GD.PrintErr(Name + " is out of cards!"); else
@@ -43,7 +43,10 @@ public partial class Stack : Zone
             //If no more cards in stack, make invisible.
             topCardSprite.Visible = cards.Count > 0;
 
+			return card;
+
         }
+		return null;
     }
 
 	public void MoveCardToZone(Stack zone)

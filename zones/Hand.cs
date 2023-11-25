@@ -47,7 +47,8 @@ public partial class Hand : ExtendedZone
         if (highlightedStack == null) return;
         if (@event.IsActionPressed("draw"))
         {
-            highlightedStack.MoveCardToZone(this);
+            CardInstance card = highlightedStack.MoveTopCardToZone(this);
+            card.canPickup = true;
             UpdateCardSpacing();
         }
     }

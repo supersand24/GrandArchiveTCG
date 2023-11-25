@@ -62,7 +62,7 @@ public partial class ExtendedZone : Zone
             case 0:
                 break;
             case 1:
-                cards[0].posGoal = GlobalPosition;
+                cards[0].SetGoals(GlobalPosition, 0);
                 break;
             default:
                 int area;
@@ -76,7 +76,7 @@ public partial class ExtendedZone : Zone
                 newPos.X -= System.Math.Min(softBound, width);
                 foreach (CardInstance card in cards)
                 {
-                    card.posGoal = newPos;
+                    card.SetGoals(newPos, 0);
                     newPos.X += step;
                 }
                 break;
