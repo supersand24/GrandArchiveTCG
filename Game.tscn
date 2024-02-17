@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://httpRequests/SilvieDeckImporter.cs" id="4_8l6fo"]
 [ext_resource type="PackedScene" uid="uid://bjumt5fh4ej5g" path="res://zones/Hand.tscn" id="5_8k48j"]
 [ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="6_dh1sg"]
-[ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="7_jb6ya"]
+[ext_resource type="Texture2D" uid="uid://dhyue1gb4j74i" path="res://images/refurbish-doap.png" id="7_jb6ya"]
 [ext_resource type="Script" path="res://cardUI/InfoPanel/InfoPanel.cs" id="8_h5854"]
 [ext_resource type="Theme" uid="uid://bludhm574uenq" path="res://cardUI/InfoPanel/InfoPanel.tres" id="9_qrxbj"]
 [ext_resource type="PackedScene" uid="uid://7y4o53p4k0s4" path="res://cardUI/CardPicker/UICardImage.tscn" id="9_ufxlr"]

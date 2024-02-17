@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://chgp72brs104"]
+[gd_scene load_steps=5 format=3 uid="uid://chgp72brs104"]
 
 [ext_resource type="Script" path="res://zones/Stack.cs" id="1_04a8k"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_t75l3"]
 [ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_tvo8q"]
-[ext_resource type="Texture2D" uid="uid://cfycmxwh48jox" path="res://images/highlight.png" id="3_20vt0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i178v"]
 size = Vector2(125, 174)
@@ -17,7 +16,6 @@ highlightSprite = NodePath("Highlight")
 [node name="Highlight" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_20vt0")
 
 [node name="TopCardImage" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)

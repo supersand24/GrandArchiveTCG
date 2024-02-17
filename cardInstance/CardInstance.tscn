@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://boumm64fcwnyr"]
 
 [ext_resource type="Script" path="res://cardInstance/CardInstance.cs" id="2_3aqpg"]
-[ext_resource type="Texture2D" uid="uid://k21qdgpfi3ax" path="res://images/refurbish-doap.png" id="3_46rx4"]
+[ext_resource type="Texture2D" uid="uid://dhyue1gb4j74i" path="res://images/refurbish-doap.png" id="3_46rx4"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="3_kecnq"]
 
 [sub_resource type="Animation" id="Animation_kw5p2"]
