@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameZone" load_steps=2 format=3 uid="uid://dnou04ybihypf"]
+
+[ext_resource type="Script" path="res://zones/GameZone.cs" id="1_ds186"]
+
+[resource]
+script = ExtResource("1_ds186")
+name = "Memory"
+isPrivate = true
+isSearchable = true
+isSharedZone = false
+ownership = 1

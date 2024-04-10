@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameZone" load_steps=2 format=3 uid="uid://dtadn7mqari1r"]
+
+[ext_resource type="Script" path="res://zones/GameZone.cs" id="1_4xiv1"]
+
+[resource]
+script = ExtResource("1_4xiv1")
+name = "Field"
+isPrivate = false
+isSearchable = true
+isSharedZone = true
+ownership = 0

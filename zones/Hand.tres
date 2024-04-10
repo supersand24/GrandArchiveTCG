@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameZone" load_steps=2 format=3 uid="uid://dh826co0sb62g"]
+
+[ext_resource type="Script" path="res://zones/GameZone.cs" id="1_e555v"]
+
+[resource]
+script = ExtResource("1_e555v")
+name = "Banishment"
+isPrivate = false
+isSearchable = true
+isSharedZone = false
+ownership = 1

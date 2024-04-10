@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameZone" load_steps=2 format=3 uid="uid://bonv4y2u8kh3d"]
+
+[ext_resource type="Script" path="res://zones/GameZone.cs" id="1_gq3ip"]
+
+[resource]
+script = ExtResource("1_gq3ip")
+name = "Intent"
+isPrivate = false
+isSearchable = true
+ownership = 2

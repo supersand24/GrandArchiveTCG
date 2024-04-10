@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GameZone" load_steps=2 format=3 uid="uid://dddr5kmfbex2d"]
+
+[ext_resource type="Script" path="res://zones/GameZone.cs" id="1_b3tkx"]
+
+[resource]
+script = ExtResource("1_b3tkx")
+name = "Material Deck"
+isPrivate = true
+isSearchable = true
+isSharedZone = false
+ownership = 1

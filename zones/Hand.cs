@@ -15,6 +15,8 @@ public partial class Hand : ExtendedZone
     public ExtendedZone field;
     public ExtendedZone memory;
 
+    [Export] GameZone testZone;
+
     //TODO Move to Game
     public Stack highlightedStack = null;
 
