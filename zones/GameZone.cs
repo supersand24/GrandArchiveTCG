@@ -4,7 +4,7 @@ using Godot;
 public partial class GameZone : Resource
 {
     [Export] public string name = "Unknown Zone";
-    [Export] bool isPrivate = false;
+    [Export] public bool isPrivate = false;
     [Export] bool isSearchable = true;
     [Export] Ownership ownership = Ownership.Player;
 

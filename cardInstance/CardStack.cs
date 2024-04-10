@@ -4,11 +4,11 @@ using System.Collections.Generic;
 public partial class CardStack : Node2D
 {
 
-	List<CardEditionData> stack = new();
+	public List<CardEditionData> stack = new();
 	[Export] public bool canPickup = true;
 	public int owner = 0;
 	public int layer = 0;
-	[Export] GameZone zone;
+	[Export] public GameZone zone;
 
 	Vector2 posGoal = Vector2.Zero; //Used for moving cards from one spot to another smoothly.
 
@@ -49,11 +49,14 @@ public partial class CardStack : Node2D
 		stack.Add(card);
 	}
 
-	public void MouseHovered()
+    //Show Card on Info Panel
+    public void MouseHovered()
 	{
-		//Show Top Card on Info Panel
-		if (stack.Count == 0) { GD.Print("No cards in " + zone.name + "."); return; }
-		GetTree().Root.GetChild<Game>(0).infoPanel.SetCard(stack[0]);
+		//If no cards in stack, ignore object.
+		if (stack.Count == 0) { return; }
+
+        GetTree().Root.GetChild<Game>(0).infoPanel.SetStack(this);
+
 	}
 
 	public void MoveToGoal(float speed)

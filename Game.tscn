@@ -65,21 +65,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
-[node name="InfoPanel" type="Panel" parent="HBoxContainer" node_paths=PackedStringArray("image", "name", "cost", "types", "subtypes", "effect", "flavor", "stats", "counters", "debug")]
+[node name="InfoPanel" type="Panel" parent="HBoxContainer" node_paths=PackedStringArray("image", "namePanel", "cardName", "cost", "types", "subtypes", "effectPanel", "effect", "flavor", "statsPanel", "stats", "counters", "zonePanel", "zoneName", "zoneCardCount", "debug")]
 custom_minimum_size = Vector2(400, 1080)
 layout_mode = 2
 theme = ExtResource("9_qrxbj")
 theme_type_variation = &"NORM"
 script = ExtResource("8_h5854")
 image = NodePath("MarginContainer/VBoxContainer/Image")
-name = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost/Name")
+namePanel = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel")
+cardName = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost/Name")
 cost = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Name&Cost/Cost")
 types = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Types/Types")
 subtypes = NodePath("MarginContainer/VBoxContainer/Name&Cost&Types Panel/VBoxContainer/Types/Subtypes")
+effectPanel = NodePath("MarginContainer/VBoxContainer/Effect&Flavor Panel")
 effect = NodePath("MarginContainer/VBoxContainer/Effect&Flavor Panel/VBoxContainer/Effect")
 flavor = NodePath("MarginContainer/VBoxContainer/Effect&Flavor Panel/VBoxContainer/Flavor")
+statsPanel = NodePath("MarginContainer/VBoxContainer/Stats&Counters")
 stats = NodePath("MarginContainer/VBoxContainer/Stats&Counters/VBoxContainer/Stats")
 counters = NodePath("MarginContainer/VBoxContainer/Stats&Counters/VBoxContainer/Counters")
+zonePanel = NodePath("MarginContainer/VBoxContainer/Zone Panel")
+zoneName = NodePath("MarginContainer/VBoxContainer/Zone Panel/VBoxContainer/HBoxContainer/ZoneName")
+zoneCardCount = NodePath("MarginContainer/VBoxContainer/Zone Panel/VBoxContainer/HBoxContainer/ZoneCardCount")
 debug = NodePath("MarginContainer/VBoxContainer/Etc")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/InfoPanel"]
@@ -206,6 +212,37 @@ size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[right][color=red]3 Buff[/color][/right]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Zone Panel" type="PanelContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("11_hqoq1")
+theme_type_variation = &"NORM"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Zone Panel"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Zone Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ZoneName" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Zone Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "Main Deck"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ZoneCardCount" type="RichTextLabel" parent="HBoxContainer/InfoPanel/MarginContainer/VBoxContainer/Zone Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[right]60 Cards[/right]"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
