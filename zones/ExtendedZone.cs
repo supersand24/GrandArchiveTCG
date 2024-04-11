@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial class ExtendedZone : Zone
+public partial class ExtendedZone : Node2D
 {
 
     [Export] public int width = 50;
@@ -13,7 +13,11 @@ public partial class ExtendedZone : Zone
     [Export(PropertyHint.Range, "1,3,")] public int rows = 1;
     float[] rowPosistions;
 
-    public Array<CardInstance> cards = new();
+    public Array<CardStack> cards = new();
+
+    [Export(PropertyHint.Range, "0,1,")] public int layer;
+
+    [Export] public GameZone zone;
 
     [ExportGroup("Debug")]
     [Export] public bool drawBounds = false;
@@ -62,7 +66,7 @@ public partial class ExtendedZone : Zone
             case 0:
                 break;
             case 1:
-                cards[0].SetGoals(GlobalPosition, 0);
+                cards[0].posGoal = Vector2.Zero;
                 break;
             default:
                 int area;
@@ -72,22 +76,22 @@ public partial class ExtendedZone : Zone
                 else
                     area = totalSize;
                 float step = area / (cards.Count - 1);
-                Vector2 newPos = GlobalPosition;
+                Vector2 newPos = Vector2.Zero;
                 newPos.X -= System.Math.Min(softBound, width);
-                foreach (CardInstance card in cards)
+                foreach (CardStack card in cards)
                 {
-                    card.SetGoals(newPos, 0);
+                    card.posGoal = newPos;
                     newPos.X += step;
                 }
                 break;
         }
     }
 
-    public CardInstance GetLastCard(bool remove = false)
+    public CardStack GetLastCard(bool remove = false)
     {
         if (remove)
         {
-            CardInstance card = cards[cards.Count - 1];
+            CardStack card = cards[cards.Count - 1];
             cards.Remove(card);
             UpdateCardSpacing();
             return card;
@@ -98,15 +102,15 @@ public partial class ExtendedZone : Zone
         }
     }
 
-    public void AddCard(CardInstance cardInstance)
+    public void AddCard(CardStack cardStack)
     {
-        cards.Add(cardInstance);
+        cards.Add(cardStack);
         UpdateCardSpacing();
     }
 
-    public void RemoveCard(CardInstance cardInstance)
+    public void RemoveCard(CardStack cardStack)
     {
-        cards.Remove(cardInstance);
+        cards.Remove(cardStack);
         UpdateCardSpacing();
     }
 

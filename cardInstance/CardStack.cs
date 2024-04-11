@@ -10,7 +10,7 @@ public partial class CardStack : Node2D
 	public int layer = 0;
 	[Export] public GameZone zone;
 
-	Vector2 posGoal = Vector2.Zero; //Used for moving cards from one spot to another smoothly.
+	[Export] public Vector2 posGoal = Vector2.Zero; //Used for moving cards from one spot to another smoothly.
 
 	bool faceUp = true; //Used to check if top card is visible.
 	[Export] Sprite2D stackSprite;
@@ -18,26 +18,40 @@ public partial class CardStack : Node2D
 
 	[Export] AnimationPlayer animPlayer;
 
-	[Export] PackedScene cardStackScene;
-
 	public override void _Ready()
 	{
 		Hide();
 		animPlayer.Play("lower");
 	}
 
-	public void AddCardToTop(CardEditionData card)
+    public override void _Process(double delta)
+    {
+        Position = Lerp(Position, posGoal, 5f * (float)delta);
+    }
+
+    public void AddCardToTop(CardEditionData card)
 	{
 		Show();
 		stack.Insert(0, card);
 	}
 
-	public CardStack MoveTopCardToZone(CardStack stack)
+	public CardStack PullTopCard()
 	{
-		CardStack topCard = cardStackScene.Instantiate<CardStack>();
-		GetParent().AddChild(topCard);
-		topCard.AddCardToTop(RemoveCardFromTop());
-		return topCard;
+		if (stack.Count > 0)
+		{
+			CardStack newCard = GD.Load<PackedScene>("res://cardInstance/CardStack.tscn").Instantiate<CardStack>();
+            GetParent().AddChild(newCard);
+            newCard.AddCardToTop(RemoveCardFromTop());
+            newCard.Position = Position;
+            newCard.posGoal = Position;
+			newCard.zone = zone;
+			return newCard;
+        }
+		else
+		{
+            GD.PrintErr("No more cards in " + Name);
+            return null;
+        }
 	}
 
 	public CardEditionData RemoveCardFromTop()

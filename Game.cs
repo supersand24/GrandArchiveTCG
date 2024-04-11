@@ -45,6 +45,7 @@ public partial class Game : Node2D
 		if (@event.IsActionPressed("draw"))
 		{
 			if (highlighted == null) { GD.Print("No selected card to draw."); return; }
+			players[0].AddCard(highlighted.PullTopCard());
 		}
 		else if (@event.IsActionPressed("glimpse"))
 		{
@@ -128,7 +129,7 @@ public partial class Game : Node2D
 		activatingCard.canPickup = false;
 		hud.SetActionHint("Choose Cards to Pay for " + card.GetCardName());
 		card.MoveToZone(effectStack);
-		players[0].RemoveCard(card);
+		//players[0].RemoveCard(card);
 		GD.Print("Activating " + card.GetDebugName());
 	}
 

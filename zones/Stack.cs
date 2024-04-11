@@ -38,7 +38,7 @@ public partial class Stack : Zone
 			}
 
             card.layer = zone.layer;
-            zone.AddCard(card);
+            //zone.AddCard(card);
 
             //If no more cards in stack, make invisible.
             topCardSprite.Visible = cards.Count > 0;

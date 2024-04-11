@@ -1,15 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjumt5fh4ej5g"]
+[gd_scene load_steps=11 format=3 uid="uid://bjumt5fh4ej5g"]
 
 [ext_resource type="Script" path="res://zones/Hand.cs" id="1_hmrrt"]
 [ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="4_3m1im"]
+[ext_resource type="Resource" uid="uid://dh826co0sb62g" path="res://zones/Hand.tres" id="4_yhhev"]
 [ext_resource type="PackedScene" uid="uid://c142fb7ob7rk4" path="res://cardInstance/CardStack.tscn" id="5_jrdrg"]
 [ext_resource type="Resource" uid="uid://bl8oso73lvup" path="res://zones/MainDeck.tres" id="6_j8rtp"]
 [ext_resource type="Resource" uid="uid://bssvsdt0ttb21" path="res://zones/Graveyard.tres" id="7_6fifs"]
 [ext_resource type="Resource" uid="uid://dddr5kmfbex2d" path="res://zones/MaterialDeck.tres" id="7_65xrv"]
 [ext_resource type="Resource" uid="uid://cdbgrjef2wnyk" path="res://zones/Banishment.tres" id="9_rd0kv"]
 [ext_resource type="Resource" uid="uid://dtadn7mqari1r" path="res://zones/Field.tres" id="10_sh4x5"]
+[ext_resource type="Resource" uid="uid://dnou04ybihypf" path="res://zones/Memory.tres" id="10_vbuhc"]
 
-[node name="Hand" type="Node2D" node_paths=PackedStringArray("mainDeck", "materialDeck", "graveyard", "banishment", "champion")]
+[node name="Hand" type="Node2D" node_paths=PackedStringArray("mainDeck", "materialDeck", "graveyard", "banishment", "champion", "field", "memory")]
 script = ExtResource("1_hmrrt")
 stackInstance = ExtResource("5_jrdrg")
 extendedZoneInstance = ExtResource("4_3m1im")
@@ -18,34 +20,44 @@ materialDeck = NodePath("Material Deck")
 graveyard = NodePath("Graveyard")
 banishment = NodePath("Banishment")
 champion = NodePath("Champion")
+field = NodePath("Field")
+memory = NodePath("Memory")
 width = 500
 layer = 1
+zone = ExtResource("4_yhhev")
 
 [node name="Main Deck" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(675, -300)
 zone = ExtResource("6_j8rtp")
+posGoal = Vector2(675, -300)
 
 [node name="Graveyard" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(675, -100)
 zone = ExtResource("7_6fifs")
+posGoal = Vector2(675, -100)
 
 [node name="Material Deck" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(-675, -300)
 zone = ExtResource("7_65xrv")
+posGoal = Vector2(-675, -300)
 
 [node name="Banishment" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(-675, -100)
 zone = ExtResource("9_rd0kv")
+posGoal = Vector2(-675, -100)
 
 [node name="Champion" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(-675, -500)
 zone = ExtResource("10_sh4x5")
+posGoal = Vector2(-675, -500)
 
 [node name="Field" parent="." instance=ExtResource("4_3m1im")]
 position = Vector2(0, -300)
 width = 500
 cardSpacing = 150
 rows = 2
+zone = ExtResource("10_sh4x5")
 
 [node name="Memory" parent="." instance=ExtResource("4_3m1im")]
 width = 500
+zone = ExtResource("10_vbuhc")

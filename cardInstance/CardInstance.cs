@@ -69,7 +69,7 @@ public partial class CardInstance : Node2D
         }
 
         layer = zone.layer;
-        zone.AddCard(this);
+        //zone.AddCard(this);
 
         zone.UpdateCardSpacing();
 	}

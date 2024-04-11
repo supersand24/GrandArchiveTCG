@@ -11,14 +11,11 @@ public partial class Hand : ExtendedZone
     [Export] public CardStack graveyard;
     [Export] public CardStack banishment;
     [Export] public CardStack champion;
-    public ExtendedZone field;
-    public ExtendedZone memory;
+    [Export] public ExtendedZone field;
+    [Export] public ExtendedZone memory;
 
     public void SpawnZones()
     {
-        field = GetNode<ExtendedZone>("Field");
-        memory = GetNode<ExtendedZone>("Memory");
-
         GetParent<Game>().silvieDeckImporter.ImportDeck("supersand24", "XXCHvAXEbnGYWJdNkTQI", this);
     }
 
