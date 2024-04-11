@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://boumm64fcwnyr"]
 
-[ext_resource type="Script" path="res://cardInstance/CardInstance.cs" id="2_3aqpg"]
-[ext_resource type="Texture2D" uid="uid://dhyue1gb4j74i" path="res://images/refurbish-doap.png" id="3_46rx4"]
-[ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="3_kecnq"]
+[ext_resource type="Script" path="res://cardInstance/CardSingle.cs" id="1_26tf0"]
+[ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_ujpdf"]
+[ext_resource type="Texture2D" uid="uid://dhyue1gb4j74i" path="res://images/refurbish-doap.png" id="3_ul7nw"]
 
 [sub_resource type="Animation" id="Animation_kw5p2"]
 length = 0.001
@@ -335,16 +335,16 @@ resource_local_to_scene = true
 size = Vector2(200, 280)
 
 [node name="Card" type="Node2D"]
-script = ExtResource("2_3aqpg")
+script = ExtResource("1_26tf0")
 
 [node name="CardBack" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("3_kecnq")
+texture = ExtResource("2_ujpdf")
 
 [node name="CardFront" type="Sprite2D" parent="."]
 visible = false
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("3_46rx4")
+texture = ExtResource("3_ul7nw")
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true

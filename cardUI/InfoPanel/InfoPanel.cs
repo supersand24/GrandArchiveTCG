@@ -87,14 +87,14 @@ public partial class InfoPanel : Panel
         debug.Text = card.uuidBase + " | " + card.uuidEdition;
     }
 
-    public void SetStack(CardStack stack)
+    public void SetStack(CardInstance cardObject)
     {
 
         StringBuilder sb = new StringBuilder();
 
-        if (stack.zone.isPrivate)
+        if (cardObject.currentZone.isPrivate)
         {
-            zone = stack.zone;
+            zone = cardObject.currentZone;
 
             image.Texture = GD.Load<CompressedTexture2D>("res://images/cardBack.png");
 
@@ -104,8 +104,12 @@ public partial class InfoPanel : Panel
             statsPanel.Hide();
 
             zoneName.Text = zone.name;
-            sb.Append("[right]").Append(stack.stack.Count).Append(" Card");
-            if (stack.stack.Count != 1) sb.Append("s");
+            if (cardObject is CardStack cardStack)
+            {
+                sb.Append("[right]").Append(cardStack.stack.Count).Append(" Card");
+                if (cardStack.stack.Count != 1) sb.Append("s");
+            }
+            else sb.Append("[right]1 Card");
             zoneCardCount.Text = sb.ToString();
         }
         else

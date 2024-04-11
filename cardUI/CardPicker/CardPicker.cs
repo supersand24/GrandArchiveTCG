@@ -42,7 +42,7 @@ public partial class CardPicker : ColorRect
     public void Open(List<CardEditionData> dataList, CardStack stack, Dictionary limits = null)
     {
         openStack = stack;
-        title.Text = stack.zone.name;
+        title.Text = stack.currentZone.name;
 
         int i = 0;
         for (i = 0; i < dataList.Count; i++)

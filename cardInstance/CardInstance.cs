@@ -1,153 +1,68 @@
 using Godot;
-using Godot.Collections;
+using System;
 
 public partial class CardInstance : Node2D
 {
-	CardEditionData card;
-	public string uuid { get; set; }
+    [Export] public bool canPickup = false;
+    public int owner = 0;
+    public int layer = 0;
+    [Export] public GameZone currentZone;
 
-	public bool canPickup = true;
-	public int ownerNumber = 0;
-	public int layer = 0;
+    [Export] public Vector2 posGoal = Vector2.Zero;
 
-	Vector2 posGoal = Vector2.Zero;
+    bool faceUp = false;
 
-	public AnimationPlayer animPlayer;
-	[Export] bool faceUp = true;
+    [ExportGroup("Nodes")]
+    [Export] Sprite2D cardSprite;
+    [Export] Sprite2D highlightSprite;
+    [Export] AnimationPlayer animPlayer;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		animPlayer = GetNode<AnimationPlayer>("Animations");
-		if (faceUp) animPlayer.Play("flipUp");
-	}
-
-	public void SetCard(string uuid)
-	{
-		this.uuid = uuid;
-		Game game = GetParent().GetOwner<Game>();
-
-		card = game.cardDataManager.GetCardEdition(uuid);
-
-		GD.Print("Trying to load " + "res://images/" + card.GetEditionSlug() + ".png");
-		GetNode<Sprite2D>("CardFront").Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
-	}
-
-	public void DrawAnim()
-	{
-		animPlayer.Play("draw");
-	}
-
-    public void DropAnim()
+    public override void _Process(double delta)
     {
-        animPlayer.Play("lower");
+        MoveToGoal(10f * (float)delta);
     }
 
-    public void FlipUp()
-	{
-		faceUp = true;
-		animPlayer.Play("flipUp");
-	}
+    public void MouseHovered()
+    {
+        GetTree().Root.GetChild<Game>(0).infoPanel.SetStack(this);
+    }
 
-	public void MoveToZone(ExtendedZone zone)
-	{
-
-		GD.Print("Moving " + GetDebugName() + " to " + zone.Name);
-
-        if (zone.layer == layer)
+    public void InputEvent(Node viewport, InputEvent input, int shape_idx)
+    {
+        if (input.IsActionPressed("left_click"))
         {
-			//Same Layer
-			GD.Print("Same Layer");
-        }
-        else
-        {
-            //Different Layer
-            if (layer == 0)
-                DrawAnim(); //Going to Higher
+            Game game = GetTree().Root.GetChild<Game>(0);
+            if (game.highlighted == null)
+            {
+                Highlight();
+                game.UnhighlightStack();
+                game.highlighted = this;
+            }
             else
-                DropAnim(); //Going to Lower
+            {
+                game.UnhighlightStack();
+            }
         }
+    }
 
-        layer = zone.layer;
-        //zone.AddCard(this);
+    public void Highlight()
+    {
+        highlightSprite.Show();
+    }
 
-        zone.UpdateCardSpacing();
-	}
+    public void Unhighlight()
+    {
+        highlightSprite.Hide();
+    }
 
-	public void MoveToZone(Stack zone)
-	{
+    public void MoveToGoal(float speed)
+    {
+        Position = Lerp(Position, posGoal, speed);
+    }
 
-	}
-
-	public void InputEvent(Node viewport, InputEvent input, int shape_idx)
-	{
-		if (input.IsActionPressed("left_click") && canPickup)
-		{
-			Game game = GetParent().GetOwner<Game>();
-			game.grabbedCard = this;
-		}
-	}
-
-	public void MouseHovered()
-	{
-		GetParent().GetParent<Game>().infoPanel.SetCard(card);
-	}
-
-	public void Drop()
-	{
-		animPlayer.Play("lower");
-		Game game = GetParent().GetOwner<Game>();
-		Vector2 oldPos = GlobalPosition;
-		GlobalPosition = oldPos;
-	}
-
-	public void SetGoals(Vector2 posistion, int index)
-	{
-		posGoal = posistion;
-		ZIndex = (layer * 100) + index;
-	}
-
-	public void MoveToGoal(float speed)
-	{
-		GlobalPosition = Lerp(GlobalPosition, posGoal, speed);
-	}
-
-	private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
-	{
-		return beginning * (1 - speed) + goal * speed;
-	}
-
-	//----------------------------------------------------------------------------------
-	// CARD DATA RELATED
-	//----------------------------------------------------------------------------------
-
-	public CardEditionData GetCardEditionData()
-	{
-		Game game = GetParent().GetOwner<Game>();
-		return game.cardDataManager.GetCardEdition(uuid);
-	}
-
-	public string GetDebugName()
-	{
-		return GetCardName() + " Card";
-	}
-
-	public string GetCardName()
-	{
-		CardEditionData cardData = GetCardEditionData();
-		return cardData.GetName();
-	}
-
-	public int GetCardCost()
-	{
-		CardEditionData cardData = GetCardEditionData();
-		return cardData.GetCost();
-	}
-
-	public Array<string> GetCardTypes()
-	{
-		CardEditionData cardData = GetCardEditionData();
-		return cardData.GetTypes();
-	}
+    private Vector2 Lerp(Vector2 beginning, Vector2 goal, float speed)
+    {
+        return beginning * (1 - speed) + goal * speed;
+    }
 
 }

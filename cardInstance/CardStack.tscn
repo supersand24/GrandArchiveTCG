@@ -311,9 +311,9 @@ _data = {
 resource_local_to_scene = true
 size = Vector2(126, 176)
 
-[node name="Card Stack" type="Node2D" node_paths=PackedStringArray("stackSprite", "highlightSprite", "animPlayer")]
+[node name="Card Stack" type="Node2D" node_paths=PackedStringArray("cardSprite", "highlightSprite", "animPlayer")]
 script = ExtResource("1_6duos")
-stackSprite = NodePath("Top Card")
+cardSprite = NodePath("Top Card")
 highlightSprite = NodePath("Highlight")
 animPlayer = NodePath("Animations")
 

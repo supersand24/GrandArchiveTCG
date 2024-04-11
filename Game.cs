@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System.Collections.Generic;
 
 public partial class Game : Node2D
 {
@@ -14,15 +13,15 @@ public partial class Game : Node2D
 
 	Dictionary imageCache = new();
 
-	public CardInstance grabbedCard { get; set; } = null;
-	CardInstance activatingCard = null;
+	public CardSingle grabbedCard { get; set; } = null;
+    CardSingle activatingCard = null;
 	int costPaid = 0;
 
 	public Array<Hand> players = new();
 
 	[Export] public CompressedTexture2D cardBack;
 
-	public CardStack highlighted = null;
+	public CardInstance highlighted = null;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -45,27 +44,41 @@ public partial class Game : Node2D
 		if (@event.IsActionPressed("draw"))
 		{
 			if (highlighted == null) { GD.Print("No selected card to draw."); return; }
-			players[0].AddCard(highlighted.PullTopCard());
+			if (highlighted is CardStack cardStack)
+			{
+                players[0].AddCard(cardStack.PullTopCard());
+            }
+			else
+			{
+				GD.Print("Highlighted is a Card Single");
+			}
 		}
 		else if (@event.IsActionPressed("glimpse"))
 		{
 			if (highlighted == null) { GD.Print("No selected card to glimpse."); return; }
 			if (cardPicker.IsOpen()) { cardPicker.Close(); return; }
-            if (highlighted.zone.isSearchable)
-            {
+			if (highlighted is CardStack cardStack)
+			{
+                if (cardStack.currentZone.isSearchable)
+                {
 
-				//Placeholder Limits
-				Dictionary limits = new()
-				{
-					{ "types", new Array() { "CHAMPION" } },
-					{ "level", "==0" }
-				};
+                    //Placeholder Limits
+                    Dictionary limits = new()
+					{
+						{ "types", new Array() { "CHAMPION" } },
+						{ "level", "==0" }
+					};
 
-				//Open Search Menu
-				cardPicker.Open(highlighted.stack, highlighted, limits);
+                    //Open Search Menu
+                    cardPicker.Open(cardStack.stack, cardStack, limits);
 
+                }
+                else GD.Print(cardStack.currentZone.name + " is not searchable.");
             }
-            else GD.Print(highlighted.zone.name + " is not searchable.");
+			else
+			{
+				GD.Print("Highlighted is not a Card Stack.");
+			}
         }
 
 		//DEBUG Exit Game
@@ -122,7 +135,7 @@ public partial class Game : Node2D
 		*/
 	}
 
-	public void ActivateCard(CardInstance card)
+	public void ActivateCard(CardSingle card)
 	{
 		ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
 		activatingCard = card;
@@ -144,7 +157,7 @@ public partial class Game : Node2D
 	{
 		if (grabbedCard != null) grabbedCard.SetGoals(GetGlobalMousePosition(), 300);
 
-		foreach (CardInstance card in GetNode("CardInstances").GetChildren())
+		foreach (CardSingle card in GetNode("CardInstances").GetChildren())
 		{
 			if (card == grabbedCard)
 				card.MoveToGoal(25 * (float)delta);

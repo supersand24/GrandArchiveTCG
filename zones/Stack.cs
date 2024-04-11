@@ -13,13 +13,13 @@ public partial class Stack : Zone
 
 	[Export] public Array<string> cards = new();
 
-	public CardInstance MoveTopCardToZone(ExtendedZone zone)
+	public CardSingle MoveTopCardToZone(ExtendedZone zone)
 	{
 		string cardUUID = GetTopCardUUID(true);
 		if (cardUUID == null) GD.PrintErr(Name + " is out of cards!"); else
 		{
 			//Spawn Card
-			CardInstance card = cardInstance.Instantiate<CardInstance>();
+			CardSingle card = cardInstance.Instantiate<CardSingle>();
 			cardInstancesNode.AddChild(card);
 			card.GlobalPosition = GlobalPosition;
             card.SetCard(cardUUID);
@@ -31,10 +31,10 @@ public partial class Stack : Zone
 			else
             {
 				//Different Layer
-				if (layer == 0)
-                    card.DrawAnim();
-				else
-					card.DropAnim();
+				if (layer == 0) { }
+				//card.DrawAnim();
+				else { }
+					//card.DropAnim();
 			}
 
             card.layer = zone.layer;
@@ -54,7 +54,7 @@ public partial class Stack : Zone
 
 	}
 
-	public CardInstance DrawCard()
+	public CardSingle DrawCard()
 	{
 		string cardUUID = GetTopCardUUID(true);
 		if (cardUUID == null)
@@ -63,11 +63,11 @@ public partial class Stack : Zone
 		}
 		else
 		{
-			CardInstance card = cardInstance.Instantiate<CardInstance>();
+            CardSingle card = cardInstance.Instantiate<CardSingle>();
 			cardInstancesNode.AddChild(card);
 			card.GlobalPosition = GlobalPosition;
 
-			card.DrawAnim();
+			//card.DrawAnim();
 			card.SetCard(cardUUID);
 			card.layer = 1;
 			GetNode<Sprite2D>("TopCardImage").Visible = cards.Count > 0;
@@ -79,7 +79,7 @@ public partial class Stack : Zone
 
 	}
 
-	public void AddCardToTop(CardInstance card)
+	public void AddCardToTop(CardSingle card)
 	{
 		AddCardToTop(card.uuid);
     }
@@ -90,7 +90,7 @@ public partial class Stack : Zone
         UpdateImage();
     }
 
-	public void AddCardToBottom(CardInstance card)
+	public void AddCardToBottom(CardSingle card)
 	{
         AddCardToBottom(card.uuid);
 	}
