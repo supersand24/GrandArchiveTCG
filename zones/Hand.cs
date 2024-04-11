@@ -7,15 +7,15 @@ public partial class Hand : ExtendedZone
 
     [Export] PackedScene stackInstance { get; set; }
     [Export] PackedScene extendedZoneInstance { get; set; }
-    public Stack mainDeck;
-    public Stack materialDeck;
-    public Stack graveyard;
-    public Stack banishment;
-    public Stack champion;
+
+    [ExportGroup("Zones")]
+    [Export] public CardStack mainDeck;
+    [Export] public CardStack materialDeck;
+    [Export] public CardStack graveyard;
+    [Export] public CardStack banishment;
+    [Export] public CardStack champion;
     public ExtendedZone field;
     public ExtendedZone memory;
-
-    [Export] GameZone testZone;
 
     //TODO Move to Game
     public Stack highlightedStack = null;
@@ -25,11 +25,6 @@ public partial class Hand : ExtendedZone
 
     public void SpawnZones()
     {
-        mainDeck = GetNode<Stack>("Main Deck");
-        materialDeck = GetNode<Stack>("Material Deck");
-        graveyard = GetNode<Stack>("Graveyard");
-        banishment = GetNode<Stack>("Banishment");
-        champion = GetNode<Stack>("Champion Stack");
         field = GetNode<ExtendedZone>("Field");
         memory = GetNode<ExtendedZone>("Memory");
 

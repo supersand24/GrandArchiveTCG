@@ -1,6 +1,8 @@
 using Godot;
 using Godot.Collections;
+using System;
 using System.Collections.Generic;
+using static Godot.OpenXRInterface;
 
 public partial class SilvieDeckImporter : HttpRequest
 {
@@ -26,10 +28,16 @@ public partial class SilvieDeckImporter : HttpRequest
                 {
                     GD.Print("Imported " + response.name + " by " + response.creator);
                     GD.Print(response.url);
-                    playerHand.mainDeck.cards = response.decks[0];
-                    playerHand.mainDeck.UpdateImage();
-                    playerHand.materialDeck.cards = response.decks[1];
-                    playerHand.materialDeck.UpdateImage();
+                    foreach (string cardUUID in response.decks[0])
+                    {
+                        playerHand.mainDeck.AddCardToBottom(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID));
+                    }
+
+                    foreach (string cardUUID in response.decks[1])
+                    {
+                        playerHand.materialDeck.AddCardToBottom(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID));
+                    }
+
                 }
                 break;
             default:
