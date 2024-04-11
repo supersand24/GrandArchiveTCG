@@ -15,7 +15,7 @@ public partial class UICardImage : TextureButton
         this.infoPanel = infoPanel;
     }
 
-    public Stack GetStack()
+    public CardStack GetStack()
     {
         return cardPicker.openStack;
     }
@@ -35,7 +35,7 @@ public partial class UICardImage : TextureButton
     public void OnPressed()
     {
         GD.Print("Activating " + card.GetEditionSlug());
-        GetStack().ActivateCard(posInStack);
+        //GetStack().ActivateCard(posInStack);
         cardPicker.Close();
     }
 

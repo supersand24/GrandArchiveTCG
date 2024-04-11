@@ -4,8 +4,7 @@
 
 [resource]
 script = ExtResource("1_3ypq2")
-name = "Graveyard"
+name = "Banishment"
 isPrivate = false
 isSearchable = true
-isSharedZone = false
 ownership = 1

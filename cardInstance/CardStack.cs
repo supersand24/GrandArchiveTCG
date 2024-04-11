@@ -1,5 +1,8 @@
 using Godot;
+using Godot.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using static Godot.OpenXRHand;
 
 public partial class CardStack : Node2D
 {
@@ -22,10 +25,13 @@ public partial class CardStack : Node2D
 
 	public override void _Ready()
 	{
+		Hide();
+		animPlayer.Play("lower");
 	}
 
 	public void AddCardToTop(CardEditionData card)
 	{
+		Show();
 		stack.Insert(0, card);
 	}
 
@@ -46,7 +52,8 @@ public partial class CardStack : Node2D
 
 	public void AddCardToBottom(CardEditionData card)
 	{
-		stack.Add(card);
+        Show();
+        stack.Add(card);
 	}
 
     //Show Card on Info Panel
@@ -56,10 +63,37 @@ public partial class CardStack : Node2D
 		if (stack.Count == 0) { return; }
 
         GetTree().Root.GetChild<Game>(0).infoPanel.SetStack(this);
-
 	}
 
-	public void MoveToGoal(float speed)
+	public void Highlight()
+	{
+		highlightSprite.Show();
+	}
+
+	public void Unhighlight()
+	{
+		highlightSprite.Hide();
+	}
+
+    public void InputEvent(Node viewport, InputEvent input, int shape_idx)
+    {
+        if (input.IsActionPressed("left_click"))
+        {
+            Game game = GetTree().Root.GetChild<Game>(0);
+            if (game.highlighted == null)
+            {
+                Highlight();
+                game.UnhighlightStack();
+                game.highlighted = this;
+            }
+			else
+			{
+                game.UnhighlightStack();
+            }
+        }
+    }
+
+    public void MoveToGoal(float speed)
 	{
 		GlobalPosition = Lerp(GlobalPosition, posGoal, speed);
 	}

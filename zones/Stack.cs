@@ -116,7 +116,7 @@ public partial class Stack : Zone
         foreach (string type in card.baseData.types)
 			switch (type)
 			{
-				case "CHAMPION": hand.champion.AddCardToTop(card.uuidEdition); break;
+				case "CHAMPION": hand.champion.AddCardToTop(card); break;
 			}
 		RemoveCard(index);
 	}

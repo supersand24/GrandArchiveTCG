@@ -1,5 +1,7 @@
 using Godot;
 using Godot.Collections;
+using System;
+using System.Collections.Generic;
 
 public partial class CardPicker : ColorRect
 {
@@ -11,16 +13,16 @@ public partial class CardPicker : ColorRect
     [Export] RichTextLabel title;
     [Export] GridContainer cardGrid;
 
-    public Stack openStack;
+    public CardStack openStack;
 
     //Limits
     int minLevel = 0;
     int maxLevel = 3;
-    Array types = new();
+    Godot.Collections.Array types = new();
 
     public void Open(Array<string> uuidList, Stack stack, Dictionary limits = null)
     {
-        this.openStack = stack;
+        //this.openStack = stack;
         title.Text = stack.Name;
 
         int i = 0;
@@ -37,12 +39,36 @@ public partial class CardPicker : ColorRect
         Visible = true;
     }
 
+    public void Open(List<CardEditionData> dataList, CardStack stack, Dictionary limits = null)
+    {
+        openStack = stack;
+        title.Text = stack.zone.name;
+
+        int i = 0;
+        for (i = 0; i < dataList.Count; i++)
+        {
+            UICardImage card = UICard.Instantiate<UICardImage>();
+            card.Init(this, game.infoPanel);
+            cardGrid.AddChild(card);
+            card.SetCard(dataList[i], i);
+        }
+
+        SetLimits(limits);
+
+        Show();
+    }
+
     public void Close()
     {
-        Visible = false;
+        Hide();
         foreach (Node card in cardGrid.GetChildren())
             card.QueueFree();
         ResetLimits();
+    }
+    
+    public bool IsOpen()
+    {
+        return Visible;
     }
 
     private void SetLimits(Dictionary limits)

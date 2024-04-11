@@ -22,6 +22,8 @@ public partial class Game : Node2D
 
 	[Export] public CompressedTexture2D cardBack;
 
+	public CardStack highlighted = null;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -40,10 +42,36 @@ public partial class Game : Node2D
 
 	public override void _Input(InputEvent @event)
 	{
+		if (@event.IsActionPressed("draw"))
+		{
+			if (highlighted == null) { GD.Print("No selected card to draw."); return; }
+		}
+		else if (@event.IsActionPressed("glimpse"))
+		{
+			if (highlighted == null) { GD.Print("No selected card to glimpse."); return; }
+			if (cardPicker.IsOpen()) { cardPicker.Close(); return; }
+            if (highlighted.zone.isSearchable)
+            {
+
+				//Placeholder Limits
+				Dictionary limits = new()
+				{
+					{ "types", new Array() { "CHAMPION" } },
+					{ "level", "==0" }
+				};
+
+				//Open Search Menu
+				cardPicker.Open(highlighted.stack, highlighted, limits);
+
+            }
+            else GD.Print(highlighted.zone.name + " is not searchable.");
+        }
+
 		//DEBUG Exit Game
 		if (@event.IsActionPressed("ui_cancel")) GetTree().Quit();
 
 		//Release Left Click, and currently holding a card.
+		/*
 		if (@event.IsActionReleased("left_click") && grabbedCard != null)
 		{
 			if (activatingCard == null)
@@ -63,8 +91,10 @@ public partial class Game : Node2D
             }
 			grabbedCard = null;
 		}
+		*/
 
 		//DEBUG Resolve the top card.
+		/*
 		if (@event.IsActionPressed("resolve"))
 		{
             ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
@@ -88,20 +118,28 @@ public partial class Game : Node2D
 				GD.PrintErr("Unexpected Card Type: " + cardType);
 
 		}
+		*/
 	}
 
 	public void ActivateCard(CardInstance card)
 	{
-        ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
+		ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
 		activatingCard = card;
 		activatingCard.canPickup = false;
 		hud.SetActionHint("Choose Cards to Pay for " + card.GetCardName());
 		card.MoveToZone(effectStack);
-        players[0].RemoveCard(card);
+		players[0].RemoveCard(card);
 		GD.Print("Activating " + card.GetDebugName());
+	}
+
+    public void UnhighlightStack()
+    {
+		if (highlighted == null) return;
+        highlighted.Unhighlight();
+        highlighted = null;
     }
 
-	public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double delta)
 	{
 		if (grabbedCard != null) grabbedCard.SetGoals(GetGlobalMousePosition(), 300);
 
