@@ -186,13 +186,13 @@ public partial class Stack : Zone
 			Hand owner = GetParent<Hand>();
 			if (highlightSprite.Visible)
 			{
-				owner.UnhighlightStack();
+				//owner.UnhighlightStack();
 			}
 			else
 			{
 				Highlight();
-				owner.UnhighlightStack();
-				owner.highlightedStack = this;
+				//owner.UnhighlightStack();
+				//owner.highlightedStack = this;
 			}
 		}
 	}

@@ -1,8 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjumt5fh4ej5g"]
+[gd_scene load_steps=9 format=3 uid="uid://bjumt5fh4ej5g"]
 
 [ext_resource type="Script" path="res://zones/Hand.cs" id="1_hmrrt"]
-[ext_resource type="PackedScene" uid="uid://boumm64fcwnyr" path="res://cardInstance/CardInstance.tscn" id="2_a5c5g"]
-[ext_resource type="PackedScene" uid="uid://chgp72brs104" path="res://zones/Stack.tscn" id="3_e4vrb"]
 [ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="4_3m1im"]
 [ext_resource type="PackedScene" uid="uid://c142fb7ob7rk4" path="res://cardInstance/CardStack.tscn" id="5_jrdrg"]
 [ext_resource type="Resource" uid="uid://bl8oso73lvup" path="res://zones/MainDeck.tres" id="6_j8rtp"]
@@ -13,8 +11,7 @@
 
 [node name="Hand" type="Node2D" node_paths=PackedStringArray("mainDeck", "materialDeck", "graveyard", "banishment", "champion")]
 script = ExtResource("1_hmrrt")
-cardInstance = ExtResource("2_a5c5g")
-stackInstance = ExtResource("3_e4vrb")
+stackInstance = ExtResource("5_jrdrg")
 extendedZoneInstance = ExtResource("4_3m1im")
 mainDeck = NodePath("Main Deck")
 materialDeck = NodePath("Material Deck")
