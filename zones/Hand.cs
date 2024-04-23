@@ -6,11 +6,11 @@ public partial class Hand : ExtendedZone
     [Export] PackedScene extendedZoneInstance { get; set; }
 
     [ExportGroup("Zones")]
-    [Export] public CardStack mainDeck;
-    [Export] public CardStack materialDeck;
-    [Export] public CardStack graveyard;
-    [Export] public CardStack banishment;
-    [Export] public CardStack champion;
+    [Export] public CardInstance mainDeck;
+    [Export] public CardInstance materialDeck;
+    [Export] public CardInstance graveyard;
+    [Export] public CardInstance banishment;
+    [Export] public CardInstance champion;
     [Export] public ExtendedZone field;
     [Export] public ExtendedZone memory;
 

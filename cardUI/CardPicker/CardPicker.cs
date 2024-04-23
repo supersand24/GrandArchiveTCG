@@ -13,33 +13,14 @@ public partial class CardPicker : ColorRect
     [Export] RichTextLabel title;
     [Export] GridContainer cardGrid;
 
-    public CardStack openStack;
+    public CardInstance openStack;
 
     //Limits
     int minLevel = 0;
     int maxLevel = 3;
     Godot.Collections.Array types = new();
 
-    public void Open(Array<string> uuidList, Stack stack, Dictionary limits = null)
-    {
-        //this.openStack = stack;
-        title.Text = stack.Name;
-
-        int i = 0;
-        for (i = 0; i < uuidList.Count; i++)
-        {
-            UICardImage card = UICard.Instantiate<UICardImage>();
-            card.Init(this, game.infoPanel);
-            cardGrid.AddChild(card);
-            card.SetCard(game.cardDataManager.GetCardEdition(uuidList[i]), i);
-        }
-
-        SetLimits(limits);
-
-        Visible = true;
-    }
-
-    public void Open(List<CardEditionData> dataList, CardStack stack, Dictionary limits = null)
+    public void Open(List<CardEditionData> dataList, CardInstance stack, Dictionary limits = null)
     {
         openStack = stack;
         title.Text = stack.currentZone.name;

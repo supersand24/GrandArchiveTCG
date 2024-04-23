@@ -104,12 +104,8 @@ public partial class InfoPanel : Panel
             statsPanel.Hide();
 
             zoneName.Text = zone.name;
-            if (cardObject is CardStack cardStack)
-            {
-                sb.Append("[right]").Append(cardStack.stack.Count).Append(" Card");
-                if (cardStack.stack.Count != 1) sb.Append("s");
-            }
-            else sb.Append("[right]1 Card");
+            sb.Append("[right]").Append(cardObject.stack.Count).Append(" Card");
+            if (cardObject.stack.Count != 1) if (cardObject.stack.Count != 1) sb.Append("s");
             zoneCardCount.Text = sb.ToString();
         }
         else

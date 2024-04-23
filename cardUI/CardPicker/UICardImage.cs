@@ -15,7 +15,7 @@ public partial class UICardImage : TextureButton
         this.infoPanel = infoPanel;
     }
 
-    public CardStack GetStack()
+    public CardInstance GetStack()
     {
         return cardPicker.openStack;
     }

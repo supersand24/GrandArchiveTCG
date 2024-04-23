@@ -13,8 +13,8 @@ public partial class Game : Node2D
 
 	Dictionary imageCache = new();
 
-	public CardSingle grabbedCard { get; set; } = null;
-    CardSingle activatingCard = null;
+	public CardInstance grabbedCard { get; set; } = null;
+    CardInstance activatingCard = null;
 	int costPaid = 0;
 
 	public Array<Hand> players = new();
@@ -44,9 +44,9 @@ public partial class Game : Node2D
 		if (@event.IsActionPressed("draw"))
 		{
 			if (highlighted == null) { GD.Print("No selected card to draw."); return; }
-			if (highlighted is CardStack cardStack)
+			if (highlighted is CardInstance card)
 			{
-                players[0].AddCard(cardStack.PullTopCard());
+                players[0].AddCard(card.PullTopCard());
             }
 			else
 			{
@@ -57,9 +57,9 @@ public partial class Game : Node2D
 		{
 			if (highlighted == null) { GD.Print("No selected card to glimpse."); return; }
 			if (cardPicker.IsOpen()) { cardPicker.Close(); return; }
-			if (highlighted is CardStack cardStack)
+			if (highlighted is CardInstance card)
 			{
-                if (cardStack.currentZone.isSearchable)
+                if (card.currentZone.isSearchable)
                 {
 
                     //Placeholder Limits
@@ -70,15 +70,20 @@ public partial class Game : Node2D
 					};
 
                     //Open Search Menu
-                    cardPicker.Open(cardStack.stack, cardStack, limits);
+                    cardPicker.Open(card.stack, card, limits);
 
                 }
-                else GD.Print(cardStack.currentZone.name + " is not searchable.");
+                else GD.Print(card.currentZone.name + " is not searchable.");
             }
 			else
 			{
 				GD.Print("Highlighted is not a Card Stack.");
 			}
+        }
+		else if (@event.IsActionPressed("flip"))
+		{
+			if (highlighted == null) { GD.Print("No selected card to flip."); return; }
+            highlighted.Flip();
         }
 
 		//DEBUG Exit Game
@@ -135,15 +140,15 @@ public partial class Game : Node2D
 		*/
 	}
 
-	public void ActivateCard(CardSingle card)
+	public void ActivateCard(CardInstance card)
 	{
 		ExtendedZone effectStack = GetNode<ExtendedZone>("Effect Stack");
 		activatingCard = card;
 		activatingCard.canPickup = false;
-		hud.SetActionHint("Choose Cards to Pay for " + card.GetCardName());
-		card.MoveToZone(effectStack);
+		//hud.SetActionHint("Choose Cards to Pay for " + card.GetCardName());
+		//card.MoveToZone(effectStack);
 		//players[0].RemoveCard(card);
-		GD.Print("Activating " + card.GetDebugName());
+		//GD.Print("Activating " + card.GetDebugName());
 	}
 
     public void UnhighlightStack()
@@ -153,18 +158,19 @@ public partial class Game : Node2D
         highlighted = null;
     }
 
+	/*
     public override void _PhysicsProcess(double delta)
 	{
 		if (grabbedCard != null) grabbedCard.SetGoals(GetGlobalMousePosition(), 300);
 
-		foreach (CardSingle card in GetNode("CardInstances").GetChildren())
+		foreach (CardInstance card in GetNode("CardInstances").GetChildren())
 		{
 			if (card == grabbedCard)
 				card.MoveToGoal(25 * (float)delta);
 			else
 				card.MoveToGoal(10 * (float)delta);
 		}
-	}
+	}*/
 
 	public override void _Draw()
     {

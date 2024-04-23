@@ -13,7 +13,7 @@ public partial class ExtendedZone : Node2D
     [Export(PropertyHint.Range, "1,3,")] public int rows = 1;
     float[] rowPosistions;
 
-    public Array<CardStack> cards = new();
+    public Array<CardInstance> cards = new();
 
     [Export(PropertyHint.Range, "0,1,")] public int layer;
 
@@ -78,7 +78,7 @@ public partial class ExtendedZone : Node2D
                 float step = area / (cards.Count - 1);
                 Vector2 newPos = Vector2.Zero;
                 newPos.X -= System.Math.Min(softBound, width);
-                foreach (CardStack card in cards)
+                foreach (CardInstance card in cards)
                 {
                     card.posGoal = newPos;
                     newPos.X += step;
@@ -87,30 +87,15 @@ public partial class ExtendedZone : Node2D
         }
     }
 
-    public CardStack GetLastCard(bool remove = false)
+    public void AddCard(CardInstance card)
     {
-        if (remove)
-        {
-            CardStack card = cards[cards.Count - 1];
-            cards.Remove(card);
-            UpdateCardSpacing();
-            return card;
-        }
-        else
-        {
-            return cards[cards.Count - 1];
-        }
-    }
-
-    public void AddCard(CardStack cardStack)
-    {
-        cards.Add(cardStack);
+        cards.Add(card);
         UpdateCardSpacing();
     }
 
-    public void RemoveCard(CardStack cardStack)
+    public void RemoveCard(CardInstance card)
     {
-        cards.Remove(cardStack);
+        cards.Remove(card);
         UpdateCardSpacing();
     }
 

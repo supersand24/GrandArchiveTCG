@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://zones/Hand.cs" id="1_hmrrt"]
 [ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="4_3m1im"]
 [ext_resource type="Resource" uid="uid://dh826co0sb62g" path="res://zones/Hand.tres" id="4_yhhev"]
-[ext_resource type="PackedScene" uid="uid://c142fb7ob7rk4" path="res://cardInstance/CardStack.tscn" id="5_jrdrg"]
+[ext_resource type="PackedScene" uid="uid://c142fb7ob7rk4" path="res://cardInstance/CardInstance.tscn" id="5_jrdrg"]
 [ext_resource type="Resource" uid="uid://bl8oso73lvup" path="res://zones/MainDeck.tres" id="6_j8rtp"]
 [ext_resource type="Resource" uid="uid://bssvsdt0ttb21" path="res://zones/Graveyard.tres" id="7_6fifs"]
 [ext_resource type="Resource" uid="uid://dddr5kmfbex2d" path="res://zones/MaterialDeck.tres" id="7_65xrv"]
@@ -28,26 +28,31 @@ zone = ExtResource("4_yhhev")
 
 [node name="Main Deck" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(675, -300)
+canPickup = null
 currentZone = ExtResource("6_j8rtp")
 posGoal = Vector2(675, -300)
 
 [node name="Graveyard" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(675, -100)
+canPickup = null
 currentZone = ExtResource("7_6fifs")
 posGoal = Vector2(675, -100)
 
 [node name="Material Deck" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(-675, -300)
+canPickup = null
 currentZone = ExtResource("7_65xrv")
 posGoal = Vector2(-675, -300)
 
 [node name="Banishment" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(-675, -100)
+canPickup = null
 currentZone = ExtResource("9_rd0kv")
 posGoal = Vector2(-675, -100)
 
 [node name="Champion" parent="." instance=ExtResource("5_jrdrg")]
 position = Vector2(-675, -500)
+canPickup = null
 currentZone = ExtResource("10_sh4x5")
 posGoal = Vector2(-675, -500)
 
