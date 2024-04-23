@@ -18,11 +18,7 @@ public partial class CardInstance : Node2D
     [Export] Sprite2D highlightSprite;
     [Export] protected AnimationPlayer animPlayer;
 
-    //CardSingle
-    CardEditionData card = null;
-
-    //CardStack
-    public List<CardEditionData> stack = new();
+    public List<Card> stack = new();
 
     public override void _Process(double delta)
     {
@@ -62,16 +58,11 @@ public partial class CardInstance : Node2D
         highlightSprite.Hide();
     }
 
-    public void SetCard(CardEditionData card)
-    {
-        cardSprite.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
-        this.card = card;
-    }
-
     public void AddCardToTop(CardEditionData card)
     {
         Show();
-        stack.Insert(0, card);
+        cardSprite.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
+        stack.Insert(0, new(card));
     }
 
     public CardInstance PullTopCard()
@@ -80,7 +71,7 @@ public partial class CardInstance : Node2D
         {
             CardInstance newCard = GD.Load<PackedScene>("res://cardInstance/CardInstance.tscn").Instantiate<CardInstance>();
             GetParent().AddChild(newCard);
-            newCard.SetCard(RemoveCardFromTop());
+            newCard.AddCardToTop(RemoveCardFromTop());
             newCard.Position = Position;
             newCard.posGoal = Position;
             newCard.currentZone = currentZone;
@@ -95,15 +86,16 @@ public partial class CardInstance : Node2D
 
     public CardEditionData RemoveCardFromTop()
     {
-        CardEditionData card = stack[0];
+        Card card = stack[0];
         stack.RemoveAt(0);
-        return card;
+        return card.GetData();
     }
 
     public void AddCardToBottom(CardEditionData card)
     {
         Show();
-        stack.Add(card);
+        cardSprite.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
+        stack.Add(new(card));
     }
 
     public void Flip()

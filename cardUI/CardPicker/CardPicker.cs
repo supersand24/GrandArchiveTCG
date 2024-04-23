@@ -20,18 +20,17 @@ public partial class CardPicker : ColorRect
     int maxLevel = 3;
     Godot.Collections.Array types = new();
 
-    public void Open(List<CardEditionData> dataList, CardInstance stack, Dictionary limits = null)
+    public void Open(List<Card> dataList, CardInstance stack, Dictionary limits = null)
     {
         openStack = stack;
         title.Text = stack.currentZone.name;
 
-        int i = 0;
-        for (i = 0; i < dataList.Count; i++)
+        for (int i = 0; i < dataList.Count; i++)
         {
             UICardImage card = UICard.Instantiate<UICardImage>();
             card.Init(this, game.infoPanel);
             cardGrid.AddChild(card);
-            card.SetCard(dataList[i], i);
+            card.SetCard(dataList[i].GetData(), i);
         }
 
         SetLimits(limits);

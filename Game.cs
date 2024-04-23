@@ -44,41 +44,28 @@ public partial class Game : Node2D
 		if (@event.IsActionPressed("draw"))
 		{
 			if (highlighted == null) { GD.Print("No selected card to draw."); return; }
-			if (highlighted is CardInstance card)
-			{
-                players[0].AddCard(card.PullTopCard());
-            }
-			else
-			{
-				GD.Print("Highlighted is a Card Single");
-			}
-		}
+            players[0].AddCard(highlighted.PullTopCard());
+        }
 		else if (@event.IsActionPressed("glimpse"))
 		{
 			if (highlighted == null) { GD.Print("No selected card to glimpse."); return; }
 			if (cardPicker.IsOpen()) { cardPicker.Close(); return; }
-			if (highlighted is CardInstance card)
-			{
-                if (card.currentZone.isSearchable)
-                {
+            //If Zone is Searchable (Can use Override)
+            if (highlighted.currentZone.isSearchable || Input.IsActionPressed("override"))
+            {
 
-                    //Placeholder Limits
-                    Dictionary limits = new()
-					{
-						{ "types", new Array() { "CHAMPION" } },
-						{ "level", "==0" }
-					};
+                //Placeholder Limits
+                Dictionary limits = new()
+                    {
+                        { "types", new Array() { "CHAMPION" } },
+                        { "level", "==0" }
+                    };
 
-                    //Open Search Menu
-                    cardPicker.Open(card.stack, card, limits);
+                //Open Search Menu
+                cardPicker.Open(highlighted.stack, highlighted, limits);
 
-                }
-                else GD.Print(card.currentZone.name + " is not searchable.");
             }
-			else
-			{
-				GD.Print("Highlighted is not a Card Stack.");
-			}
+            else GD.Print(highlighted.currentZone.name + " is not searchable.");
         }
 		else if (@event.IsActionPressed("flip"))
 		{
