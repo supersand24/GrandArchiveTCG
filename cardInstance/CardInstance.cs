@@ -91,11 +91,11 @@ public partial class CardInstance : Node2D
         return card.GetData();
     }
 
-    public void AddCardToBottom(CardEditionData card)
+    public void AddCardToBottom(Card card)
     {
         Show();
-        cardSprite.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetEditionSlug() + ".png");
-        stack.Add(new(card));
+        cardSprite.Texture = GD.Load<CompressedTexture2D>("res://images/" + card.GetData().GetEditionSlug() + ".png");
+        stack.Add(card);
     }
 
     public void Flip()

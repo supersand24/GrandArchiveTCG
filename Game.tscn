@@ -1,10 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://dcicb28a1xcw4"]
+[gd_scene load_steps=25 format=3 uid="uid://dcicb28a1xcw4"]
 
 [ext_resource type="Script" path="res://Game.cs" id="1_15phb"]
 [ext_resource type="Texture2D" uid="uid://x3ofh1khwc2j" path="res://images/cardBack.png" id="2_b8es7"]
 [ext_resource type="Script" path="res://httpRequests/CardDataManager.cs" id="3_dkwey"]
 [ext_resource type="Script" path="res://httpRequests/SilvieDeckImporter.cs" id="4_8l6fo"]
+[ext_resource type="Script" path="res://cardData/CardData.cs" id="4_457sk"]
 [ext_resource type="PackedScene" uid="uid://bjumt5fh4ej5g" path="res://zones/Hand.tscn" id="5_8k48j"]
+[ext_resource type="Script" path="res://cardData/CardEditionData.cs" id="5_dy6yy"]
 [ext_resource type="PackedScene" uid="uid://cd6tm3pcypn37" path="res://zones/ExtendedZone.tscn" id="6_dh1sg"]
 [ext_resource type="Texture2D" uid="uid://dhyue1gb4j74i" path="res://images/refurbish-doap.png" id="7_jb6ya"]
 [ext_resource type="Resource" uid="uid://bnok4l4fsiye" path="res://zones/EffectStack.tres" id="8_c7ddm"]
@@ -16,6 +18,54 @@
 [ext_resource type="FontFile" uid="uid://dx8wckmaytk33" path="res://cardUI/LinBiolinum_Normal.ttf" id="11_56vjh"]
 [ext_resource type="Theme" uid="uid://co20dnajwfxka" path="res://cardUI/InfoPanel/TextBox/InfoPanelTextBox.tres" id="11_hqoq1"]
 [ext_resource type="Script" path="res://cardUI/HeadsUpDisplay.cs" id="12_57763"]
+
+[sub_resource type="Resource" id="Resource_7gda1"]
+script = ExtResource("4_457sk")
+uuid = "5k1vt1cn1t"
+name = "Blanche, Sheltering Saint"
+slug = "blanche-sheltering-saint"
+types = Array[String](["Unique", "Ally"])
+subtypes = Array[String](["Human"])
+classes = Array[String](["Cleric"])
+element = "NORM"
+effect = "Blib Blob Blab"
+effectFormatted = "Blib Blob Blab"
+flavor = "Blib Blob Blab"
+
+[sub_resource type="Resource" id="Resource_ulrkd"]
+script = ExtResource("4_457sk")
+uuid = "6ILtLfjQEe"
+name = "Rai"
+slug = "rai-mana-weaver"
+types = Array[String](["Champion"])
+subtypes = Array[String](["Human"])
+classes = Array[String](["Mage"])
+element = "Arcane"
+effect = "G"
+effectFormatted = "gh"
+flavor = "ghj"
+
+[sub_resource type="Resource" id="Resource_2ghcw"]
+script = ExtResource("5_dy6yy")
+uuidEdition = "xpnjwuap6a"
+uuidBase = "5k1vt1cn1t"
+slug = "blanche-sheltering-saint-ftc-csr"
+effect = "Shiny Blib Blab Boo"
+flavor = "Shiny Blib Blab Boo"
+rarity = 0
+collectorNumber = "hhh"
+illustrator = "me"
+
+[sub_resource type="Resource" id="Resource_gy1r7"]
+script = ExtResource("5_dy6yy")
+uuidEdition = "Fx4hwYQgnu"
+uuidBase = "6ILtLfjQEe"
+slug = "rai-mana-weaver-doa1e-cur"
+effect = "The power within my left eye!"
+flavor = "Arcane Sight!"
+rarity = 0
+collectorNumber = "ggg"
+illustrator = "eee"
 
 [sub_resource type="Theme" id="Theme_478me"]
 RichTextLabel/font_sizes/bold_font_size = 24
@@ -39,9 +89,13 @@ cardBack = ExtResource("2_b8es7")
 
 [node name="CardDataManager" type="HTTPRequest" parent="."]
 script = ExtResource("3_dkwey")
+overrideCards = [SubResource("Resource_7gda1"), SubResource("Resource_ulrkd")]
+overrideCardEditions = [SubResource("Resource_2ghcw"), SubResource("Resource_gy1r7")]
 
 [node name="SilvieDeckImporter" type="HTTPRequest" parent="."]
 script = ExtResource("4_8l6fo")
+mainDeckOverride = ["xpnjwuap6a", "xpnjwuap6a", "xpnjwuap6a", "xpnjwuap6a"]
+materialDeckOverride = ["Fx4hwYQgnu"]
 
 [node name="CardInstances" type="Node2D" parent="."]
 

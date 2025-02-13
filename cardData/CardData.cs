@@ -2,31 +2,59 @@ using Godot;
 using Godot.Collections;
 using System.Text;
 
-public partial class CardData
+[GlobalClass]
+public partial class CardData : Resource
 {
-    public string uuid { get; }
-    public string name { get; }
-    public string slug { get; }
+    [Export] public string uuid;
+    [Export] public string name;
+    [Export] public string slug;
 
-    public Array<string> types { get; }
-    public Array<string> subtypes { get; }
-    public Array<string> classes { get; }
-    public string element { get; }
+    [Export] public Array<string> types;
+    [Export] public Array<string> subtypes;
+    [Export] public Array<string> classes;
+    [Export] public string element;
 
-    public string effect;
-    public string effectFormatted;
-    public string flavor;
+    [Export(PropertyHint.MultilineText)] public string effect;
+    [Export(PropertyHint.MultilineText)] public string effectFormatted;
+    [Export(PropertyHint.MultilineText)] public string flavor;
 
-    public Variant costReserve { get; }
-    public Variant costMemory { get; }
-    public Variant level { get; }
+    public Variant costReserve;
+    public Variant costMemory;
+    public Variant level;
 
-    public Variant power { get; }
-    public Variant life { get; }
-    public Variant durability { get; }
-    public Variant speed { get; }
+    public Variant power;
+    public Variant life;
+    public Variant durability;
+    public Variant speed;
 
     public System.Collections.Generic.List<CardEditionData> editions = new();
+
+    public CardData()
+    {
+        uuid = "";
+        name = "Unnamed Card";
+        slug = "slug";
+
+        types = new();
+        subtypes = new();
+        classes = new();
+        element = "NORM";
+
+        effect = "";
+        effectFormatted = "";
+        flavor = "";
+
+        costMemory = 0;
+        costReserve = 0;
+        level = 0;
+
+        power = 0;
+        life = 0;
+        durability = 0;
+        speed = false;
+
+        editions = new();
+    }
 
     public CardData(Dictionary data)
     {

@@ -6,10 +6,15 @@ using System.Text;
 public partial class CardDataManager : HttpRequest
 {
 
-    public System.Collections.Generic.Dictionary<string, CardData> cards = new();
-    public System.Collections.Generic.Dictionary<string, CardEditionData> cardEditions = new();
+    public Godot.Collections.Dictionary<string, CardData> cards = new();
+    public Godot.Collections.Dictionary<string, CardEditionData> cardEditions = new();
 
     CardDatabaseRequests requests = new();
+
+    [ExportGroup("Debug")]
+    [Export] bool fetchCardsFromDatabase = true;
+    [Export] Array<CardData> overrideCards = new();
+    [Export] Array<CardEditionData> overrideCardEditions = new();
 
     public CardData GetCardData(string uuid)
     {
@@ -32,10 +37,20 @@ public partial class CardDataManager : HttpRequest
 
     public void CardRequest(Dictionary filters = null)
     {
-        if (requests.Request(filters)) HTTPRequest();
+        if (fetchCardsFromDatabase)
+        {
+            if (requests.Request(filters)) HTTPRequest();
+            else
+            {
+                GD.Print("Request Pending");
+            }
+        } 
         else
         {
-            GD.Print("Request Pending");
+            foreach (CardData data in overrideCards)
+                cards.Add(data.uuid, data);
+            foreach (CardEditionData data in overrideCardEditions)
+                cardEditions.Add(data.uuidEdition, data);
         }
     }
 

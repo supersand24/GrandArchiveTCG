@@ -1,19 +1,32 @@
 using Godot;
 using Godot.Collections;
-using System;
 using System.Collections.Generic;
-using static Godot.OpenXRInterface;
 
 public partial class SilvieDeckImporter : HttpRequest
 {
 
     SilvieDeckImportOpenRequests requestManager = new();
 
+    [ExportGroup("Debug")]
+    [Export] bool manualOverride = false;
+    [Export] Array<string> mainDeckOverride = new();
+    [Export] Array<string> materialDeckOverride = new();
+
     public void ImportDeck(string username, string id, Hand player)
     {
-        requestManager.OpenRequest(username, id, "https://build-v2.silvie.org/@" + username + "/" + id, player);
-        if (Request("https://api.silvie.org/api/build/v2/export/json?user=%40" + username + "&id=" + id + "&format=json") != Error.Ok)
-            GD.PrintErr("Bad HTTP Request : https://api.silvie.org/api/build/v2/export/json?user=%40" + username + "&id=" + id + "&format=json");
+        if (manualOverride)
+        {
+            foreach (string cardUUID in mainDeckOverride)
+                GetParent<Game>().players[0].mainDeck.AddCardToBottom(new(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID)));
+            foreach (string cardUUID in materialDeckOverride)
+                GetParent<Game>().players[0].materialDeck.AddCardToBottom(new(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID)));
+        }
+        else
+        {
+            requestManager.OpenRequest(username, id, "https://build-v2.silvie.org/@" + username + "/" + id, player);
+            if (Request("https://api.silvie.org/api/build/v2/export/json?user=%40" + username + "&id=" + id + "&format=json") != Error.Ok)
+                GD.PrintErr("Bad HTTP Request : https://api.silvie.org/api/build/v2/export/json?user=%40" + username + "&id=" + id + "&format=json");
+        }
     }
 
     public void DeckImportCompleted(long result, long response_code, string[] headers, byte[] body)
@@ -30,12 +43,12 @@ public partial class SilvieDeckImporter : HttpRequest
                     GD.Print(response.url);
                     foreach (string cardUUID in response.decks[0])
                     {
-                        playerHand.mainDeck.AddCardToBottom(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID));
+                        playerHand.mainDeck.AddCardToBottom(new(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID)));
                     }
 
                     foreach (string cardUUID in response.decks[1])
                     {
-                        playerHand.materialDeck.AddCardToBottom(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID));
+                        playerHand.materialDeck.AddCardToBottom(new(GetParent<Game>().cardDataManager.GetCardEdition(cardUUID)));
                     }
 
                 }

@@ -2,20 +2,35 @@ using Godot;
 using Godot.Collections;
 using System.Text;
 
-public partial class CardEditionData
+[GlobalClass]
+public partial class CardEditionData : Resource
 {
-    public string uuidEdition;
-    public string uuidBase;
-    string slug;
+    [Export] public string uuidEdition;
+    [Export] public string uuidBase;
+    [Export] string slug;
 
-    string effect;
-    string flavor;
+    [Export(PropertyHint.MultilineText)] string effect;
+    [Export(PropertyHint.MultilineText)] string flavor;
 
-    int rarity;
-    string collectorNumber;
-    string illustrator;
+    [Export] int rarity;
+    [Export] string collectorNumber;
+    [Export] string illustrator;
 
     public CardData baseData;
+
+    public CardEditionData()
+    {
+        uuidEdition = "";
+        uuidBase = "";
+        slug = "slug";
+
+        effect = "";
+        flavor = "";
+
+        rarity = 0;
+        collectorNumber = "";
+        illustrator = "";
+    }
 
     public CardEditionData(Dictionary data)
     {
